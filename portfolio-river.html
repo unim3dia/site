@@ -598,10 +598,11 @@ body::-webkit-scrollbar{display:none}
   .hero-note{font-size:15px;line-height:1.65}
 
   /* River sections */
-  #sec0{height:58vh}
+  #sec0{height:auto;min-height:58vh;padding-top:152px}
   #sec1{height:100vh}
-  #sec2{height:68vh}
-  .river-band{height:28vh}
+  #sec1{padding-top:152px;box-sizing:border-box}
+  #sec2{height:auto;min-height:68vh;padding-top:152px}
+  .river-band{height:30vh;top:auto;bottom:18px;transform:none}
   #band1{height:100%; top:0; transform:none}
   .sec-heading{font-size:11px;letter-spacing:0.18em;top:18px}
   .section-intro{
@@ -638,6 +639,10 @@ body::-webkit-scrollbar{display:none}
   .hero-lede{font-size:27px}
   #ov-title{font-size:34px}
   #ov-body{font-size:14px;line-height:1.6}
+  #sec0{min-height:56vh;padding-top:144px}
+  #sec1{padding-top:144px}
+  #sec2{min-height:64vh;padding-top:144px}
+  .river-band{height:28vh;bottom:14px}
   #pool-panel{width:94vw;max-height:82vh}
   #pool-video{aspect-ratio:4/3}
 }
