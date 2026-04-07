@@ -598,53 +598,17 @@ body::-webkit-scrollbar{display:none}
   .hero-note{font-size:15px;line-height:1.65}
 
   /* River sections */
-  .river-section{
-    display:flex;
-    flex-direction:column;
-    align-items:stretch;
-    height:auto;
-    min-height:0;
-    padding:18px 0 22px;
-    overflow:visible;
-  }
-  #sec0{min-height:0}
-  #sec1{min-height:0}
-  #sec2{min-height:0}
-  .sec-heading{
-    position:relative;
-    top:auto;
-    left:auto;
-    transform:none;
-    align-self:flex-start;
-    margin:0 18px 10px;
-    font-size:11px;
-    letter-spacing:0.18em;
-  }
+  #sec0{height:58vh}
+  #sec1{height:100vh}
+  #sec2{height:68vh}
+  .river-band{height:28vh}
+  #band1{height:100%; top:0; transform:none}
+  .sec-heading{font-size:11px;letter-spacing:0.18em;top:18px}
   .section-intro{
-    position:relative;
-    left:auto;
-    top:auto;
-    width:auto;
-    margin:0 18px 14px;
+    left:18px;
+    top:52px;
+    width:min(92vw,420px);
     padding:16px 16px 18px;
-  }
-  .river-band{
-    position:relative;
-    top:auto;
-    bottom:auto;
-    left:auto;
-    right:auto;
-    transform:none;
-    width:100%;
-    height:30vh;
-    min-height:220px;
-  }
-  #band0{top:auto}
-  #band1{
-    height:46vh;
-    min-height:320px;
-    top:auto;
-    transform:none;
   }
   .section-title{font-size:28px}
   .section-desc{font-size:14px;line-height:1.6}
@@ -674,11 +638,6 @@ body::-webkit-scrollbar{display:none}
   .hero-lede{font-size:27px}
   #ov-title{font-size:34px}
   #ov-body{font-size:14px;line-height:1.6}
-  .river-section{padding:16px 0 18px}
-  .sec-heading{margin:0 14px 8px}
-  .section-intro{margin:0 14px 12px}
-  .river-band{height:28vh;min-height:200px}
-  #band1{height:42vh;min-height:280px}
   #pool-panel{width:94vw;max-height:82vh}
   #pool-video{aspect-ratio:4/3}
 }
@@ -828,9 +787,9 @@ function shuffle(arr){
 
 /* ── ASSETS ── */
 const EGP_GIFS = [
-  'gifs26/Everglades 1.mp4','gifs26/Everglades 2.mp4','gifs26/Everglades 3.mp4',
-  'gifs26/Everglades 4.mp4','gifs26/Everglades 5.mp4','gifs26/Everglades 6.mp4',
-  'gifs26/Everglades 7.mp4'
+  'gifs26/Everglades 1.gif','gifs26/Everglades 2.gif','gifs26/Everglades 3.gif',
+  'gifs26/Everglades 4.gif','gifs26/Everglades 5.gif','gifs26/Everglades 6.gif',
+  'gifs26/Everglades 7.gif'
 ];
 const MGC_MP4S = Array.from({length:15},(_,i)=>`gifs26/Mother Goose Club ${String(i+1).padStart(2,'0')}.mp4`);
 const POOL_MP4S = [
@@ -1671,7 +1630,7 @@ const r0=makeRiver(
   sections[0], bands[0],
   ['rect16x9'],  /* single shape — 16:9 fills GIF without letterboxing */
   EGP_GIFS,
-  EGP_GIFS.map(()=>true),
+  EGP_GIFS.map(()=>false),
   EGP_GIFS.map(()=>'Everglades'),
   ()=>openOverlay('egp'),
   true, 7,
