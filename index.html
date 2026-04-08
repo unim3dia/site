@@ -27,7 +27,7 @@ body{font-family:var(--sans);background:var(--ink);color:var(--cream);overflow-x
 #overlay-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;mix-blend-mode:screen;opacity:.85;filter:blur(.7px)}
 
 /* ── CURSOR ─────────────────────────────────────────── */
-.cur{position:fixed;top:0;left:0;pointer-events:none;z-index:9999}
+.cur{position:fixed;top:0;left:0;pointer-events:none;z-index:10030}
 .cur-dot{width:4px;height:4px;background:#fff;border-radius:50%;position:absolute;transform:translate(-50%,-50%);mix-blend-mode:difference}
 .cur-ring{width:28px;height:28px;border:.7px solid rgba(255,255,255,.3);border-radius:50%;position:absolute;transform:translate(-50%,-50%);transition:width .35s,height .35s,border-color .35s,border-width .35s}
 body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);border-width:1px}
@@ -80,9 +80,9 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 
 /* ── MGC ────────────────────────────────────────────── */
 #mgc{background:radial-gradient(ellipse at 60% 0%,var(--mgc-accent),transparent 70%)}
-.mgc-title{font-family:var(--serif);font-size:clamp(3.8rem,9vw,12rem);line-height:.9;letter-spacing:-.03em;color:#fff;text-shadow:0 8px 0 rgba(162,73,29,.55),0 18px 30px rgba(0,0,0,.38)}
-.mgc-line,.edge-line{display:block}
-.mgc-title .acc{display:block;font-style:normal;background:linear-gradient(180deg,#fff7b1 0%,#ffca42 28%,#ff7f32 58%,#ff4b6f 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 6px 0 rgba(179,72,21,.58),0 22px 44px rgba(255,129,34,.18)}
+.mgc-title{font-family:var(--serif);font-size:clamp(3.8rem,9vw,12rem);line-height:.9;letter-spacing:-.03em;color:#fff;text-shadow:none;white-space:nowrap}
+.mgc-line,.edge-line{display:inline}
+.mgc-title .acc{display:inline;font-style:normal;background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#fff;text-shadow:none}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.07);margin-top:5vh;background:rgba(240,160,30,.04)}
 .stat{padding:4vh 0;border-right:1px solid rgba(255,255,255,.05);text-align:center}
 .stat:last-child{border-right:none}
@@ -120,8 +120,8 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 
 /* ── BRANDED CREATIVE ──────────────────────────────── */
 #edge{background:radial-gradient(ellipse at 30% 50%,var(--edge-accent),transparent 70%)}
-.edge-title{font-family:var(--serif);font-size:clamp(4rem,11vw,13rem);line-height:.86;letter-spacing:-.02em;color:rgba(255,255,255,.9)}
-.edge-title em{font-style:italic;color:#79c0ff}
+.edge-title{font-family:var(--serif);font-size:clamp(4rem,11vw,13rem);line-height:.86;letter-spacing:-.02em;color:#fff;white-space:nowrap}
+.edge-title em{font-style:normal;color:#fff;display:inline}
 .edge-sub{font-weight:300;font-size:clamp(.95rem,1.2vw,1.12rem);line-height:1.95;color:rgba(255,255,255,.76);max-width:440px;margin-top:2rem}
 
 /* ── EDGE EDITORIAL LAYOUT ──────────────────────────── */
@@ -157,8 +157,9 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 /* ── GIF accents ────────────────────────────────────── */
 .gif-row{display:flex;gap:8px;padding:1vh 0 5vh;justify-content:flex-start;overflow-x:auto;scrollbar-width:none}
 .gif-row::-webkit-scrollbar{display:none}
-.gif-row video{height:clamp(90px,12vw,150px);width:auto;border-radius:2px;opacity:.7;transition:opacity .4s,transform .4s}
-.gif-row video:hover{opacity:1;transform:translateY(-4px)}
+.gif-row .media-trigger{flex:0 0 auto;cursor:pointer}
+.gif-row video,.gif-row img{height:clamp(90px,12vw,150px);width:auto;border-radius:2px;opacity:.7;transition:opacity .4s,transform .4s,box-shadow .4s;display:block}
+.gif-row .media-trigger:hover video,.gif-row .media-trigger:hover img{opacity:1;transform:translateY(-4px);box-shadow:0 22px 44px rgba(0,0,0,.34)}
 
 /* ── ART SPOTLIGHT ─────────────────────────────────── */
 #paper-zone{min-height:60vh;display:flex;align-items:center;justify-content:center;position:relative;padding:8vh 0 4vh;overflow:hidden}
@@ -169,6 +170,9 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 .art-sub{max-width:760px;margin:1.1rem auto 0;font-size:clamp(.92rem,1.15vw,1.05rem);line-height:1.8;color:rgba(255,255,255,.62)}
 .art-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:2vh 0 10vh}
 .art-grid video,.art-grid img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px;box-shadow:0 20px 50px rgba(0,0,0,.35);display:block}
+.art-grid .media-trigger{cursor:pointer}
+.art-grid .media-trigger video,.art-grid .media-trigger img{transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .45s cubic-bezier(.16,1,.3,1),filter .45s ease;filter:saturate(.86) brightness(.92)}
+.art-grid .media-trigger:hover video,.art-grid .media-trigger:hover img{transform:translateY(-6px) scale(1.02);box-shadow:0 28px 64px rgba(0,0,0,.48);filter:saturate(1) brightness(1)}
 
 /* ── RIPPLE FEATURE ─────────────────────────────────── */
 .feature-physics{position:relative;padding:8vh 0;display:flex;align-items:center;justify-content:center;min-height:70vh}
@@ -223,7 +227,9 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
 .media-modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:2rem;background:rgba(6,6,8,.84);backdrop-filter:blur(10px);z-index:10020;opacity:0;pointer-events:none;transition:opacity .35s ease}
 .media-modal.open{opacity:1;pointer-events:auto}
 .media-shell{width:min(960px,92vw);background:rgba(10,12,18,.94);border:1px solid rgba(255,255,255,.12);box-shadow:0 40px 90px rgba(0,0,0,.55);padding:1rem}
-.media-video{width:100%;max-height:72vh;background:#000;display:block}
+.media-video,.media-image{width:100%;max-height:72vh;background:#000;display:block}
+.media-image{object-fit:contain}
+.media-video[hidden],.media-image[hidden]{display:none}
 .media-actions{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-top:1rem;flex-wrap:wrap}
 .media-title{font-size:.76rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.56)}
 .media-controls{display:flex;gap:.75rem;flex-wrap:wrap}
@@ -244,8 +250,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
   .hero-eyebrow{margin-bottom:2rem;letter-spacing:.28em;text-align:center;padding:0 1rem;line-height:1.6}
   .hero-name{font-size:clamp(3.5rem,21vw,6.2rem);line-height:.9}
   .scroll-hint{bottom:1.5rem}
-  #mgc-hero{height:78vh}
-  #mgc-hero img{object-position:65% center}
+  #mgc-hero{height:84svh}
+  #mgc-hero img{object-position:center center}
   .text-wrap{padding:0 1.35rem 6vh}
   .stats{grid-template-columns:1fr;gap:0;margin-top:3vh}
   .stat{padding:2.6vh 0;border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}
@@ -295,7 +301,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
   .top-nav{right:.75rem;left:.75rem;justify-content:flex-end}
   .top-nav-link{padding:.62rem .8rem;font-size:.58rem;letter-spacing:.14em}
   .hero-eyebrow{font-size:.74rem}
-  #mgc-hero img{object-position:68% center}
+  #mgc-hero{height:88svh}
+  #mgc-hero img{object-position:center center}
   .mgc-title{font-size:clamp(1.66rem,7.7vw,2.3rem);line-height:1}
   .mgc-line,.mgc-title .acc,.edge-line,.edge-title em{display:inline !important}
   .edge-title{font-size:clamp(1.72rem,7.9vw,2.35rem);line-height:1}
@@ -422,16 +429,16 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
   <!-- Editorial layout: big feature + stacked pair -->
   <div class="inner" style="padding-top:0">
     <div class="edge-editorial" id="edge-editorial">
-      <div class="edge-main" data-tilt>
+      <div class="edge-main media-trigger" data-tilt data-image="images/reality/Jagwar Ma 20140318.mov.01_00_15_07.Still001.jpg" data-title="Jagwar Ma">
         <img src="images/reality/Jagwar Ma 20140318.mov.01_00_15_07.Still001.jpg" alt="Jagwar Ma">
         <div class="c-lbl">Jagwar Ma</div>
       </div>
       <div class="edge-stack">
-        <div class="edge-stack-item" data-tilt style="--erot:2deg">
+        <div class="edge-stack-item media-trigger" data-tilt style="--erot:2deg" data-image="images/reality/Parquet Courts feature.jpg" data-title="Parquet Courts Feature">
           <img src="images/reality/Parquet Courts feature.jpg" alt="Parquet Courts feature">
           <div class="c-lbl">Parquet Courts Feature</div>
         </div>
-        <div class="edge-stack-item" data-tilt style="--erot:-1.8deg">
+        <div class="edge-stack-item media-trigger" data-tilt style="--erot:-1.8deg" data-image="images/reality/Hardeman NYFW18 4 color_1.mp4.00_00_04_27.Still024.jpg" data-title="Hardeman NYFW">
           <img src="images/reality/Hardeman NYFW18 4 color_1.mp4.00_00_04_27.Still024.jpg" alt="Hardeman NYFW backstage">
           <div class="c-lbl">Hardeman NYFW</div>
         </div>
@@ -441,16 +448,16 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
     <!-- Discovery strip -->
     <p class="edge-discover-hint" style="margin-top:2.5rem">Drag to discover</p>
     <div class="edge-discover" id="edge-discover">
-      <div class="edge-disc-card" style="--erot:-3.2deg;--ew:240px">
+      <div class="edge-disc-card media-trigger" style="--erot:-3.2deg;--ew:240px" data-image="images/reality/Freestylers  Daniel-MASTER HQ.mov.01_00_01_19.Still001.jpg" data-title="Freestylers Daniel">
         <img src="images/reality/Freestylers  Daniel-MASTER HQ.mov.01_00_01_19.Still001.jpg" alt="Freestylers Daniel"><span></span>
       </div>
-      <div class="edge-disc-card" style="--erot:1.6deg;--ew:270px">
+      <div class="edge-disc-card media-trigger" style="--erot:1.6deg;--ew:270px" data-image="images/reality/Freestylers  John_20140626_3.mov.01_00_10_23.Still004.jpg" data-title="Freestylers John">
         <img src="images/reality/Freestylers  John_20140626_3.mov.01_00_10_23.Still004.jpg" alt="Freestylers John"><span></span>
       </div>
-      <div class="edge-disc-card" style="--erot:-2.8deg;--ew:300px">
+      <div class="edge-disc-card media-trigger" style="--erot:-2.8deg;--ew:300px" data-image="images/reality/Pencil.MOV.19_23_56_28.Still005.jpg" data-title="Pencil Still">
         <img src="images/reality/Pencil.MOV.19_23_56_28.Still005.jpg" alt="Pencil still"><span></span>
       </div>
-      <div class="edge-disc-card" style="--erot:3deg;--ew:250px">
+      <div class="edge-disc-card media-trigger" style="--erot:3deg;--ew:250px" data-image="images/reality/Onion 3.MOV.17_05_26_13.Still003.jpg" data-title="Onion Still">
         <img src="images/reality/Onion 3.MOV.17_05_26_13.Still003.jpg" alt="Onion still"><span></span>
       </div>
     </div>
@@ -459,10 +466,18 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
   <!-- GIF accents -->
   <div class="inner">
     <div class="gif-row">
-      <video src="gifs26/Music - David Byrne.mp4" autoplay muted loop playsinline></video>
-      <video src="gifs26/Music - Valerie June.mp4" autoplay muted loop playsinline></video>
-      <video src="gifs26/Music - Warpaint encore.mp4" autoplay muted loop playsinline></video>
-      <video src="gifs26/Music Video - Kylian.mp4" autoplay muted loop playsinline></video>
+      <div class="media-trigger" data-video="gifs26/Music - David Byrne.mp4" data-title="Music - David Byrne" data-has-audio="false">
+        <video src="gifs26/Music - David Byrne.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="media-trigger" data-video="gifs26/Music - Valerie June.mp4" data-title="Music - Valerie June" data-has-audio="false">
+        <video src="gifs26/Music - Valerie June.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="media-trigger" data-video="gifs26/Music - Warpaint encore.mp4" data-title="Music - Warpaint Encore" data-has-audio="false">
+        <video src="gifs26/Music - Warpaint encore.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="media-trigger" data-video="gifs26/Music Video - Kylian.mp4" data-title="Music Video - Kylian" data-has-audio="false">
+        <video src="gifs26/Music Video - Kylian.mp4" autoplay muted loop playsinline></video>
+      </div>
     </div>
   </div>
 
@@ -486,10 +501,18 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 
   <div class="inner">
     <div class="art-grid">
-      <img src="ARTGIFS/Street Art - Colors 1.gif" alt="Colorful street art">
-      <video src="gifs26/Art - Fire Escape.mp4" autoplay muted loop playsinline></video>
-      <video src="gifs26/Art - Man's Field 1.mp4" autoplay muted loop playsinline></video>
-      <video src="gifs26/Art - Silent Trees.mp4" autoplay muted loop playsinline></video>
+      <div class="media-trigger" data-video="gifs26/Music Video - letter-.mp4" data-title="Music Video - Letter" data-has-audio="false">
+        <video src="gifs26/Music Video - letter-.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="media-trigger" data-video="gifs26/Art - Fire Escape.mp4" data-title="Art - Fire Escape" data-has-audio="false">
+        <video src="gifs26/Art - Fire Escape.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="media-trigger" data-video="gifs26/Art - Man's Field 1.mp4" data-title="Art - Man's Field" data-has-audio="false">
+        <video src="gifs26/Art - Man's Field 1.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="media-trigger" data-image="ARTGIFS/Street Art - Colors 1.gif" data-title="Street Art - Colors">
+        <img src="ARTGIFS/Street Art - Colors 1.gif" alt="Street art colors">
+      </div>
     </div>
   </div>
 
@@ -528,6 +551,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 <div class="media-modal" id="media-modal" aria-hidden="true">
   <div class="media-shell">
     <video class="media-video" id="modal-video" playsinline></video>
+    <img class="media-image" id="modal-image" alt="" hidden>
     <div class="media-actions">
       <div class="media-title" id="modal-title">Video</div>
       <div class="media-controls">
@@ -1302,11 +1326,12 @@ ScrollTrigger.create({trigger:'#future',start:'top 55%',
 (function(){
   const modal=document.getElementById('media-modal');
   const video=document.getElementById('modal-video');
+  const image=document.getElementById('modal-image');
   const title=document.getElementById('modal-title');
   const playBtn=document.getElementById('modal-play');
   const muteBtn=document.getElementById('modal-mute');
   const closeBtn=document.getElementById('modal-close');
-  if(!modal||!video)return;
+  if(!modal||!video||!image)return;
 
   function syncButtons(){
     playBtn.textContent=video.paused?'Play':'Pause';
@@ -1315,29 +1340,55 @@ ScrollTrigger.create({trigger:'#future',start:'top 55%',
     }
   }
 
-  function openModal(src,label,hasAudio=true){
+  function openModal({src,label,hasAudio=true,type='video'}){
     title.textContent=label||'Video';
-    video.src=src;
-    video.currentTime=0;
-    video.loop=true;
-    video.muted=!hasAudio;
-    muteBtn.style.display=hasAudio?'inline-flex':'none';
+    const isVideo=type==='video';
+    video.hidden=!isVideo;
+    image.hidden=isVideo;
+    playBtn.style.display=isVideo?'inline-flex':'none';
+    muteBtn.style.display=isVideo&&hasAudio?'inline-flex':'none';
+    if(isVideo){
+      image.removeAttribute('src');
+      image.alt='';
+      video.src=src;
+      video.currentTime=0;
+      video.loop=true;
+      video.muted=!hasAudio;
+    }else{
+      video.pause();
+      video.removeAttribute('src');
+      video.load();
+      image.src=src;
+      image.alt=label||'Expanded image';
+    }
     modal.classList.add('open');
     modal.setAttribute('aria-hidden','false');
-    video.play().catch(()=>{});
-    syncButtons();
+    if(isVideo){
+      video.play().catch(()=>{});
+      syncButtons();
+    }
   }
 
   function closeModal(){
     video.pause();
     video.removeAttribute('src');
     video.load();
+    image.removeAttribute('src');
+    image.alt='';
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden','true');
   }
 
   document.querySelectorAll('.media-trigger').forEach(el=>{
-    el.addEventListener('click',()=>openModal(el.dataset.video,el.dataset.title,el.dataset.hasAudio!=='false'));
+    el.addEventListener('click',()=>{
+      if(el.dataset.image){
+        openModal({src:el.dataset.image,label:el.dataset.title,type:'image'});
+        return;
+      }
+      if(el.dataset.video){
+        openModal({src:el.dataset.video,label:el.dataset.title,hasAudio:el.dataset.hasAudio!=='false',type:'video'});
+      }
+    });
   });
 
   playBtn.addEventListener('click',()=>{
