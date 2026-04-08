@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Aylon Ben-Ami — Infinite Expressions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -43,6 +44,7 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 
 /* ── GLOBAL UTIL ────────────────────────────────────── */
 .section{position:relative;overflow:hidden}
+.deferred-section{content-visibility:auto;contain-intrinsic-size:1200px}
 .inner{max-width:1260px;margin:0 auto;padding:0 clamp(1.5rem,5vw,4.5rem)}
 .ch{font-family:var(--sans);font-weight:300;font-size:clamp(.72rem,1vw,.95rem);letter-spacing:.34em;text-transform:uppercase;color:var(--label-bright);display:inline-flex;align-items:center;gap:1rem}
 .ch::before{content:'';width:2.4rem;height:1px;background:rgba(255,255,255,.22);flex-shrink:0}
@@ -53,6 +55,7 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 .hero-name{font-family:var(--serif);font-weight:400;font-size:clamp(4.5rem,16vw,16rem);line-height:.84;letter-spacing:-.03em;text-align:center;z-index:1;position:relative}
 .hero-name .hn-aylon{display:block;color:rgba(255,255,255,.92)}
 .hero-name .hn-benami{display:block;font-style:italic;color:var(--gold)}
+.hero-eyebrow,.hero-name .hn-aylon,.hero-name .hn-benami,.scroll-hint{opacity:0}
 .scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;z-index:1}
 .scroll-hint span{font-size:.62rem;letter-spacing:.42em;text-transform:uppercase;color:rgba(255,255,255,.42)}
 .scroll-hint-line{width:1px;height:55px;background:linear-gradient(to bottom,rgba(255,255,255,.35),transparent);animation:breathe 2.8s ease-in-out infinite}
@@ -75,6 +78,7 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 /* ── MGC ────────────────────────────────────────────── */
 #mgc{background:radial-gradient(ellipse at 60% 0%,var(--mgc-accent),transparent 70%)}
 .mgc-title{font-family:var(--serif);font-size:clamp(3.8rem,9vw,12rem);line-height:.9;letter-spacing:-.03em;color:#fff;text-shadow:0 8px 0 rgba(162,73,29,.55),0 18px 30px rgba(0,0,0,.38)}
+.mgc-line,.edge-line{display:block}
 .mgc-title .acc{display:block;font-style:normal;background:linear-gradient(180deg,#fff7b1 0%,#ffca42 28%,#ff7f32 58%,#ff4b6f 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 6px 0 rgba(179,72,21,.58),0 22px 44px rgba(255,129,34,.18)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.07);margin-top:5vh;background:rgba(240,160,30,.04)}
 .stat{padding:4vh 0;border-right:1px solid rgba(255,255,255,.05);text-align:center}
@@ -157,6 +161,9 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 #paper-zone{min-height:60vh;display:flex;align-items:center;justify-content:center;position:relative;padding:8vh 0 4vh;overflow:hidden}
 .spotlight-frame{width:min(860px,88vw);border-radius:3px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.55)}
 .spotlight-frame img{width:100%;display:block}
+.art-intro{padding:2vh 0 1.5vh;text-align:center}
+.art-title{font-family:var(--serif);font-size:clamp(3rem,7.5vw,7rem);line-height:.92;letter-spacing:-.03em;color:rgba(255,255,255,.9)}
+.art-sub{max-width:760px;margin:1.1rem auto 0;font-size:clamp(.92rem,1.15vw,1.05rem);line-height:1.8;color:rgba(255,255,255,.62)}
 .art-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:2vh 0 10vh}
 .art-grid video,.art-grid img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px;box-shadow:0 20px 50px rgba(0,0,0,.35);display:block}
 
@@ -232,10 +239,12 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
   .hero-eyebrow{margin-bottom:2rem;letter-spacing:.28em;text-align:center;padding:0 1rem;line-height:1.6}
   .hero-name{font-size:clamp(3.5rem,21vw,6.2rem);line-height:.9}
   .scroll-hint{bottom:1.5rem}
+  #mgc-hero{height:78vh}
   .text-wrap{padding:0 1.35rem 6vh}
   .stats{grid-template-columns:1fr;gap:0;margin-top:3vh}
   .stat{padding:2.6vh 0;border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}
   .stat:last-child{border-bottom:none}
+  .mgc-title,.edge-title{white-space:nowrap;letter-spacing:-.04em}
   .mgc-grid{grid-template-columns:1fr 1fr;gap:3px}
   .mgc-grid .img-reveal:first-child{grid-column:span 2;aspect-ratio:16/9}
   .section-copy,.section-quote{font-size:clamp(1.08rem,4.8vw,1.45rem);line-height:1.58;padding-left:.25rem;padding-right:.25rem}
@@ -256,6 +265,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
   .clients span{font-size:.72rem;letter-spacing:.14em}
   #paper-zone{min-height:auto;padding:4vh 0 2vh}
   .spotlight-frame{width:92vw}
+  .art-title{font-size:clamp(2.5rem,12vw,4.4rem)}
+  .art-sub{font-size:.95rem;line-height:1.65}
   .art-grid{grid-template-columns:1fr 1fr}
   .future-inner{padding:6rem 1.5rem 5rem}
   .portal-frame-shell{gap:1rem}
@@ -274,7 +285,9 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 @media(max-width:520px){
   .inner{padding:0 1rem}
   .hero-eyebrow{font-size:.74rem}
-  .mgc-title{font-size:clamp(3rem,16vw,4.6rem)}
+  .mgc-title{font-size:clamp(2.3rem,10.8vw,3.2rem)}
+  .mgc-line,.mgc-title .acc,.edge-line,.edge-title em{display:inline}
+  .edge-title{font-size:clamp(2.15rem,10.2vw,3rem)}
   .film-cell{flex-basis:84vw}
   .edge-disc-card{flex-basis:80vw}
   .gif-row video{height:96px}
@@ -315,7 +328,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
     <div class="overlay" style="background:linear-gradient(to top,rgba(6,6,8,.92) 0%,rgba(6,6,8,.18) 55%,rgba(6,6,8,.45) 100%)"></div>
     <div class="text-wrap">
       <div class="ch" data-scramble>Joy at Scale</div>
-      <h2 class="mgc-title" style="margin-top:1.4rem">Mother Goose <br><span class="acc">Club</span></h2>
+      <h2 class="mgc-title" data-title-reveal style="margin-top:1.4rem"><span class="mgc-line">Mother Goose</span> <span class="acc">Club</span></h2>
     </div>
   </div>
   <div class="inner">
@@ -340,7 +353,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 </section>
 
 <!-- ═══ EVERGLADES ════════════════════════════════════ -->
-<section id="evg" class="section">
+<section id="evg" class="section deferred-section">
   <!-- Alligator dramatic opener -->
   <div class="full-img" id="evg-gator">
     <img src="images/egp/alligator-eye.jpg" alt="Alligator Eye">
@@ -381,11 +394,11 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 </section>
 
 <!-- ═══ THE EDGE ══════════════════════════════════════ -->
-<section id="edge" class="section">
+<section id="edge" class="section deferred-section">
   <div class="inner" style="padding-top:12vh;padding-bottom:6vh">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:4vw;flex-wrap:wrap">
       <div>
-        <h2 class="edge-title" id="edge-title" style="margin-top:1.4rem">Branded <br><em>Creative</em></h2>
+        <h2 class="edge-title" id="edge-title" data-title-reveal style="margin-top:1.4rem"><span class="edge-line">Branded</span> <em>Creative</em></h2>
       </div>
       <p class="edge-sub" data-reveal>Campaigns, branded films, music work, and visual storytelling built to feel cinematic while still landing the client brief. The mix here leans into energy, polish, and memorable motion.</p>
     </div>
@@ -449,6 +462,12 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
     </div>
   </section>
 
+  <div class="inner art-intro" data-reveal>
+    <p class="ch" data-scramble>Moving Image</p>
+    <h3 class="art-title" style="margin-top:1rem">Moving Image</h3>
+    <p class="art-sub">Video art, motion studies, and visual experiments shaped for atmosphere, rhythm, and feeling rather than category.</p>
+  </div>
+
   <!-- Art spotlight -->
   <div id="paper-zone">
     <div class="spotlight-frame">
@@ -470,7 +489,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 </section>
 
 <!-- ═══ FUTURE ════════════════════════════════════════ -->
-<section id="future" class="section">
+<section id="future" class="section deferred-section">
   <div class="future-inner">
     <a class="portal-link" href="ai.html" aria-label="Open AI and computer generated work">
       <div class="portal-frame-shell">
@@ -686,6 +705,12 @@ void main(){
    Higher resolution, subtler colors, more elegant
 ══════════════════════════════════════════════════════ */
 (function initFluid(){
+  const isTouchDevice=window.matchMedia('(pointer: coarse)').matches||('ontouchstart' in window);
+  const disp=document.getElementById('overlay-canvas');
+  if(isTouchDevice){
+    if(disp) disp.style.display='none';
+    return;
+  }
   const N=128; // higher resolution for less pixelation
   const SZ=N*N;
   let vx=new Float32Array(SZ),vy=new Float32Array(SZ);
@@ -741,7 +766,6 @@ void main(){
 
   const fc=document.createElement('canvas');fc.width=fc.height=N;
   const fx=fc.getContext('2d');const imgData=fx.createImageData(N,N);
-  const disp=document.getElementById('overlay-canvas');
   const dctx=disp.getContext('2d');
 
   let W=window.innerWidth,H=window.innerHeight;
@@ -830,7 +854,7 @@ void main(){
    LOADER
 ══════════════════════════════════════════════════════ */
 window.addEventListener('load',()=>{
-  gsap.to('#loader',{opacity:0,duration:.9,delay:.5,ease:'power2.inOut',
+  gsap.to('#loader',{opacity:0,duration:.55,delay:.12,ease:'power2.inOut',
     onComplete:()=>{document.getElementById('loader').style.display='none';heroIn();}});
 });
 
@@ -929,8 +953,9 @@ gsap.to('#hero',{opacity:0,y:-80,ease:'none',
 /* ══════════════════════════════════════════════════════
    SECTION TITLE REVEALS (split-letter)
 ══════════════════════════════════════════════════════ */
-document.querySelectorAll('.mgc-title,.edge-title').forEach(el=>{
-  splitReveal(el);
+document.querySelectorAll('[data-title-reveal]').forEach(el=>{
+  gsap.fromTo(el,{opacity:0,y:48},{opacity:1,y:0,duration:1.05,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 78%',toggleActions:'play none none none'}});
 });
 
 /* ══════════════════════════════════════════════════════
