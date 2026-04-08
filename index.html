@@ -48,6 +48,9 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 .inner{max-width:1260px;margin:0 auto;padding:0 clamp(1.5rem,5vw,4.5rem)}
 .ch{font-family:var(--sans);font-weight:300;font-size:clamp(.72rem,1vw,.95rem);letter-spacing:.34em;text-transform:uppercase;color:var(--label-bright);display:inline-flex;align-items:center;gap:1rem}
 .ch::before{content:'';width:2.4rem;height:1px;background:rgba(255,255,255,.22);flex-shrink:0}
+.top-nav{position:fixed;top:1.4rem;right:1.6rem;z-index:9100;display:flex;gap:.65rem}
+.top-nav-link{display:inline-flex;align-items:center;justify-content:center;padding:.8rem 1.1rem;border:1px solid rgba(255,255,255,.2);text-decoration:none;color:rgba(255,255,255,.82);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;background:rgba(6,6,8,.28);backdrop-filter:blur(10px);transition:background .25s,border-color .25s,color .25s,transform .25s}
+.top-nav-link:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.42);transform:translateY(-2px)}
 
 /* ── HERO ───────────────────────────────────────────── */
 #hero{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
@@ -235,16 +238,20 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 @media(max-width:768px){
   body{cursor:auto}
   .cur{display:none}
+  .top-nav{top:1rem;right:1rem;gap:.5rem}
+  .top-nav-link{padding:.7rem .9rem;font-size:.62rem;letter-spacing:.18em}
   #hero{min-height:100svh;padding:0 1rem}
   .hero-eyebrow{margin-bottom:2rem;letter-spacing:.28em;text-align:center;padding:0 1rem;line-height:1.6}
   .hero-name{font-size:clamp(3.5rem,21vw,6.2rem);line-height:.9}
   .scroll-hint{bottom:1.5rem}
   #mgc-hero{height:78vh}
+  #mgc-hero img{object-position:65% center}
   .text-wrap{padding:0 1.35rem 6vh}
   .stats{grid-template-columns:1fr;gap:0;margin-top:3vh}
   .stat{padding:2.6vh 0;border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}
   .stat:last-child{border-bottom:none}
-  .mgc-title,.edge-title{white-space:nowrap;letter-spacing:-.04em}
+  .mgc-title,.edge-title{white-space:nowrap;letter-spacing:-.05em}
+  .mgc-line,.edge-line,.mgc-title .acc,.edge-title em{display:inline !important}
   .mgc-grid{grid-template-columns:1fr 1fr;gap:3px}
   .mgc-grid .img-reveal:first-child{grid-column:span 2;aspect-ratio:16/9}
   .section-copy,.section-quote{font-size:clamp(1.08rem,4.8vw,1.45rem);line-height:1.58;padding-left:.25rem;padding-right:.25rem}
@@ -255,7 +262,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
   .bug-play{right:.8rem;bottom:.8rem;padding:.58rem .82rem;font-size:.55rem}
   .evg-intro{font-size:clamp(1.55rem,8vw,2.4rem);line-height:1.22}
   .evg-meta{letter-spacing:.18em;font-size:.66rem}
-  .edge-title{font-size:clamp(2.7rem,14vw,4.5rem)}
+  .edge-title-wrap{width:100%}
+  .edge-title{font-size:clamp(2rem,8.4vw,3rem);line-height:1}
   .edge-sub{max-width:none;font-size:1rem;line-height:1.7}
   .edge-editorial{grid-template-columns:1fr}
   .edge-stack{flex-direction:column}
@@ -284,10 +292,13 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 }
 @media(max-width:520px){
   .inner{padding:0 1rem}
+  .top-nav{right:.75rem;left:.75rem;justify-content:flex-end}
+  .top-nav-link{padding:.62rem .8rem;font-size:.58rem;letter-spacing:.14em}
   .hero-eyebrow{font-size:.74rem}
-  .mgc-title{font-size:clamp(2.3rem,10.8vw,3.2rem)}
-  .mgc-line,.mgc-title .acc,.edge-line,.edge-title em{display:inline}
-  .edge-title{font-size:clamp(2.15rem,10.2vw,3rem)}
+  #mgc-hero img{object-position:68% center}
+  .mgc-title{font-size:clamp(1.66rem,7.7vw,2.3rem);line-height:1}
+  .mgc-line,.mgc-title .acc,.edge-line,.edge-title em{display:inline !important}
+  .edge-title{font-size:clamp(1.72rem,7.9vw,2.35rem);line-height:1}
   .film-cell{flex-basis:84vw}
   .edge-disc-card{flex-basis:80vw}
   .gif-row video{height:96px}
@@ -310,6 +321,10 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
   <div class="l-bar"><div class="l-fill"></div></div>
 </div>
 <div id="progress"></div>
+<nav class="top-nav" aria-label="Primary">
+  <a class="top-nav-link" href="mailto:aylonbenami@gmail.com">Contact</a>
+  <a class="top-nav-link" href="ai.html">AI</a>
+</nav>
 
 <!-- ═══ HERO ══════════════════════════════════════════ -->
 <section id="hero" class="section">
@@ -333,7 +348,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
   </div>
   <div class="inner">
     <div class="stats">
-      <div class="stat"><div class="stat-n">20 Billion</div><div class="stat-l">Views on YouTube</div></div>
+      <div class="stat"><div class="stat-n">20+ Billion</div><div class="stat-l">Views on YouTube</div></div>
       <div class="stat"><div class="stat-n">27 Million</div><div class="stat-l">Subscribers on 2 channels</div></div>
       <div class="stat"><div class="stat-n">100s</div><div class="stat-l">Of videos produced</div></div>
     </div>
@@ -397,7 +412,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 <section id="edge" class="section deferred-section">
   <div class="inner" style="padding-top:12vh;padding-bottom:6vh">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:4vw;flex-wrap:wrap">
-      <div>
+      <div class="edge-title-wrap">
         <h2 class="edge-title" id="edge-title" data-title-reveal style="margin-top:1.4rem"><span class="edge-line">Branded</span> <em>Creative</em></h2>
       </div>
       <p class="edge-sub" data-reveal>Campaigns, branded films, music work, and visual storytelling built to feel cinematic while still landing the client brief. The mix here leans into energy, polish, and memorable motion.</p>
@@ -461,12 +476,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
       </div>
     </div>
   </section>
-
-  <div class="inner art-intro" data-reveal>
-    <p class="ch" data-scramble>Moving Image</p>
-    <h3 class="art-title" style="margin-top:1rem">Moving Image</h3>
-    <p class="art-sub">Video art, motion studies, and visual experiments shaped for atmosphere, rhythm, and feeling rather than category.</p>
-  </div>
 
   <!-- Art spotlight -->
   <div id="paper-zone">
