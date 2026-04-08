@@ -174,21 +174,34 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
   linear-gradient(180deg,rgba(6,6,8,0) 0%,rgba(4,5,10,.32) 28%,rgba(5,7,12,.5) 100%)}
 .future-inner{text-align:center;max-width:1400px;width:100%;padding:8rem 4rem 6rem}
 .portal-link{display:block;text-decoration:none;color:inherit}
-.portal-sculpture{position:relative;width:100%;min-height:72vh;margin:0 auto;display:flex;align-items:flex-end;justify-content:center;isolation:isolate;overflow:hidden;background:
-  radial-gradient(ellipse at 50% 36%,rgba(158,220,255,.05),transparent 18%),
-  radial-gradient(ellipse at 50% 56%,rgba(10,18,32,.28) 0%,rgba(6,8,14,.06) 42%,transparent 72%);
-  border-radius:0}
-.portal-sculpture::before{content:'';position:absolute;inset:0;background:
-  radial-gradient(ellipse at 50% 48%,rgba(255,255,255,.045),transparent 16%),
-  radial-gradient(ellipse at 50% 52%,rgba(0,0,0,.26),transparent 34%),
-  radial-gradient(ellipse at 50% 52%,rgba(0,0,0,.58),transparent 58%);
-  filter:blur(10px);z-index:1;pointer-events:none}
-.portal-sculpture::after{content:'';position:absolute;inset:0;background:
-  linear-gradient(180deg,rgba(5,7,12,0) 0%,rgba(5,7,12,.08) 28%,rgba(0,0,0,.48) 100%);
-  z-index:2;pointer-events:none}
-.portal-copy{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;width:min(900px,84%);display:flex;flex-direction:column;gap:1.2rem;align-items:center;pointer-events:none}
-.portal-copy span{max-width:920px;font-family:var(--serif);font-size:clamp(2.4rem,5.2vw,6.2rem);line-height:.98;letter-spacing:-.03em;color:rgba(255,255,255,.88);text-align:center;text-shadow:0 10px 40px rgba(0,0,0,.62)}
-.portal-particles{position:absolute;inset:0;width:100%;height:100%;z-index:3}
+.portal-frame-shell{position:relative;width:min(980px,100%);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+.portal-frame-wrap{position:relative;width:min(760px,100%);padding:1rem;border-radius:1.75rem;background:
+  linear-gradient(145deg,rgba(235,222,198,.18),rgba(132,103,56,.18)),
+  linear-gradient(180deg,rgba(18,18,22,.92),rgba(7,8,12,.98));
+  box-shadow:0 38px 100px rgba(0,0,0,.52),0 0 0 1px rgba(255,255,255,.08),inset 0 1px 0 rgba(255,255,255,.14);
+  transform:perspective(1400px) rotateX(2.5deg);
+  transition:transform .55s cubic-bezier(.16,1,.3,1),box-shadow .55s cubic-bezier(.16,1,.3,1)}
+.portal-link:hover .portal-frame-wrap{transform:perspective(1400px) rotateX(0deg) translateY(-8px) scale(1.01);box-shadow:0 52px 130px rgba(0,0,0,.62),0 0 0 1px rgba(255,255,255,.12),inset 0 1px 0 rgba(255,255,255,.18)}
+.portal-frame-wrap::before{content:'';position:absolute;inset:-7%;background:
+  radial-gradient(circle at 50% 30%,rgba(124,196,255,.22),transparent 30%),
+  radial-gradient(circle at 50% 78%,rgba(201,159,76,.14),transparent 42%);
+  filter:blur(36px);opacity:.85;pointer-events:none}
+.portal-frame{position:relative;aspect-ratio:4/3;border-radius:1rem;overflow:hidden;background:
+  radial-gradient(circle at 50% 18%,rgba(110,190,255,.1),transparent 24%),
+  linear-gradient(180deg,#030407 0%,#0a0f16 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.portal-frame::before{content:'';position:absolute;inset:0;background:
+  linear-gradient(135deg,rgba(255,255,255,.14),transparent 18%,transparent 82%,rgba(255,255,255,.06)),
+  repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.02) 3px 4px);
+  z-index:4;pointer-events:none}
+.portal-frame::after{content:'';position:absolute;left:0;right:0;bottom:0;height:26%;background:linear-gradient(180deg,rgba(3,4,7,0) 0%,rgba(3,4,7,.82) 100%);z-index:4;pointer-events:none}
+.portal-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .85s ease,transform 6s ease,filter .85s ease;filter:saturate(.88) brightness(.82);transform:scale(1.035)}
+.portal-media.is-active{opacity:1;filter:saturate(1) brightness(.94);transform:scale(1)}
+.portal-overlay{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:1.4rem 1.5rem 1.3rem;display:flex;justify-content:space-between;align-items:flex-end;gap:1rem}
+.portal-badge{font-size:.62rem;letter-spacing:.36em;text-transform:uppercase;color:rgba(255,255,255,.56)}
+.portal-prompt{font-family:var(--serif);font-size:clamp(1.35rem,2.2vw,2rem);line-height:1.02;color:rgba(255,255,255,.92);text-align:right;text-shadow:0 10px 30px rgba(0,0,0,.45)}
+.portal-caption{max-width:760px;font-family:var(--serif);font-size:clamp(1.3rem,2.1vw,2rem);line-height:1.45;color:rgba(255,255,255,.8)}
+.portal-meta{font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.48)}
 .contact-link{display:inline-block;margin-top:2.5rem;font-size:.82rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.82);text-decoration:none;border:1px solid rgba(255,255,255,.24);padding:.9rem 1.4rem}
 
 /* ── FOOTER ─────────────────────────────────────────── */
@@ -213,14 +226,62 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 
 /* ── RESPONSIVE ─────────────────────────────────────── */
 @media(max-width:768px){
+  body{cursor:auto}
+  .cur{display:none}
+  #hero{min-height:100svh;padding:0 1rem}
+  .hero-eyebrow{margin-bottom:2rem;letter-spacing:.28em;text-align:center;padding:0 1rem;line-height:1.6}
+  .hero-name{font-size:clamp(3.5rem,21vw,6.2rem);line-height:.9}
+  .scroll-hint{bottom:1.5rem}
+  .text-wrap{padding:0 1.35rem 6vh}
+  .stats{grid-template-columns:1fr;gap:0;margin-top:3vh}
+  .stat{padding:2.6vh 0;border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}
+  .stat:last-child{border-bottom:none}
   .mgc-grid{grid-template-columns:1fr 1fr;gap:3px}
   .mgc-grid .img-reveal:first-child{grid-column:span 2;aspect-ratio:16/9}
+  .section-copy,.section-quote{font-size:clamp(1.08rem,4.8vw,1.45rem);line-height:1.58;padding-left:.25rem;padding-right:.25rem}
+  .feature-physics{min-height:auto;padding:5vh 0}
+  .feature-img-wrap{width:min(100%,92vw)}
+  .film-strip{padding:2vh 0 1vh}
+  .film-cell{flex-basis:78vw}
+  .bug-play{right:.8rem;bottom:.8rem;padding:.58rem .82rem;font-size:.55rem}
+  .evg-intro{font-size:clamp(1.55rem,8vw,2.4rem);line-height:1.22}
+  .evg-meta{letter-spacing:.18em;font-size:.66rem}
+  .edge-title{font-size:clamp(2.7rem,14vw,4.5rem)}
+  .edge-sub{max-width:none;font-size:1rem;line-height:1.7}
   .edge-editorial{grid-template-columns:1fr}
-  .edge-stack{flex-direction:row}
+  .edge-stack{flex-direction:column}
+  .edge-discover{padding-bottom:3vh}
+  .edge-disc-card{flex-basis:72vw}
+  .clients{gap:.7rem 1.2rem}
+  .clients span{font-size:.72rem;letter-spacing:.14em}
+  #paper-zone{min-height:auto;padding:4vh 0 2vh}
+  .spotlight-frame{width:92vw}
   .art-grid{grid-template-columns:1fr 1fr}
   .future-inner{padding:6rem 1.5rem 5rem}
-  .portal-sculpture{min-height:58vh}
-  .portal-copy{gap:.9rem}
+  .portal-frame-shell{gap:1rem}
+  .portal-frame-wrap{padding:.75rem;border-radius:1.25rem;transform:none}
+  .portal-link:hover .portal-frame-wrap{transform:translateY(-4px)}
+  .portal-overlay{padding:1rem;align-items:flex-start;flex-direction:column}
+  .portal-prompt{text-align:left}
+  .portal-caption{font-size:clamp(1.06rem,4.9vw,1.35rem);padding:0 .35rem}
+  .portal-meta{font-size:.62rem;letter-spacing:.22em}
+  footer{padding:9vh 1.5rem 7vh}
+  .foot-name{font-size:clamp(2.6rem,13vw,4.4rem)}
+  .media-modal{padding:1rem}
+  .media-shell{padding:.75rem}
+  .media-actions{align-items:flex-start}
+}
+@media(max-width:520px){
+  .inner{padding:0 1rem}
+  .hero-eyebrow{font-size:.74rem}
+  .mgc-title{font-size:clamp(3rem,16vw,4.6rem)}
+  .film-cell{flex-basis:84vw}
+  .edge-disc-card{flex-basis:80vw}
+  .gif-row video{height:96px}
+  .art-grid{grid-template-columns:1fr;gap:10px}
+  .portal-overlay{gap:.55rem}
+  .portal-badge{font-size:.56rem;letter-spacing:.28em}
+  .contact-link{font-size:.68rem;letter-spacing:.18em;padding:.8rem 1rem}
 }
 </style>
 </head>
@@ -412,11 +473,19 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 <section id="future" class="section">
   <div class="future-inner">
     <a class="portal-link" href="ai.html" aria-label="Open AI and computer generated work">
-      <div class="portal-sculpture">
-        <canvas class="portal-particles" id="portal-particles" aria-hidden="true"></canvas>
-        <div class="portal-copy">
-          <span>AI-driven visuals, computer-generated experiments, and work that lives beyond the camera.</span>
+      <div class="portal-frame-shell">
+        <div class="portal-frame-wrap">
+          <div class="portal-frame">
+            <img class="portal-media is-active" id="portal-image" alt="AI portal preview" src="ai/whimsy_02.png">
+            <video class="portal-media" id="portal-video" muted playsinline preload="metadata"></video>
+            <div class="portal-overlay">
+              <div class="portal-badge">AI Portal</div>
+              <div class="portal-prompt">Enter the experiments</div>
+            </div>
+          </div>
         </div>
+        <p class="portal-caption">Computer-generated experiments and work that lives beyond the camera.</p>
+        <div class="portal-meta">Open the AI page</div>
       </div>
     </a>
   </div>
@@ -1023,129 +1092,164 @@ document.querySelectorAll('[data-tilt]').forEach(card=>{
 })();
 
 /* ══════════════════════════════════════════════════════
-   PORTAL PARTICLES
+   AI PORTAL FRAME
 ══════════════════════════════════════════════════════ */
 (function(){
-  const canvas=document.getElementById('portal-particles');
-  const wrap=document.querySelector('.portal-sculpture');
-  if(!canvas||!wrap)return;
-  const ctx=canvas.getContext('2d');
-  let w=0,h=0,cx=0,cy=0,fieldW=0,fieldH=0,rect;
-  let mouse={x:0,y:0,px:0,py:0,vx:0,vy:0,active:false};
-  const particles=[];
-  const colors=['132,207,255','96,172,255','127,255,208','255,214,122','182,226,255'];
-  const COUNT=520;
-  const CAMERA_Z=560;
-  const DEPTH=480;
+  const imageEl=document.getElementById('portal-image');
+  const videoEl=document.getElementById('portal-video');
+  const wrap=document.querySelector('.portal-frame-wrap');
+  if(!imageEl||!videoEl||!wrap)return;
 
-  function resize(){
-    rect=wrap.getBoundingClientRect();
-    w=canvas.width=rect.width*window.devicePixelRatio;
-    h=canvas.height=rect.height*window.devicePixelRatio;
-    canvas.style.width=rect.width+'px';
-    canvas.style.height=rect.height+'px';
-    ctx.setTransform(window.devicePixelRatio,0,0,window.devicePixelRatio,0,0);
-    cx=rect.width/2; cy=rect.height*0.5; fieldW=rect.width*0.9; fieldH=rect.height*0.56;
-    if(!particles.length){
-      for(let i=0;i<COUNT;i++){
-        const spread=Math.pow(Math.random(),0.5);
-        const angle=(Math.random()-.5)*Math.PI*1.88;
-        particles.push({
-          x:Math.sin(angle)*fieldW*(0.08+spread*0.92),
-          y:(Math.random()-.5)*fieldH*(0.72+Math.random()*0.95),
-          z:(Math.random()-.5)*DEPTH,
-          vx:0,
-          vy:0,
-          vz:0,
-          baseSize:0.8+Math.random()*2.4,
-          color:colors[i%colors.length],
-          drift:0.001+Math.random()*0.0024,
-          phase:Math.random()*Math.PI*2
-        });
-      }
+  const mediaItems=[
+    'ai/whimsy_02.png',
+    'ai/whimsy_01.png',
+    'ai/vid_hf_03.mp4',
+    'ai/vid_hf_02.mp4',
+    'ai/vid_hf_01.mp4',
+    'ai/vid_grok_05.mp4',
+    'ai/vid_grok_04.mp4',
+    'ai/vid_grok_03.mp4',
+    'ai/vid_grok_02.mp4',
+    'ai/vid_grok_01.mp4',
+    'ai/vid_coffee_01.mp4',
+    'ai/versions_02.png',
+    'ai/versions_01.png',
+    'ai/sand_01.png',
+    'ai/rock_01.png',
+    'ai/richard_lewis_02.png',
+    'ai/richard_lewis_01.png',
+    'ai/portrait_02.jpg',
+    'ai/portrait_01.jpg',
+    'ai/pixel_game_01.png',
+    'ai/nyc_decay_01.png',
+    'ai/ninja_02.png',
+    'ai/ninja_01.png',
+    'ai/melies_01.png',
+    'ai/manboy_10.png',
+    'ai/manboy_09.png',
+    'ai/manboy_08.png',
+    'ai/manboy_07.png',
+    'ai/manboy_06.png',
+    'ai/manboy_05.png',
+    'ai/manboy_04.png',
+    'ai/manboy_03.png',
+    'ai/manboy_02.png',
+    'ai/manboy_01.png',
+    'ai/leaf_monster_04.png',
+    'ai/leaf_monster_03.png',
+    'ai/leaf_monster_02.png',
+    'ai/leaf_monster_01.png',
+    'ai/highway_median_01.png',
+    'ai/highway_girl_01.png',
+    'ai/hf_still_01.png',
+    'ai/harry_smith_01.png',
+    'ai/hamm_bike_01.png',
+    'ai/ground_01.png',
+    'ai/goofy_01.png',
+    'ai/film_photo_02.png',
+    'ai/film_photo_01.png',
+    'ai/fargo_clown_01.png',
+    'ai/egg_sneakers_01.png',
+    'ai/egg_runner_05.png',
+    'ai/egg_runner_04.png',
+    'ai/egg_runner_03.png',
+    'ai/egg_runner_02.png',
+    'ai/egg_runner_01.png',
+    'ai/egg_funky_01.png',
+    'ai/egg_ego_01.png',
+    'ai/doofus_01.png',
+    'ai/desert_melt_02.png',
+    'ai/desert_melt_01.png',
+    'ai/desert_digital_02.png',
+    'ai/desert_digital_01.png',
+    'ai/cute bubbebubble.mp4',
+    'ai/crowd_ants_01.png',
+    'ai/character_03.png',
+    'ai/character_02.png',
+    'ai/character_01.png',
+    'ai/char_hat_01.png',
+    'ai/cat_hand_02.png',
+    'ai/cat_hand_01.png',
+    'ai/car_smile_01.png',
+    'ai/car_animal_01.png',
+    'ai/bully_04.png',
+    'ai/bully_03.png',
+    'ai/bully_02.png',
+    'ai/bully_01.png',
+    'ai/being_01.png',
+    'ai/base_head_01.png',
+    'ai/asshole_02.png',
+    'ai/asshole_01.png',
+    'ai/architecture_02.png',
+    'ai/architecture_01.png',
+    'ai/angry_mother_01.png',
+    'ai/angry_father_01.png',
+    'ai/abstract_01.png'
+  ];
+
+  let index=0;
+  let timer=null;
+
+  function clearTimer(){
+    if(timer){
+      clearTimeout(timer);
+      timer=null;
     }
   }
 
-  wrap.addEventListener('mousemove',e=>{
-    rect=wrap.getBoundingClientRect();
-    const nx=e.clientX-rect.left-cx;
-    const ny=e.clientY-rect.top-cy;
-    mouse.px=mouse.x;
-    mouse.py=mouse.y;
-    mouse.x=nx;
-    mouse.y=ny;
-    mouse.vx=mouse.x-mouse.px;
-    mouse.vy=mouse.y-mouse.py;
-    mouse.active=true;
-  });
-  wrap.addEventListener('mouseleave',()=>{mouse.active=false; mouse.vx=0; mouse.vy=0;});
-  window.addEventListener('resize',resize);
-  resize();
-
-  function tick(){
-    ctx.clearRect(0,0,w,h);
-
-    const pulse=Date.now()*0.001;
-    const voidGrad=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.max(fieldW,fieldH)*0.72);
-    voidGrad.addColorStop(0,'rgba(255,255,255,0.08)');
-    voidGrad.addColorStop(0.18,'rgba(120,190,255,0.045)');
-    voidGrad.addColorStop(0.42,'rgba(8,12,22,0.09)');
-    voidGrad.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=voidGrad;
-    ctx.fillRect(0,0,rect.width,rect.height);
-
-    const ordered=particles.slice().sort((a,b)=>a.z-b.z);
-
-    ordered.forEach((p,i)=>{
-      p.z+=Math.sin(pulse*p.drift+p.phase)*0.55;
-      p.x+=Math.cos(p.phase+pulse*0.28)*0.04;
-      p.y+=Math.sin(p.phase*1.4+pulse*0.34)*0.05;
-
-      if(mouse.active){
-        const dx=p.x-mouse.x;
-        const dy=p.y-mouse.y;
-        const dist=Math.hypot(dx,dy);
-        if(dist<110){
-          const swipe=Math.min(16,Math.hypot(mouse.vx,mouse.vy));
-          const force=(1-dist/110)*(0.14+swipe*0.032);
-          p.vx+=(dx/(dist||1))*force*5.2;
-          p.vy+=(dy/(dist||1))*force*5.2;
-          p.vz+=force*6.5;
-        }
-      }
-
-      p.vx+=(-p.x*0.00042);
-      p.vy+=(-p.y*0.00038);
-      p.vz+=(-p.z*0.00062);
-      p.vx*=0.91; p.vy*=0.91; p.vz*=0.88;
-      p.x+=p.vx; p.y+=p.vy; p.z+=p.vz;
-
-      const perspective=CAMERA_Z/(CAMERA_Z-p.z);
-      const sx=cx+p.x*perspective;
-      const sy=cy+p.y*perspective*0.78;
-      const size=p.baseSize*perspective;
-      const alpha=Math.max(0.06,Math.min(0.88,0.2+((p.z+DEPTH)/(DEPTH*2))*0.38));
-
-      ctx.beginPath();
-      ctx.arc(sx,sy,size,0,Math.PI*2);
-      ctx.fillStyle=`rgba(${p.color},${alpha})`;
-      ctx.shadowBlur=18*perspective;
-      ctx.shadowColor=`rgba(${p.color},0.34)`;
-      ctx.fill();
-
-      if(i%3===0){
-        ctx.beginPath();
-        ctx.arc(sx,sy,size*(4.2+perspective),0,Math.PI*2);
-        ctx.strokeStyle=`rgba(${p.color},${0.028*perspective})`;
-        ctx.lineWidth=1;
-        ctx.stroke();
-      }
-    });
-
-    ctx.shadowBlur=0;
-    requestAnimationFrame(tick);
+  function queueNext(delay){
+    clearTimer();
+    timer=setTimeout(()=>{
+      index=(index+1)%mediaItems.length;
+      showMedia(index);
+    },delay);
   }
-  tick();
+
+  function showMedia(i){
+    const src=mediaItems[i];
+    const isVideo=/\.(mp4|webm|mov)$/i.test(src);
+    clearTimer();
+
+    if(isVideo){
+      imageEl.classList.remove('is-active');
+      videoEl.pause();
+      videoEl.src=src;
+      videoEl.currentTime=0;
+      videoEl.classList.add('is-active');
+      const playPromise=videoEl.play();
+      if(playPromise&&typeof playPromise.catch==='function') playPromise.catch(()=>{});
+      queueNext(7000);
+      return;
+    }
+
+    videoEl.pause();
+    videoEl.removeAttribute('src');
+    videoEl.load();
+    videoEl.classList.remove('is-active');
+    imageEl.src=src;
+    imageEl.classList.add('is-active');
+    queueNext(3600);
+  }
+
+  videoEl.addEventListener('ended',()=>showMedia((index+1)%mediaItems.length));
+  videoEl.addEventListener('loadedmetadata',()=>{
+    clearTimer();
+    queueNext(Math.max(3200,Math.min(videoEl.duration*1000,9000)));
+  });
+
+  wrap.addEventListener('mousemove',e=>{
+    if(window.innerWidth<=768)return;
+    const rect=wrap.getBoundingClientRect();
+    const hoverX=(e.clientX-rect.left)/rect.width-.5;
+    const hoverY=(e.clientY-rect.top)/rect.height-.5;
+    wrap.style.transform=`perspective(1400px) rotateX(${(-hoverY*5).toFixed(2)}deg) rotateY(${(hoverX*7).toFixed(2)}deg) translateY(-6px)`;
+  });
+
+  wrap.addEventListener('mouseleave',()=>{
+    wrap.style.transform=window.innerWidth<=768?'none':'perspective(1400px) rotateX(2.5deg)';
+  });
+
+  showMedia(index);
 })();
 
 /* ══════════════════════════════════════════════════════
@@ -1153,9 +1257,9 @@ document.querySelectorAll('[data-tilt]').forEach(card=>{
 ══════════════════════════════════════════════════════ */
 ScrollTrigger.create({trigger:'#future',start:'top 55%',
   onEnter:()=>{
-    gsap.fromTo('.portal-sculpture',{opacity:0},{opacity:1,duration:1.6,ease:'power2.out'});
+    gsap.fromTo('.portal-frame-shell',{opacity:0,y:40},{opacity:1,y:0,duration:1.35,ease:'power2.out'});
   },
-  onLeaveBack:()=>{gsap.to('.portal-sculpture',{opacity:0,duration:.45});}
+  onLeaveBack:()=>{gsap.to('.portal-frame-shell',{opacity:0,y:20,duration:.45});}
 });
 
 /* ══════════════════════════════════════════════════════
