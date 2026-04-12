@@ -54,15 +54,39 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 
 /* ── HERO ───────────────────────────────────────────── */
 #hero{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.hero-eyebrow{font-weight:300;font-size:clamp(.82rem,1vw,1.05rem);letter-spacing:.42em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:3.5rem;z-index:1;text-shadow:0 0 28px rgba(255,255,255,.08)}
-.hero-name{font-family:var(--serif);font-weight:400;font-size:clamp(4.5rem,16vw,16rem);line-height:.84;letter-spacing:-.03em;text-align:center;z-index:1;position:relative}
-.hero-name .hn-aylon{display:block;color:rgba(255,255,255,.92)}
-.hero-name .hn-benami{display:block;font-style:italic;color:var(--gold)}
+.hero-video-wrap{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-video{width:100%;height:100%;object-fit:cover;filter:brightness(.38) saturate(.7);transform:scale(1.08);transition:filter 3s ease}
+.hero-video-overlay{position:absolute;inset:0;background:
+  radial-gradient(ellipse at 50% 50%,rgba(6,6,8,.25) 0%,rgba(6,6,8,.7) 70%),
+  linear-gradient(180deg,rgba(6,6,8,.4) 0%,transparent 30%,transparent 70%,rgba(6,6,8,.85) 100%);
+  z-index:1}
+.hero-eyebrow{font-weight:300;font-size:clamp(.82rem,1vw,1.05rem);letter-spacing:.42em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:3.5rem;z-index:2;text-shadow:0 0 28px rgba(255,255,255,.08)}
+.hero-name{font-family:var(--serif);font-weight:400;font-size:clamp(4.5rem,16vw,16rem);line-height:.84;letter-spacing:-.03em;text-align:center;z-index:2;position:relative}
+.hero-name .hn-aylon{display:block;color:rgba(255,255,255,.95);text-shadow:0 4px 60px rgba(0,0,0,.5)}
+.hero-name .hn-benami{display:block;font-style:italic;color:var(--gold);text-shadow:0 4px 60px rgba(0,0,0,.4)}
 .hero-eyebrow,.hero-name .hn-aylon,.hero-name .hn-benami,.scroll-hint{opacity:0}
-.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;z-index:1}
+.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;z-index:2}
 .scroll-hint span{font-size:.62rem;letter-spacing:.42em;text-transform:uppercase;color:rgba(255,255,255,.42)}
 .scroll-hint-line{width:1px;height:55px;background:linear-gradient(to bottom,rgba(255,255,255,.35),transparent);animation:breathe 2.8s ease-in-out infinite}
 @keyframes breathe{0%,100%{opacity:.3;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.2)}}
+
+/* ── MOBILE BOTTOM NAV ─────────────────────────────── */
+.bottom-nav{display:none}
+@media(max-width:768px){
+  .bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:9100;background:rgba(6,6,8,.85);backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,.06);padding:.6rem .4rem calc(.6rem + env(safe-area-inset-bottom));justify-content:space-around;opacity:0;transition:opacity .6s ease}
+  .bottom-nav.is-visible{opacity:1}
+  .bottom-nav-item{display:flex;flex-direction:column;align-items:center;gap:.3rem;text-decoration:none;color:rgba(255,255,255,.4);transition:color .3s ease;padding:.3rem .5rem;-webkit-tap-highlight-color:transparent}
+  .bottom-nav-item.is-active{color:var(--gold)}
+  .bottom-nav-dot{width:4px;height:4px;border-radius:50%;background:currentColor;transition:transform .3s ease}
+  .bottom-nav-item.is-active .bottom-nav-dot{transform:scale(1.6)}
+  .bottom-nav-label{font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;font-weight:300}
+  /* Hide bottom nav when modal is open */
+  body.modal-open .bottom-nav{opacity:0!important;pointer-events:none}
+  /* Larger touch targets on scroll strips */
+  .film-cell{min-height:200px}
+  .edge-disc-card img{min-height:180px}
+  .gif-row video,.gif-row img{height:clamp(100px,18vw,160px)}
+}
 
 /* ── SPLIT-LETTER spans ─────────────────────────────── */
 .sl{display:inline-block}
@@ -71,7 +95,7 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 .full-img{width:100%;height:100vh;position:relative;overflow:hidden}
 .full-img img{width:100%;height:100%;object-fit:cover;will-change:transform}
 .full-img .overlay{position:absolute;inset:0}
-.full-img .text-wrap{position:absolute;bottom:0;left:0;right:0;padding:0 clamp(2rem,6vw,5rem) 8vh;z-index:2}
+.full-img .text-wrap{position:absolute;bottom:0;left:0;right:0;padding:0 clamp(2rem,6vw,5rem) 8vh;z-index:2;isolation:isolate}
 
 /* ── IMG-REVEAL ─────────────────────────────────────── */
 /* Base: hidden by clip. JS sets the initial clip style per variant. */
@@ -81,6 +105,7 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 /* ── MGC ────────────────────────────────────────────── */
 #mgc{background:radial-gradient(ellipse at 60% 0%,var(--mgc-accent),transparent 70%)}
 .mgc-title{font-family:var(--serif);font-size:clamp(3.8rem,9vw,12rem);line-height:.9;letter-spacing:-.03em;color:#fff;text-shadow:none;white-space:nowrap}
+[data-title-reveal]{opacity:0}
 .mgc-line,.edge-line{display:inline}
 .mgc-title .acc{display:inline;font-style:normal;background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#fff;text-shadow:none}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.07);margin-top:5vh;background:rgba(240,160,30,.04)}
@@ -168,7 +193,7 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 .art-intro{padding:2vh 0 1.5vh;text-align:center}
 .art-title{font-family:var(--serif);font-size:clamp(3rem,7.5vw,7rem);line-height:.92;letter-spacing:-.03em;color:rgba(255,255,255,.9)}
 .art-sub{max-width:760px;margin:1.1rem auto 0;font-size:clamp(.92rem,1.15vw,1.05rem);line-height:1.8;color:rgba(255,255,255,.62)}
-.art-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:2vh 0 10vh}
+.art-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:2vh 0 10vh;grid-auto-rows:1fr}
 .art-grid video,.art-grid img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px;box-shadow:0 20px 50px rgba(0,0,0,.35);display:block}
 .art-grid .media-trigger{cursor:pointer}
 .art-grid .media-trigger video,.art-grid .media-trigger img{transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .45s cubic-bezier(.16,1,.3,1),filter .45s ease;filter:saturate(.86) brightness(.92)}
@@ -236,8 +261,35 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
 .media-btn{background:transparent;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.82);padding:.75rem 1rem;font:inherit;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .25s,border-color .25s,color .25s}
 .media-btn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.42)}
 
+/* ── IDENTITY SYSTEM ─────────────────────────────────── */
+.signet{display:inline-flex;align-items:center;justify-content:center;position:relative;width:52px;height:52px;flex-shrink:0}
+.signet::before{content:'';position:absolute;inset:0;border:.8px solid rgba(200,169,110,.5);border-radius:50%}
+.signet::after{content:'';position:absolute;inset:6px;border:.6px solid rgba(200,169,110,.18);border-radius:50%}
+.signet-text{font-family:var(--serif);font-style:italic;font-size:.9rem;letter-spacing:.1em;color:rgba(200,169,110,.9);position:relative;z-index:1;user-select:none}
+#signet-loader{opacity:0;animation:signet-in 1s ease forwards .2s}
+@keyframes signet-in{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
+
+/* ── FILM GATE (hero viewfinder) ─────────────────────── */
+.film-gate{position:absolute;inset:clamp(1.4rem,3.5vw,3rem);z-index:3;pointer-events:none;opacity:0}
+.fg{position:absolute;width:22px;height:22px}
+.fg::before,.fg::after{content:'';position:absolute;background:rgba(200,169,110,.5)}
+.fg::before{width:100%;height:.7px;top:0;left:0}
+.fg::after{width:.7px;height:100%;top:0;left:0}
+.fg.tl{top:0;left:0}
+.fg.tr{top:0;right:0;transform:scaleX(-1)}
+.fg.bl{bottom:0;left:0;transform:scaleY(-1)}
+.fg.br{bottom:0;right:0;transform:scale(-1)}
+
+/* ── FOOTER TAGLINE ──────────────────────────────────── */
+.foot-tag{font-size:.62rem;letter-spacing:.44em;text-transform:uppercase;color:rgba(255,255,255,.24);margin-top:-.6rem}
+
 /* ── GRAIN ──────────────────────────────────────────── */
-body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.022;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23g)'/%3E%3C/svg%3E");background-size:160px;animation:grain 7s steps(1) infinite}
+body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23g)'/%3E%3C/svg%3E");background-size:160px;animation:grain 7s steps(1) infinite}
+
+/* ── SECTION FLASH (film changeover) ──────────────── */
+.section-flash{position:fixed;inset:0;z-index:9997;pointer-events:none;opacity:0}
+.section-flash-black{background:var(--ink)}
+.section-flash-amber{background:rgba(235,210,165,.18)}
 @keyframes grain{0%{background-position:0 0}12%{background-position:-22px -43px}25%{background-position:15px -31px}37%{background-position:-35px 19px}50%{background-position:25px 35px}62%{background-position:-12px -18px}75%{background-position:32px -44px}87%{background-position:-18px 28px}100%{background-position:14px -25px}}
 
 /* ── RESPONSIVE ─────────────────────────────────────── */
@@ -247,6 +299,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
   .top-nav{top:1rem;right:1rem;gap:.5rem}
   .top-nav-link{padding:.7rem .9rem;font-size:.62rem;letter-spacing:.18em}
   #hero{min-height:100svh;padding:0 1rem}
+  .hero-video{filter:brightness(.32) saturate(.6)}
   .hero-eyebrow{margin-bottom:2rem;letter-spacing:.28em;text-align:center;padding:0 1rem;line-height:1.6}
   .hero-name{font-size:clamp(3.5rem,21vw,6.2rem);line-height:.9}
   .scroll-hint{bottom:1.5rem}
@@ -290,7 +343,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
   .portal-prompt{text-align:left}
   .portal-caption{font-size:clamp(1.06rem,4.9vw,1.35rem);padding:0 .35rem}
   .portal-meta{font-size:.62rem;letter-spacing:.22em}
-  footer{padding:9vh 1.5rem 7vh}
+  footer{padding:9vh 1.5rem calc(7vh + 4rem)}
   .foot-name{font-size:clamp(2.6rem,13vw,4.4rem)}
   .media-modal{padding:1rem}
   .media-shell{padding:.75rem}
@@ -324,6 +377,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 <div class="cur" id="cur"><div class="cur-dot" id="cdot"></div><div class="cur-ring" id="cring"></div></div>
 
 <div id="loader">
+  <div class="signet" id="signet-loader"><span class="signet-text">A·B</span></div>
   <span class="l-name">Infinite Expressions</span>
   <div class="l-bar"><div class="l-fill"></div></div>
 </div>
@@ -333,14 +387,44 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
   <a class="top-nav-link" href="ai.html">AI</a>
 </nav>
 
+<!-- Bottom nav (mobile) -->
+<nav class="bottom-nav" id="bottom-nav" aria-label="Sections">
+  <a class="bottom-nav-item is-active" data-nav="hero" href="#hero">
+    <span class="bottom-nav-dot"></span><span class="bottom-nav-label">Top</span>
+  </a>
+  <a class="bottom-nav-item" data-nav="mgc" href="#mgc">
+    <span class="bottom-nav-dot"></span><span class="bottom-nav-label">MGC</span>
+  </a>
+  <a class="bottom-nav-item" data-nav="evg" href="#evg">
+    <span class="bottom-nav-dot"></span><span class="bottom-nav-label">Everglades</span>
+  </a>
+  <a class="bottom-nav-item" data-nav="edge" href="#edge">
+    <span class="bottom-nav-dot"></span><span class="bottom-nav-label">Branded</span>
+  </a>
+  <a class="bottom-nav-item" data-nav="future" href="#future">
+    <span class="bottom-nav-dot"></span><span class="bottom-nav-label">AI</span>
+  </a>
+</nav>
+
 <!-- ═══ HERO ══════════════════════════════════════════ -->
 <section id="hero" class="section">
+  <div class="hero-video-wrap">
+    <video class="hero-video" id="hero-video" autoplay muted loop playsinline preload="auto"
+      src="gifs26/Art%20-%20Silent%20Trees.mp4"></video>
+    <div class="hero-video-overlay"></div>
+  </div>
   <p class="hero-eyebrow" id="ey">Director &middot; Editor &middot; Colorist</p>
   <h1 class="hero-name" id="hn">
     <span class="hn-aylon" id="hn1">AYLON</span>
     <span class="hn-benami" id="hn2">BEN-AMI</span>
   </h1>
   <div class="scroll-hint" id="sh"><span>Scroll</span><div class="scroll-hint-line"></div></div>
+  <div class="film-gate" id="hero-gate">
+    <div class="fg tl"></div>
+    <div class="fg tr"></div>
+    <div class="fg bl"></div>
+    <div class="fg br"></div>
+  </div>
 </section>
 
 <!-- ═══ MGC ═══════════════════════════════════════════ -->
@@ -367,9 +451,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
       <div class="img-reveal media-trigger" data-video="gifs26/MGC Selects.mp4" data-title="Mother Goose Club Selects" data-has-audio="false"><img src="MGCGIFS/Monster Trucks - Superhero Cars Crash - Mother Goose Club Songs for Children.gif" alt="Mother Goose Club Monster Trucks"></div>
     </div>
     <div class="section-copy" data-reveal>
-      <p>Mother Goose Club grew into one of YouTube's most-watched children's brands, with billions of views, Emmy awards and a long-running relationship with families in over 100 countries.</p>
-      <p>My role centered on leading video production across a high-volume slate of episodes, songs, and character-driven formats, keeping the work clear, musical, and production-ready at scale.</p>
-      <p>It is a body of work about consistency as much as creativity: performance direction, repeatable visual language, and a production system built to keep delivering.</p>
+      <p>Emmy-winning children's brand reaching families in 100+ countries. I led video production across hundreds of episodes — performance direction, visual language, and a system built to keep delivering at scale.</p>
     </div>
   </div>
 </section>
@@ -405,7 +487,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
       <div class="film-cell"><img src="gifs26/Everglades 6.gif" alt=""></div>
       <div class="film-cell"><img src="gifs26/Everglades 7.gif" alt=""></div>
     </div>
-    <p class="section-quote" data-reveal style="font-style:normal">Deep in the Florida Everglades, time moves differently — measured not in hours but in the slow passage of light through cypress canopy and the patient drift of water through sawgrass prairie.<br><br>Shot entirely on 16mm film, this experimental documentary explores the ecological and spiritual texture of one of North America's most endangered landscapes. The camera becomes a witness, not a narrator.</p>
+    <p class="section-quote" data-reveal style="font-style:normal">Time moves differently here — measured in the passage of light through cypress canopy and the patient drift of water through sawgrass. The camera becomes a witness, not a narrator.</p>
   </div>
   <div class="inner" style="padding-bottom:10vh">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
@@ -448,17 +530,29 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
     <!-- Discovery strip -->
     <p class="edge-discover-hint" style="margin-top:2.5rem">Drag to discover</p>
     <div class="edge-discover" id="edge-discover">
-      <div class="edge-disc-card media-trigger" style="--erot:-3.2deg;--ew:240px" data-image="images/reality/Freestylers  Daniel-MASTER HQ.mov.01_00_01_19.Still001.jpg" data-title="Freestylers Daniel">
-        <img src="images/reality/Freestylers  Daniel-MASTER HQ.mov.01_00_01_19.Still001.jpg" alt="Freestylers Daniel"><span></span>
+      <div class="edge-disc-card media-trigger" style="--erot:-1.5deg;--ew:300px" data-video="gifs26/LEXUS%20Miami.mp4" data-title="Lexus Miami" data-has-audio="false">
+        <img src="ADGIFS/LEXUS%20Miami.gif" alt="Lexus Miami"><span></span>
       </div>
-      <div class="edge-disc-card media-trigger" style="--erot:1.6deg;--ew:270px" data-image="images/reality/Freestylers  John_20140626_3.mov.01_00_10_23.Still004.jpg" data-title="Freestylers John">
-        <img src="images/reality/Freestylers  John_20140626_3.mov.01_00_10_23.Still004.jpg" alt="Freestylers John"><span></span>
+      <div class="edge-disc-card media-trigger" style="--erot:2.2deg;--ew:310px" data-video="gifs26/Time%20Inc%20webisode%20-%20One%20Lap%20of%20Rennsport%20in%20the%202017%20Porsche%20911%20Carrera.mp4" data-title="Porsche 911 — Rennsport" data-has-audio="false">
+        <img src="ADGIFS/One%20Lap%20of%20Rennsport%20in%20the%202017%20Porsche%20911%20Carrera%20-%20The%20Drive%201.gif" alt="Porsche Rennsport"><span></span>
       </div>
-      <div class="edge-disc-card media-trigger" style="--erot:-2.8deg;--ew:300px" data-image="images/reality/Pencil.MOV.19_23_56_28.Still005.jpg" data-title="Pencil Still">
+      <div class="edge-disc-card media-trigger" style="--erot:-2.8deg;--ew:280px" data-video="gifs26/Honda%20-%20Freestylers.mp4" data-title="Honda — Freestylers" data-has-audio="false">
+        <img src="images/reality/Freestylers%20%20Daniel-MASTER%20HQ.mov.01_00_01_19.Still001.jpg" alt="Honda Freestylers"><span></span>
+      </div>
+      <div class="edge-disc-card media-trigger" style="--erot:1.6deg;--ew:270px" data-image="images/reality/Freestylers%20%20John_20140626_3.mov.01_00_10_23.Still004.jpg" data-title="Freestylers John">
+        <img src="images/reality/Freestylers%20%20John_20140626_3.mov.01_00_10_23.Still004.jpg" alt="Freestylers John"><span></span>
+      </div>
+      <div class="edge-disc-card media-trigger" style="--erot:-3.2deg;--ew:260px" data-image="images/reality/Freestylers%20%20Noe_20140627.mov.01_01_27_29.Still009.jpg" data-title="Freestylers Noe">
+        <img src="images/reality/Freestylers%20%20Noe_20140627.mov.01_01_27_29.Still009.jpg" alt="Freestylers Noe"><span></span>
+      </div>
+      <div class="edge-disc-card media-trigger" style="--erot:2.5deg;--ew:250px" data-image="images/reality/Pencil.MOV.19_23_56_28.Still005.jpg" data-title="Pencil Still">
         <img src="images/reality/Pencil.MOV.19_23_56_28.Still005.jpg" alt="Pencil still"><span></span>
       </div>
-      <div class="edge-disc-card media-trigger" style="--erot:3deg;--ew:250px" data-image="images/reality/Onion 3.MOV.17_05_26_13.Still003.jpg" data-title="Onion Still">
-        <img src="images/reality/Onion 3.MOV.17_05_26_13.Still003.jpg" alt="Onion still"><span></span>
+      <div class="edge-disc-card media-trigger" style="--erot:-1.8deg;--ew:240px" data-image="images/reality/Onion%203.MOV.17_05_26_13.Still003.jpg" data-title="Onion Still">
+        <img src="images/reality/Onion%203.MOV.17_05_26_13.Still003.jpg" alt="Onion still"><span></span>
+      </div>
+      <div class="edge-disc-card media-trigger" style="--erot:3deg;--ew:260px" data-image="images/stilllife/Lebrons__XIIIq.mov.00_00_02_05.Still001.jpg" data-title="LeBrons XIII">
+        <img src="images/stilllife/Lebrons__XIIIq.mov.00_00_02_05.Still001.jpg" alt="LeBrons XIII"><span></span>
       </div>
     </div>
   </div>
@@ -486,8 +580,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
       <p class="ch" data-scramble>Partners &amp; Clients</p>
       <div class="clients" data-reveal>
         <span>HBO</span><span>NFL</span><span>Netflix</span><span>Honda</span>
-        <span>Nokia</span><span>Lexus</span><span>BMW</span><span>Time Inc.</span>
-        <span>Think Visual Group</span><span>Sockeye Media LLC</span>
+        <span>Nokia</span><span>Lexus</span><span>BMW</span><span>Porsche</span>
+        <span>Time Inc.</span><span>Think Visual Group</span><span>Sockeye Media LLC</span>
       </div>
     </div>
   </section>
@@ -501,17 +595,29 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 
   <div class="inner">
     <div class="art-grid">
-      <div class="media-trigger" data-video="gifs26/Music Video - letter-.mp4" data-title="Music Video - Letter" data-has-audio="false">
-        <video src="gifs26/Music Video - letter-.mp4" autoplay muted loop playsinline></video>
+      <div class="media-trigger" data-video="gifs26/Music%20Video%20-%20letter-.mp4" data-title="Music Video - Letter" data-has-audio="false">
+        <video src="gifs26/Music%20Video%20-%20letter-.mp4" autoplay muted loop playsinline></video>
       </div>
-      <div class="media-trigger" data-video="gifs26/Art - Fire Escape.mp4" data-title="Art - Fire Escape" data-has-audio="false">
-        <video src="gifs26/Art - Fire Escape.mp4" autoplay muted loop playsinline></video>
+      <div class="media-trigger" data-video="gifs26/Art%20-%20Fire%20Escape.mp4" data-title="Art - Fire Escape" data-has-audio="false">
+        <video src="gifs26/Art%20-%20Fire%20Escape.mp4" autoplay muted loop playsinline></video>
       </div>
-      <div class="media-trigger" data-video="gifs26/Art - Man's Field 1.mp4" data-title="Art - Man's Field" data-has-audio="false">
-        <video src="gifs26/Art - Man's Field 1.mp4" autoplay muted loop playsinline></video>
+      <div class="media-trigger" data-video="gifs26/Art%20-%20Man's%20Field%201.mp4" data-title="Art - Man's Field" data-has-audio="false">
+        <video src="gifs26/Art%20-%20Man's%20Field%201.mp4" autoplay muted loop playsinline></video>
       </div>
-      <div class="media-trigger" data-image="ARTGIFS/Street Art - Colors 1.gif" data-title="Street Art - Colors">
-        <img src="ARTGIFS/Street Art - Colors 1.gif" alt="Street art colors">
+      <div class="media-trigger" data-image="ARTGIFS/Street%20Art%20-%20Colors%201.gif" data-title="Street Art - Colors">
+        <img src="ARTGIFS/Street%20Art%20-%20Colors%201.gif" alt="Street art colors">
+      </div>
+      <div class="media-trigger" data-image="ARTGIFS/Crater%20Lake.gif" data-title="Crater Lake">
+        <img src="ARTGIFS/Crater%20Lake.gif" alt="Crater Lake">
+      </div>
+      <div class="media-trigger" data-image="ARTGIFS/California%201.gif" data-title="California">
+        <img src="ARTGIFS/California%201.gif" alt="California">
+      </div>
+      <div class="media-trigger" data-image="ARTGIFS/Snow%20Roofs.gif" data-title="Snow Roofs">
+        <img src="ARTGIFS/Snow%20Roofs.gif" alt="Snow Roofs">
+      </div>
+      <div class="media-trigger" data-image="ARTGIFS/Bushwick%20Bookstore.gif" data-title="Bushwick Bookstore">
+        <img src="ARTGIFS/Bushwick%20Bookstore.gif" alt="Bushwick Bookstore">
       </div>
     </div>
   </div>
@@ -544,9 +650,14 @@ body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;o
 
 <!-- ═══ FOOTER ════════════════════════════════════════ -->
 <footer>
+  <div class="signet"><span class="signet-text">A·B</span></div>
   <div class="foot-name">Aylon<br><em>Ben-Ami</em></div>
+  <p class="foot-tag">Infinite Expressions</p>
   <a class="contact-link" href="mailto:aylonbenami@gmail.com" data-reveal>Send a message</a>
 </footer>
+
+<div class="section-flash section-flash-black" id="flash-black"></div>
+<div class="section-flash section-flash-amber" id="flash-amber"></div>
 
 <div class="media-modal" id="media-modal" aria-hidden="true">
   <div class="media-shell">
@@ -967,6 +1078,7 @@ function heroIn(){
     .fromTo('#hn1',{opacity:0,y:60,skewY:3},{opacity:1,y:0,skewY:0,duration:1.8,ease:'power3.out'},'-=.5')
     .fromTo('#hn2',{opacity:0,y:60,skewY:-2},{opacity:1,y:0,skewY:0,duration:1.8,ease:'power3.out'},'-=1.4')
     .fromTo('#sh',{opacity:0},{opacity:1,duration:.8},'-=.4')
+    .fromTo('#hero-gate',{opacity:0},{opacity:1,duration:2.4,ease:'power1.inOut'},'-=1.6')
     .call(()=>setTimeout(()=>scramble(document.querySelector('#ey')),300));
 }
 
@@ -1362,6 +1474,7 @@ ScrollTrigger.create({trigger:'#future',start:'top 55%',
       image.alt=label||'Expanded image';
     }
     modal.classList.add('open');
+    document.body.classList.add('modal-open');
     modal.setAttribute('aria-hidden','false');
     if(isVideo){
       video.play().catch(()=>{});
@@ -1376,6 +1489,7 @@ ScrollTrigger.create({trigger:'#future',start:'top 55%',
     image.removeAttribute('src');
     image.alt='';
     modal.classList.remove('open');
+    document.body.classList.remove('modal-open');
     modal.setAttribute('aria-hidden','true');
   }
 
@@ -1416,6 +1530,102 @@ ScrollTrigger.create({trigger:'#mgc',start:'top 80%',
   onEnter:()=>gsap.to('#sh',{opacity:0,duration:.6}),
   onLeaveBack:()=>gsap.to('#sh',{opacity:1,duration:.5})
 });
+
+/* ══════════════════════════════════════════════════════
+   SECTION FLASH — film changeover between sections
+══════════════════════════════════════════════════════ */
+(function(){
+  const black=document.getElementById('flash-black');
+  const amber=document.getElementById('flash-amber');
+  if(!black||!amber)return;
+  let lastZone=-1;
+
+  function flash(){
+    // Quick black flash (80ms) then warm amber (40ms)
+    gsap.timeline()
+      .to(black,{opacity:1,duration:.04,ease:'none'})
+      .to(black,{opacity:0,duration:.06,ease:'power2.out'},'>+=.04')
+      .to(amber,{opacity:1,duration:.03,ease:'none'},'-=.03')
+      .to(amber,{opacity:0,duration:.08,ease:'power2.out'});
+  }
+
+  // Fire flash when crossing section boundaries
+  ['mgc','evg','edge','future'].forEach((id,i)=>{
+    ScrollTrigger.create({trigger:'#'+id,start:'top 60%',
+      onEnter:()=>{if(lastZone!==i){lastZone=i;flash();}},
+      onLeaveBack:()=>{if(lastZone!==i-1){lastZone=i-1;flash();}}
+    });
+  });
+})();
+
+/* ══════════════════════════════════════════════════════
+   HERO VIDEO — subtle parallax + brightness shift on scroll
+══════════════════════════════════════════════════════ */
+(function(){
+  const heroVid=document.getElementById('hero-video');
+  if(!heroVid)return;
+  const heroSection=document.getElementById('hero');
+  gsap.to(heroVid,{
+    scale:1.18,filter:'brightness(.2) saturate(.4)',ease:'none',
+    scrollTrigger:{trigger:heroSection,start:'top top',end:'bottom top',scrub:1.2}
+  });
+})();
+
+/* ══════════════════════════════════════════════════════
+   SECTION NAV — side dots (desktop) + bottom bar (mobile)
+══════════════════════════════════════════════════════ */
+(function(){
+  const bottomNav=document.getElementById('bottom-nav');
+  if(!bottomNav)return;
+
+  const sections=['hero','mgc','evg','edge','future'];
+  const allItems=document.querySelectorAll('[data-nav]');
+
+  // Show nav after scrolling past hero
+  let navVisible=false;
+  function checkNavVisibility(){
+    const show=window.scrollY>window.innerHeight*.35;
+    if(show!==navVisible){
+      navVisible=show;
+      bottomNav.classList.toggle('is-visible',show);
+    }
+  }
+
+  // Update active section
+  function updateActive(){
+    let activeId='hero';
+    let bestVis=0;
+    sections.forEach(id=>{
+      const el=document.getElementById(id);
+      if(!el)return;
+      const r=el.getBoundingClientRect();
+      const vis=Math.max(0,Math.min(r.bottom,window.innerHeight)-Math.max(r.top,0));
+      if(vis>bestVis){bestVis=vis;activeId=id;}
+    });
+    allItems.forEach(item=>{
+      item.classList.toggle('is-active',item.dataset.nav===activeId);
+    });
+  }
+
+  // Smooth scroll on click
+  allItems.forEach(item=>{
+    item.addEventListener('click',e=>{
+      e.preventDefault();
+      const target=document.getElementById(item.dataset.nav);
+      if(target){
+        target.scrollIntoView({behavior:'smooth',block:'start'});
+      }
+    });
+  });
+
+  window.addEventListener('scroll',()=>{
+    checkNavVisibility();
+    updateActive();
+  },{passive:true});
+
+  checkNavVisibility();
+  updateActive();
+})();
 
 console.log('%c AYLON BEN-AMI ','font-size:1.8rem;font-family:Georgia,serif;font-style:italic;color:#c8a96e;background:#060608;padding:.3em .8em');
 console.log('%c Infinite Expressions ','font-size:.75rem;letter-spacing:.4em;color:#333;padding:.2em .5em');
