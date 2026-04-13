@@ -232,7 +232,7 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 
 /* ── FUTURE ─────────────────────────────────────────── */
 #future{min-height:95vh;display:flex;align-items:center;justify-content:center;background:transparent}
-.future-inner{text-align:center;max-width:1400px;width:100%;padding:1.2rem 4rem 6rem}
+.future-inner{text-align:center;max-width:1400px;width:100%;padding:.45rem 4rem 6rem}
 .portal-link{display:block;text-decoration:none;color:inherit}
 .portal-frame-shell{position:relative;width:min(980px,100%);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:.55rem}
 .portal-frame-wrap{position:relative;width:min(760px,100%);padding:1rem;border-radius:1.75rem;background:
@@ -328,8 +328,8 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   .section-copy,.section-quote{font-size:clamp(1.08rem,4.8vw,1.45rem);line-height:1.58;padding-left:.25rem;padding-right:.25rem}
   .feature-physics{min-height:auto;padding:5vh 0}
   .feature-img-wrap{width:min(100%,92vw)}
-  .film-strip{padding:2vh 0 1vh}
-  .film-cell{flex-basis:78vw}
+  .film-strip{display:flex;padding:2vh 0 1vh;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .film-cell{flex:0 0 78vw;min-width:78vw}
   .bug-play{right:.8rem;bottom:.8rem;padding:.58rem .82rem;font-size:.55rem}
   .evg-intro{font-size:clamp(1.55rem,8vw,2.4rem);line-height:1.22}
   .evg-meta{letter-spacing:.18em;font-size:.66rem}
@@ -346,8 +346,9 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   .spotlight-frame{width:92vw}
   .art-title{font-size:clamp(2.5rem,12vw,4.4rem)}
   .art-sub{font-size:.95rem;line-height:1.65}
-  .art-grid{grid-template-columns:1fr 1fr}
-  .future-inner{padding:6rem 1.5rem 5rem}
+  .art-grid{grid-template-columns:1fr}
+  .art-grid video,.art-grid img{aspect-ratio:16/9;object-position:center center}
+  .future-inner{padding:1.4rem 1.5rem 5rem}
   .portal-frame-shell{gap:1rem}
   .portal-frame-wrap{padding:.75rem;border-radius:1.25rem;transform:none}
   .portal-link:hover .portal-frame-wrap{transform:translateY(-4px)}
@@ -375,6 +376,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   .edge-disc-card{flex-basis:80vw}
   .gif-row video{height:96px}
   .art-grid{grid-template-columns:1fr;gap:10px}
+  .art-grid video,.art-grid img{aspect-ratio:16/9}
   .portal-overlay{gap:.55rem}
   .portal-badge{font-size:.56rem;letter-spacing:.28em}
   .contact-link{font-size:.68rem;letter-spacing:.18em;padding:.8rem 1rem}
@@ -641,12 +643,12 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
     </div>
   </div>
 
-  <div class="inner art-intro" style="padding-bottom:4vh">
+  <div class="inner art-intro" style="padding-bottom:1.2vh">
     <h2 class="art-title">Computer-Generated</h2>
     <p class="art-sub">Experiments and work that lives beyond the camera.</p>
   </div>
 
-  <div class="inner" style="padding-bottom:2vh">
+  <div class="inner" style="padding-bottom:0">
   </div>
 </section>
 

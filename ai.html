@@ -15,7 +15,7 @@
       --font-display:'EB Garamond',serif;
     }
     #back-link {
-      position:fixed; top:26px; left:32px; z-index:1200;
+      position:fixed; top:26px; left:32px; z-index:5000;
       font-family:var(--font-body); font-size:calc(13px * var(--type-scale)); letter-spacing:0.18em; font-weight:600;
       text-transform:uppercase; color:rgba(240,237,232,0); text-decoration:none;
       pointer-events:none; transition:color 1.4s ease 0.8s;
@@ -184,20 +184,6 @@
     }
     .tile:hover .tile-lbl { opacity:1; }
     .tile-tri .tile-lbl   { display:none; }
-
-    /* ── EXEC HINT (bottom-right, main screen) ── */
-    #exec-hint {
-      position:fixed; bottom:24px; right:28px;
-      font-family:var(--font-body); font-size:calc(12px * var(--type-scale)); letter-spacing:0.16em; font-weight:600; text-transform:uppercase;
-      color:rgba(240,237,232,0); z-index:400; pointer-events:none;
-      transition:color 1.6s ease; cursor:pointer;
-      border:1px solid rgba(240,237,232,0); padding:9px 18px;
-    }
-    #exec-hint.show {
-      color:rgba(240,237,232,0.55); pointer-events:all;
-      border-color:rgba(240,237,232,0.18);
-    }
-    #exec-hint.show:hover { color:rgba(240,237,232,0.9); border-color:rgba(240,237,232,0.5); }
 
     /* ── SOUND BUTTON ────────────────────── */
     #sound-btn {
@@ -407,7 +393,6 @@
       #mode { display:none; }
 
       /* Tighter corner buttons */
-      #exec-hint { font-size:12px; padding:8px 14px; right:12px; bottom:12px; }
       #sound-btn { font-size:11px; padding:8px 14px; left:12px;  bottom:12px; }
       #back-link { top:18px; left:18px; font-size:12px; padding:8px 14px; }
 
@@ -452,7 +437,6 @@
       #name { font-size:11px; letter-spacing:0.14em; }
       #tagline { font-size:14px; margin-top:3px; white-space:normal; line-height:1.15; }
       #back-link { top:14px; left:12px; padding:7px 10px; font-size:11px; letter-spacing:0.12em; }
-      #exec-hint { right:10px; bottom:10px; padding:7px 10px; font-size:11px; }
       #sound-btn { left:10px; bottom:10px; padding:7px 10px; font-size:10px; }
       #ov-box { padding:16px 12px 14px; width:96vw; }
       #ov-img, #ov-vid { max-width:92vw; max-height:46vh; }
@@ -502,7 +486,6 @@
 </div>
 <div id="mode">hold space — pull &nbsp;·&nbsp; release — push</div>
 <div id="announcer"></div>
-<div id="exec-hint" role="button" tabindex="0">e — brief</div>
 <div id="sound-btn" role="button" tabindex="0">&#9675; sound off</div>
 <div id="ring"></div>
 <div id="overlay">
@@ -681,7 +664,7 @@ function assetUrl(src) {
   }
 })(ASSETS);
 
-/* Always start with 2 videos — separately shuffled so the pair is different every load */
+/* Always start with 4 videos — separately shuffled so the opening field includes motion */
 {
   const vids = ASSETS.filter(a =>  a.isVideo);
   const imgs  = ASSETS.filter(a => !a.isVideo);
@@ -690,8 +673,8 @@ function assetUrl(src) {
     const j=Math.floor(Math.random()*(i+1));
     [vids[i],vids[j]]=[vids[j],vids[i]];
   }
-  /* Rebuild: 2 random videos first, then all images (already shuffled), then remaining videos */
-  ASSETS.splice(0, ASSETS.length, vids[0], vids[1], ...imgs, ...vids.slice(2));
+  /* Rebuild: 4 random videos first, then all images (already shuffled), then remaining videos */
+  ASSETS.splice(0, ASSETS.length, ...vids.slice(0,4), ...imgs, ...vids.slice(4));
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -922,7 +905,6 @@ document.addEventListener('mousemove', () => {
    SPACEBAR
    ═══════════════════════════════════════════════════════ */
 document.addEventListener('keydown', e => {
-  if ((e.key==='e' || e.key==='E') && !expanded) { toggleExec(); return; }
   if (e.code==='Space' && !attract) {
     e.preventDefault(); attract=true;
     curEl.classList.add('attract');
@@ -1165,19 +1147,20 @@ function announce(text) {
 function dropFromTop(shape, w, h, delay) {
   setTimeout(() => {
     const x  = W*0.18 + Math.random()*W*0.64;
-    spawnTile(shape, w, h, x, -h-10, (Math.random()-0.5)*3, 4+Math.random()*3);
+    const fallSpeed = shape === 'circle' ? 7 + Math.random()*4.5 : 4 + Math.random()*3;
+    spawnTile(shape, w, h, x, -h-10, (Math.random()-0.5)*3, fallSpeed);
   }, delay);
 }
 
 // 30s: first wave of circles
 setTimeout(() => {
   announce('new shapes entering');
-  [[190,190],[220,220],[175,175]].forEach(([s,_], i) => dropFromTop('circle', Math.round(s*MS), Math.round(s*MS), i*2000));
+  [[190,190],[220,220],[175,175]].forEach(([s,_], i) => dropFromTop('circle', Math.round(s*MS), Math.round(s*MS), i*900));
   (function recurringCircle() {
     const sizes = [165,180,195,210,225,175,200];
     const s = Math.round(sizes[Math.floor(Math.random()*sizes.length)] * MS);
     dropFromTop('circle', s, s, 0);
-    setTimeout(recurringCircle, 22000 + Math.random()*12000);
+    setTimeout(recurringCircle, 12000 + Math.random()*7000);
   })();
 }, 30*1000);
 
@@ -1643,10 +1626,6 @@ if (homeLink) {
   });
 }
 
-setTimeout(() => {
-  document.getElementById('exec-hint').classList.add('show');
-}, 5000);
-
 /* ═══════════════════════════════════════════════════════
    PRELOAD next batch of assets silently in background
    ═══════════════════════════════════════════════════════ */
@@ -2058,9 +2037,6 @@ function closeHero() {
   playWhoosh();
 }
 
-/* Exec hint button */
-document.getElementById('exec-hint').addEventListener('click', () => toggleExec());
-
 /* Click the dark backdrop (not the panel) to close exec mode */
 execOverlay.addEventListener('click', e => {
   if (e.target === execOverlay) toggleExec(false);
@@ -2118,12 +2094,15 @@ if (isMobile) {
     const el  = document.elementFromPoint(t.clientX, t.clientY);
     touchStartPt = null;
 
+    if (el && el.closest('#back-link')) {
+      window.location.href = new URL('./index.html', window.location.href).href;
+      return;
+    }
+
     /* Dismiss exec mode by tapping the dark backdrop */
     if (execMode && el === execOverlay) { toggleExec(false); return; }
     /* Dismiss hero by tapping back button or outside text col */
     if (heroMode) { closeHero(); return; }
-    /* Open exec mode via hint button */
-    if (el && el.id === 'exec-hint') { toggleExec(); return; }
     /* Toggle sound button */
     if (el && el.id === 'sound-btn') { setSoundOn(!soundOn); return; }
     /* Open image overlay by tapping a tile */
