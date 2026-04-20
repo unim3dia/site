@@ -46,10 +46,24 @@ body::before{
 #overlay-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;mix-blend-mode:screen;opacity:.28;filter:blur(.7px)}
 
 /* ── CURSOR ─────────────────────────────────────────── */
-.cur{display:none}
-.cur-dot{width:4px;height:4px;background:#fff;border-radius:50%;position:absolute;transform:translate(-50%,-50%);mix-blend-mode:difference}
-.cur-ring{width:28px;height:28px;border:.7px solid rgba(255,255,255,.3);border-radius:50%;position:absolute;transform:translate(-50%,-50%);transition:width .35s,height .35s,border-color .35s,border-width .35s}
-body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);border-width:1px}
+body{cursor:none}
+.cur{display:none;position:fixed;top:0;left:0;z-index:12000;pointer-events:none}
+.cur-core{position:absolute;top:50%;left:50%;width:8px;height:8px;border-radius:50%;background:rgba(244,240,232,.92);transform:translate(-50%,-50%)}
+.cur-ring{
+  position:absolute;top:50%;left:50%;width:34px;height:34px;border:1px solid rgba(244,240,232,.44);border-radius:50%;
+  transform:translate(-50%,-50%);transition:width .28s,height .28s,border-color .28s,opacity .28s
+}
+.cur-cross{
+  position:absolute;top:50%;left:50%;width:52px;height:52px;transform:translate(-50%,-50%);opacity:.58;
+  transition:width .28s,height .28s,opacity .28s
+}
+.cur-cross::before,.cur-cross::after{
+  content:'';position:absolute;left:50%;top:50%;background:rgba(244,240,232,.34);transform:translate(-50%,-50%)
+}
+.cur-cross::before{width:1px;height:100%}
+.cur-cross::after{width:100%;height:1px}
+body.hover-active .cur-ring{width:52px;height:52px;border-color:rgba(200,169,110,.72)}
+body.hover-active .cur-cross{width:64px;height:64px;opacity:.8}
 
 /* ── LOADER ─────────────────────────────────────────── */
 #loader{position:fixed;inset:0;background:linear-gradient(135deg,#07111f 0%,#0d2f1a 45%,#461118 72%,#240d3d 100%);z-index:10000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2rem}
@@ -63,6 +77,11 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 
 /* ── GLOBAL UTIL ────────────────────────────────────── */
 .section{position:relative;overflow:hidden}
+.section::before{
+  content:'';position:absolute;left:0;right:0;top:-12vh;height:24vh;pointer-events:none;z-index:0;
+  background:linear-gradient(180deg,rgba(4,7,12,0) 0%,rgba(4,7,12,.22) 38%,rgba(4,7,12,0) 100%);
+}
+.section > *{position:relative;z-index:1}
 .deferred-section{content-visibility:auto;contain-intrinsic-size:1200px}
 .inner{max-width:1260px;margin:0 auto;padding:0 clamp(1.5rem,5vw,4.5rem)}
 .ch{font-family:var(--sans);font-weight:300;font-size:clamp(.72rem,1vw,.95rem);letter-spacing:.34em;text-transform:uppercase;color:var(--label-bright);display:inline-flex;align-items:center;gap:1rem}
@@ -123,7 +142,7 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 
 /* ── MGC ────────────────────────────────────────────── */
 #mgc{background:radial-gradient(ellipse at 60% 0%,var(--mgc-accent),transparent 70%)}
-.mgc-title{font-family:var(--sans);font-weight:300;font-size:clamp(2.7rem,7.4vw,7rem);line-height:1.02;letter-spacing:.08em;text-transform:uppercase;color:#fff;text-shadow:none;white-space:normal}
+.mgc-title{font-family:var(--serif);font-weight:400;font-size:clamp(2.9rem,7.4vw,7.2rem);line-height:.96;letter-spacing:-.02em;text-transform:none;color:#fff;text-shadow:none;white-space:normal}
 [data-title-reveal]{opacity:0}
 .mgc-line,.edge-line{display:inline}
 .mgc-title .acc{display:inline;font-style:normal;background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#fff;text-shadow:none}
@@ -143,7 +162,7 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 .section-quote{font-family:var(--serif);font-style:italic;font-size:clamp(1.24rem,2.1vw,2.2rem);color:rgba(255,255,255,.72);line-height:1.75;text-align:center;padding:8vh 0;max-width:900px;margin:0 auto}
 
 /* ── ABOUT ──────────────────────────────────────────── */
-.about-section{padding:14vh 0 12vh;border-bottom:1px solid rgba(255,255,255,.04)}
+.about-section{padding:14vh 0 12vh}
 .about-inner{max-width:880px;margin:0 auto;text-align:center}
 .about-eyebrow{font-family:var(--sans);font-weight:300;font-size:clamp(.72rem,1vw,.95rem);letter-spacing:.34em;text-transform:uppercase;color:var(--label-bright);margin-bottom:3.5rem}
 .about-body{font-family:var(--serif);font-size:clamp(1.28rem,1.85vw,1.85rem);line-height:1.7;color:var(--copy-bright);margin:0 auto 1.6rem;max-width:760px}
@@ -165,7 +184,7 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 .bug-play{position:absolute;right:1.4rem;bottom:1.4rem;z-index:5;padding:.95rem 1.35rem;border-radius:999px;background:rgba(6,6,8,.7);border:1px solid rgba(255,255,255,.2);font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.88);pointer-events:none}
 
 /* ── CLIENTS ────────────────────────────────────────── */
-.clients-section{padding:7vh 0 10vh;border-bottom:1px solid rgba(255,255,255,.04);text-align:center}
+.clients-section{padding:7vh 0 10vh;text-align:center}
 .clients-section .ch{justify-content:center}
 .clients{display:flex;flex-wrap:wrap;gap:.8rem 2.8rem;padding:3vh 0;justify-content:center}
 .clients span{font-weight:300;font-size:clamp(.84rem,1.15vw,1.15rem);letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.68);transition:color .4s,transform .3s;display:inline-block}
@@ -173,8 +192,8 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 
 /* ── BRANDED CREATIVE ──────────────────────────────── */
 #edge{background:radial-gradient(ellipse at 30% 50%,var(--edge-accent),transparent 70%)}
-.edge-title{font-family:var(--sans);font-weight:300;font-size:clamp(2.7rem,7.4vw,7rem);line-height:1.02;letter-spacing:.08em;text-transform:uppercase;color:#fff;white-space:normal}
-.edge-title em{font-style:normal;color:#fff;display:inline}
+.edge-title{font-family:var(--serif);font-weight:400;font-size:clamp(2.9rem,7.4vw,7.2rem);line-height:.96;letter-spacing:-.02em;text-transform:none;color:#fff;white-space:normal}
+.edge-title em{font-style:italic;color:var(--gold);display:inline}
 .edge-sub{font-weight:300;font-size:clamp(.95rem,1.2vw,1.12rem);line-height:1.95;color:rgba(255,255,255,.76);max-width:440px;margin-top:2rem}
 
 /* ── EDGE EDITORIAL LAYOUT ──────────────────────────── */
@@ -219,7 +238,7 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 .spotlight-frame{width:min(1140px,calc(100vw - 11rem));border-radius:3px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.55)}
 .spotlight-frame img{width:100%;display:block}
 .art-intro{padding:2vh 0 1.5vh;text-align:center}
-.art-title{font-family:var(--sans);font-weight:300;font-size:clamp(2.5rem,6vw,5.3rem);line-height:1.04;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.92)}
+.art-title{font-family:var(--serif);font-weight:400;font-size:clamp(2.7rem,6vw,5.6rem);line-height:.98;letter-spacing:-.02em;text-transform:none;color:rgba(255,255,255,.92)}
 .art-sub{max-width:760px;margin:1rem auto 0;font-size:clamp(1.08rem,1.45vw,1.38rem);line-height:1.65;color:rgba(255,255,255,.62)}
 .art-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:2vh 0 10vh;grid-auto-rows:1fr}
 .art-grid video,.art-grid img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px;box-shadow:0 20px 50px rgba(0,0,0,.35);display:block}
@@ -396,7 +415,11 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
 <canvas id="bg-canvas"></canvas>
 <canvas id="overlay-canvas"></canvas>
 
-<div class="cur" id="cur"><div class="cur-dot" id="cdot"></div><div class="cur-ring" id="cring"></div></div>
+<div class="cur" id="cur">
+  <div class="cur-cross" id="ccross"></div>
+  <div class="cur-ring" id="cring"></div>
+  <div class="cur-core" id="ccore"></div>
+</div>
 
 <div id="loader">
   <div class="signet" id="signet-loader"><span class="signet-text">A·B</span></div>
@@ -997,7 +1020,7 @@ void main(){
   const dctx=disp.getContext('2d');
 
   let W=window.innerWidth,H=window.innerHeight;
-  let mx=.5,my=.5,pmx=.5,pmy=.5,lastSplat=0;
+  let mx=.5,my=.5,pmx=.5,pmy=.5;
 
   function resize(){W=disp.width=window.innerWidth;H=disp.height=window.innerHeight;}
   resize();window.addEventListener('resize',resize);
@@ -1008,25 +1031,11 @@ void main(){
   const parts=Array.from({length:NP},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3}));
   const CONN=120;
 
-  const trail=[];
-  document.addEventListener('mousemove',e=>trail.push({x:e.clientX,y:e.clientY,t:Date.now()}));
-
   let lastT=0;
   function frame(ts){
     const dt=Math.min(ts-lastT,40);lastT=ts;
 
     step();
-
-    if(ts-lastSplat>28){
-      const dvx=(mx-pmx)*2,dvy=(my-pmy)*2;
-      const speed=Math.hypot(dvx,dvy);
-      if(speed>.0008){
-        const zi=Math.round(Math.min(4,Math.max(0,webglZone)));
-        const ci=ZONE_COLORS[zi]();
-        splat(mx,my,dvx,dvy,ci[0],ci[1],ci[2]);
-      }
-      lastSplat=ts;
-    }
 
     const d=imgData.data;
     for(let i=0;i<SZ;i++){d[i*4]=r[i]*255|0;d[i*4+1]=g[i]*255|0;d[i*4+2]=b[i]*255|0;d[i*4+3]=255;}
@@ -1040,7 +1049,7 @@ void main(){
     const mcx=mx*W,mcy=my*H;
     parts.forEach(p=>{
       const dx=mcx-p.x,dy=mcy-p.y,d=Math.hypot(dx,dy);
-      if(d<180){const f=(1-d/180)*.9;p.vx-=dx/d*f*.4;p.vy-=dy/d*f*.4;}
+      if(d<180 && d>0){const f=(1-d/180)*.9;p.vx-=dx/d*f*.4;p.vy-=dy/d*f*.4;}
       p.vx*=.972;p.vy*=.972;p.x+=p.vx;p.y+=p.vy;
       if(p.x<0)p.x+=W;if(p.x>W)p.x-=W;if(p.y<0)p.y+=H;if(p.y>H)p.y-=H;
     });
@@ -1059,19 +1068,6 @@ void main(){
         }
       }
     }
-
-    // Refined cursor trail — smaller, more elegant
-    const now=Date.now();
-    for(let i=trail.length-1;i>=0;i--){
-      if(now-trail[i].t>420){trail.splice(0,i+1);break;}
-    }
-    trail.forEach((pt,i)=>{
-      const age=(now-pt.t)/420;
-      if(age>1)return;
-      const sz=1.8*(1-age);
-      dctx.beginPath();dctx.arc(pt.x,pt.y,sz,0,Math.PI*2);
-      dctx.fillStyle=`rgba(255,255,255,${.28*(1-age)})`;dctx.fill();
-    });
 
     requestAnimationFrame(frame);
   }
@@ -1112,13 +1108,19 @@ void main(){
 ══════════════════════════════════════════════════════ */
 (function(){
   if('ontouchstart' in window){document.getElementById('cur').style.display='none';document.body.style.cursor='auto';return;}
-  const dot=document.getElementById('cdot'),ring=document.getElementById('cring');
-  let tx=0,ty=0,rx=0,ry=0;
+  const cur=document.getElementById('cur');
+  const core=document.getElementById('ccore');
+  const ring=document.getElementById('cring');
+  const cross=document.getElementById('ccross');
+  cur.style.display='block';
+  let tx=0,ty=0,rx=0,ry=0,cx=0,cy=0;
   document.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;});
   (function tick(){
     rx+=(tx-rx)*.12;ry+=(ty-ry)*.12;
-    dot.style.transform=`translate(${tx}px,${ty}px) translate(-50%,-50%)`;
+    cx+=(tx-cx)*.2;cy+=(ty-cy)*.2;
+    core.style.transform=`translate(${tx}px,${ty}px) translate(-50%,-50%)`;
     ring.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+    cross.style.transform=`translate(${cx}px,${cy}px) translate(-50%,-50%)`;
     requestAnimationFrame(tick);
   })();
 
