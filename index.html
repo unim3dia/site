@@ -17,22 +17,23 @@
   --future-accent:rgba(70,50,200,.07);
   --copy-bright:rgba(255,255,255,.82);
   --label-bright:rgba(255,255,255,.62);
+  --bg-1:rgb(7,19,39);--bg-2:rgb(13,36,72);--bg-3:rgb(18,61,47);--bg-4:rgb(74,37,56);
+  --bg-spot-1:rgba(28,64,122,.78);--bg-spot-2:rgba(24,96,58,.72);--bg-spot-3:rgba(118,50,60,.65);--bg-spot-4:rgba(90,60,132,.58);
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 html{scrollbar-width:none;overflow-x:hidden}
 html::-webkit-scrollbar{display:none}
-body{font-family:var(--sans);background:#04070c;color:var(--cream);overflow-x:hidden;cursor:none}
+body{font-family:var(--sans);background:#04070c;color:var(--cream);overflow-x:hidden;cursor:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 body::after{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:-3;
   background:
-    radial-gradient(circle at 50% 12%,rgba(14,38,92,.88),transparent 34%),
-    radial-gradient(circle at 52% 35%,rgba(13,58,31,.82),transparent 30%),
-    radial-gradient(circle at 48% 62%,rgba(78,18,24,.8),transparent 30%),
-    radial-gradient(circle at 50% 86%,rgba(54,18,88,.84),transparent 32%),
-    linear-gradient(180deg,#071327 0%,#0d2448 20%,#0e351f 44%,#4b1218 68%,#24103d 100%);
-  background-size:100% 260%,100% 260%,100% 260%,100% 260%,100% 260%;
-  background-position:50% var(--page-bg-pos,0%),50% var(--page-bg-pos,0%),50% var(--page-bg-pos,0%),50% var(--page-bg-pos,0%),50% var(--page-bg-pos,0%);
-  animation:pageMorph 24s ease-in-out infinite alternate;
+    radial-gradient(circle at 50% 12%,var(--bg-spot-1),transparent 34%),
+    radial-gradient(circle at 54% 36%,var(--bg-spot-2),transparent 31%),
+    radial-gradient(circle at 46% 64%,var(--bg-spot-3),transparent 32%),
+    radial-gradient(circle at 50% 88%,var(--bg-spot-4),transparent 34%),
+    linear-gradient(180deg,var(--bg-1) 0%,var(--bg-2) 26%,var(--bg-3) 62%,var(--bg-4) 100%);
+  background-size:100% 205%,100% 205%,100% 205%,100% 205%,100% 205%;
+  background-position:50% var(--page-bg-shift,0%),50% calc(var(--page-bg-shift,0%) * 1.18),50% calc(var(--page-bg-shift,0%) * .92),50% calc(var(--page-bg-shift,0%) * 1.28),50% var(--page-bg-shift,0%);
 }
 body::before{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:-2;
@@ -40,18 +41,12 @@ body::before{
   background-repeat:repeat;background-size:250px 250px;
   opacity:.1;mix-blend-mode:soft-light;
 }
-@keyframes pageMorph{
-  0%{transform:scale(1) translate3d(0,0,0);filter:hue-rotate(0deg)}
-  50%{transform:scale(1.04) translate3d(0,-1.5%,0);filter:hue-rotate(-4deg)}
-  100%{transform:scale(1.07) translate3d(0,1.5%,0);filter:hue-rotate(4deg)}
-}
-
 /* ── CANVAS LAYERS ──────────────────────────────────── */
 #bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-4;pointer-events:none;opacity:.26;mix-blend-mode:screen}
 #overlay-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;mix-blend-mode:screen;opacity:.28;filter:blur(.7px)}
 
 /* ── CURSOR ─────────────────────────────────────────── */
-.cur{position:fixed;top:0;left:0;pointer-events:none;z-index:10030}
+.cur{display:none}
 .cur-dot{width:4px;height:4px;background:#fff;border-radius:50%;position:absolute;transform:translate(-50%,-50%);mix-blend-mode:difference}
 .cur-ring{width:28px;height:28px;border:.7px solid rgba(255,255,255,.3);border-radius:50%;position:absolute;transform:translate(-50%,-50%);transition:width .35s,height .35s,border-color .35s,border-width .35s}
 body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);border-width:1px}
@@ -78,7 +73,7 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 
 /* ── HERO ───────────────────────────────────────────── */
 #hero{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.hero-video-wrap{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-video-wrap{position:absolute;inset:0;z-index:0;overflow:hidden;background:radial-gradient(ellipse at 50% 60%,#0c1428 0%,#060608 70%)}
 .hero-video{width:100%;height:100%;object-fit:cover;filter:brightness(.38) saturate(.7);transform:scale(1.08);transition:filter 3s ease}
 .hero-video-overlay{position:absolute;inset:0;background:
   radial-gradient(ellipse at 50% 50%,rgba(6,6,8,.25) 0%,rgba(6,6,8,.7) 70%),
@@ -128,7 +123,7 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 
 /* ── MGC ────────────────────────────────────────────── */
 #mgc{background:radial-gradient(ellipse at 60% 0%,var(--mgc-accent),transparent 70%)}
-.mgc-title{font-family:var(--serif);font-size:clamp(3.8rem,9vw,12rem);line-height:.9;letter-spacing:-.03em;color:#fff;text-shadow:none;white-space:nowrap}
+.mgc-title{font-family:var(--sans);font-weight:300;font-size:clamp(2.7rem,7.4vw,7rem);line-height:1.02;letter-spacing:.08em;text-transform:uppercase;color:#fff;text-shadow:none;white-space:normal}
 [data-title-reveal]{opacity:0}
 .mgc-line,.edge-line{display:inline}
 .mgc-title .acc{display:inline;font-style:normal;background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#fff;text-shadow:none}
@@ -147,13 +142,22 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 .section-copy p+ p{margin-top:1.4rem}
 .section-quote{font-family:var(--serif);font-style:italic;font-size:clamp(1.24rem,2.1vw,2.2rem);color:rgba(255,255,255,.72);line-height:1.75;text-align:center;padding:8vh 0;max-width:900px;margin:0 auto}
 
+/* ── ABOUT ──────────────────────────────────────────── */
+.about-section{padding:14vh 0 12vh;border-bottom:1px solid rgba(255,255,255,.04)}
+.about-inner{max-width:880px;margin:0 auto;text-align:center}
+.about-eyebrow{font-family:var(--sans);font-weight:300;font-size:clamp(.72rem,1vw,.95rem);letter-spacing:.34em;text-transform:uppercase;color:var(--label-bright);margin-bottom:3.5rem}
+.about-body{font-family:var(--serif);font-size:clamp(1.28rem,1.85vw,1.85rem);line-height:1.7;color:var(--copy-bright);margin:0 auto 1.6rem;max-width:760px}
+.about-body:last-child{margin-bottom:0;color:rgba(255,255,255,.62);font-size:clamp(1.1rem,1.45vw,1.45rem);font-style:italic;padding-top:1.2rem}
+.about-link{color:rgba(255,255,255,.92);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.28);padding-bottom:1px;transition:border-color .4s,color .4s}
+.about-link:hover{color:#fff;border-bottom-color:rgba(255,255,255,.7)}
+
 /* ── EVERGLADES ─────────────────────────────────────── */
-.film-strip{display:flex;gap:5px;padding:2.5vh 0;overflow-x:auto;scrollbar-width:none;cursor:grab}
+.film-strip{display:flex;gap:5px;padding:2.5vh 0;overflow-x:auto;scrollbar-width:none;cursor:auto}
 .film-strip::-webkit-scrollbar{display:none}
-.film-strip:active{cursor:grabbing}
+.film-strip:active{cursor:auto}
 .film-cell{flex:0 0 clamp(200px,26vw,360px);aspect-ratio:3/2;overflow:hidden;position:relative;border-radius:2px}
-.film-cell img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(1.05);transition:filter .6s,transform .6s}
-.film-cell:hover img{filter:saturate(1.15) contrast(1.08);transform:scale(1.06)}
+.film-cell img,.film-cell video{width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(1.05);transition:filter .6s,transform .6s;display:block}
+.film-cell:hover img,.film-cell:hover video{filter:saturate(1.15) contrast(1.08);transform:scale(1.06)}
 .film-cell .lbl{display:none}
 .evg-intro{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,4rem);line-height:1.35;color:rgba(255,255,255,.9);margin-top:2rem;text-shadow:0 10px 30px rgba(0,0,0,.4)}
 .evg-meta{margin-top:2rem;font-size:.8rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.62);font-weight:300}
@@ -169,17 +173,17 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 
 /* ── BRANDED CREATIVE ──────────────────────────────── */
 #edge{background:radial-gradient(ellipse at 30% 50%,var(--edge-accent),transparent 70%)}
-.edge-title{font-family:var(--serif);font-size:clamp(4rem,11vw,13rem);line-height:.86;letter-spacing:-.02em;color:#fff;white-space:nowrap}
+.edge-title{font-family:var(--sans);font-weight:300;font-size:clamp(2.7rem,7.4vw,7rem);line-height:1.02;letter-spacing:.08em;text-transform:uppercase;color:#fff;white-space:normal}
 .edge-title em{font-style:normal;color:#fff;display:inline}
 .edge-sub{font-weight:300;font-size:clamp(.95rem,1.2vw,1.12rem);line-height:1.95;color:rgba(255,255,255,.76);max-width:440px;margin-top:2rem}
 
 /* ── EDGE EDITORIAL LAYOUT ──────────────────────────── */
 .edge-editorial{display:grid;grid-template-columns:1.65fr 1fr;gap:6px;margin-bottom:6px}
-.edge-main{position:relative;overflow:hidden;border-radius:3px;cursor:grab;aspect-ratio:4/3}
+.edge-main{position:relative;overflow:hidden;border-radius:3px;cursor:pointer;aspect-ratio:4/3}
 .edge-main img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .75s cubic-bezier(.25,.46,.45,.94)}
 .edge-main:hover img{transform:scale(1.07)}
 .edge-stack{display:flex;flex-direction:column;gap:6px}
-.edge-stack-item{position:relative;overflow:hidden;border-radius:3px;flex:1;transform:rotate(var(--erot,0deg));transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s;cursor:grab;will-change:transform}
+.edge-stack-item{position:relative;overflow:hidden;border-radius:3px;flex:1;transform:rotate(var(--erot,0deg));transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s;cursor:pointer;will-change:transform}
 .edge-stack-item:hover{transform:rotate(0deg) scale(1.02);box-shadow:0 28px 70px rgba(0,0,0,.6);z-index:5}
 .edge-stack-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s}
 .edge-stack-item:hover img{transform:scale(1.08)}
@@ -190,9 +194,9 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 .edge-main:hover{box-shadow:0 36px 90px rgba(0,0,0,.5)}
 
 /* ── EDGE DISCOVERY STRIP ───────────────────────────── */
-.edge-discover{display:flex;gap:12px;padding:1.5vh 0 5vh;overflow-x:auto;scrollbar-width:none;cursor:grab}
+.edge-discover{display:flex;gap:12px;padding:1.5vh 0 5vh;overflow-x:auto;scrollbar-width:none;cursor:auto}
 .edge-discover::-webkit-scrollbar{display:none}
-.edge-discover:active{cursor:grabbing}
+.edge-discover:active{cursor:auto}
 .edge-disc-card{flex:0 0 var(--ew,260px);position:relative;overflow:hidden;border-radius:2px;transform:rotate(var(--erot,0));transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .45s;cursor:pointer;will-change:transform}
 .edge-disc-card img,.edge-disc-card video{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .5s,filter .5s;filter:saturate(.7) brightness(.85)}
 .edge-disc-card:hover{transform:rotate(0deg) scale(1.04) translateY(-4px);box-shadow:0 24px 60px rgba(0,0,0,.65);z-index:10}
@@ -215,7 +219,7 @@ body.hover-active .cur-ring{width:58px;height:58px;border-color:var(--gold);bord
 .spotlight-frame{width:min(1140px,calc(100vw - 11rem));border-radius:3px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.55)}
 .spotlight-frame img{width:100%;display:block}
 .art-intro{padding:2vh 0 1.5vh;text-align:center}
-.art-title{font-family:var(--serif);font-size:clamp(3rem,7.5vw,7rem);line-height:.92;letter-spacing:-.03em;color:rgba(255,255,255,.9)}
+.art-title{font-family:var(--sans);font-weight:300;font-size:clamp(2.5rem,6vw,5.3rem);line-height:1.04;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.92)}
 .art-sub{max-width:760px;margin:1rem auto 0;font-size:clamp(1.08rem,1.45vw,1.38rem);line-height:1.65;color:rgba(255,255,255,.62)}
 .art-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:2vh 0 10vh;grid-auto-rows:1fr}
 .art-grid video,.art-grid img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px;box-shadow:0 20px 50px rgba(0,0,0,.35);display:block}
@@ -321,11 +325,15 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   .stats{grid-template-columns:1fr;gap:0;margin-top:3vh}
   .stat{padding:2.6vh 0;border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}
   .stat:last-child{border-bottom:none}
-  .mgc-title,.edge-title{white-space:nowrap;letter-spacing:-.05em}
+  .mgc-title,.edge-title{white-space:normal;letter-spacing:.07em}
   .mgc-line,.edge-line,.mgc-title .acc,.edge-title em{display:inline !important}
   .mgc-grid{grid-template-columns:1fr 1fr;gap:3px}
   .mgc-grid .img-reveal:first-child{grid-column:span 2;aspect-ratio:16/9}
   .section-copy,.section-quote{font-size:clamp(1.08rem,4.8vw,1.45rem);line-height:1.58;padding-left:.25rem;padding-right:.25rem}
+  .about-section{padding:9vh 0 8vh}
+  .about-eyebrow{margin-bottom:2.2rem}
+  .about-body{font-size:clamp(1.05rem,4.4vw,1.35rem);line-height:1.62}
+  .about-body:last-child{font-size:clamp(.95rem,3.8vw,1.18rem)}
   .feature-physics{min-height:auto;padding:5vh 0}
   .feature-img-wrap{width:min(100%,92vw)}
   .film-strip{display:flex;padding:2vh 0 1vh;overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -334,7 +342,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   .evg-intro{font-size:clamp(1.55rem,8vw,2.4rem);line-height:1.22}
   .evg-meta{letter-spacing:.18em;font-size:.66rem}
   .edge-title-wrap{width:100%}
-  .edge-title{font-size:clamp(2rem,8.4vw,3rem);line-height:1}
+  .edge-title{font-size:clamp(2rem,8.4vw,3rem);line-height:1.02}
   .edge-sub{max-width:none;font-size:1rem;line-height:1.7}
   .edge-editorial{grid-template-columns:1fr}
   .edge-stack{flex-direction:column}
@@ -344,7 +352,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   .clients span{font-size:.72rem;letter-spacing:.14em}
   #paper-zone{min-height:auto;padding:4vh 0 2vh}
   .spotlight-frame{width:92vw}
-  .art-title{font-size:clamp(2.5rem,12vw,4.4rem)}
+  .art-title{font-size:clamp(2.2rem,10vw,4rem);line-height:1.06}
   .art-sub{font-size:.95rem;line-height:1.65}
   .art-grid{grid-template-columns:1fr}
   .art-grid video,.art-grid img{aspect-ratio:16/9;object-position:center center}
@@ -369,9 +377,9 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   .hero-eyebrow{font-size:.74rem}
   #mgc-hero{height:88svh}
   #mgc-hero img{object-position:center center}
-  .mgc-title{font-size:clamp(1.66rem,7.7vw,2.3rem);line-height:1}
+  .mgc-title{font-size:clamp(1.66rem,7.7vw,2.3rem);line-height:1.04}
   .mgc-line,.mgc-title .acc,.edge-line,.edge-title em{display:inline !important}
-  .edge-title{font-size:clamp(1.72rem,7.9vw,2.35rem);line-height:1}
+  .edge-title{font-size:clamp(1.72rem,7.9vw,2.35rem);line-height:1.04}
   .film-cell{flex-basis:84vw}
   .edge-disc-card{flex-basis:80vw}
   .gif-row video{height:96px}
@@ -392,9 +400,17 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
 
 <div id="loader">
   <div class="signet" id="signet-loader"><span class="signet-text">A·B</span></div>
-  <span class="l-name">Infinite Expressions</span>
+  <span class="l-name" id="loader-name">Infinite Expressions</span>
   <div class="l-bar"><div class="l-fill"></div></div>
 </div>
+<script>
+/* loader text — randomize between two phrases on each load */
+(function(){
+  var phrases=['Infinite Expressions','Precision in Motion'];
+  var el=document.getElementById('loader-name');
+  if(el) el.textContent=phrases[Math.floor(Math.random()*phrases.length)];
+})();
+</script>
 <div id="progress"></div>
 <nav class="top-nav" aria-label="Primary">
   <a class="top-nav-link" href="mailto:aylonbenami@gmail.com">Contact</a>
@@ -413,7 +429,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
     <span class="bottom-nav-dot"></span><span class="bottom-nav-label">Everglades</span>
   </a>
   <a class="bottom-nav-item" data-nav="edge" href="#edge">
-    <span class="bottom-nav-dot"></span><span class="bottom-nav-label">Branded</span>
+    <span class="bottom-nav-dot"></span><span class="bottom-nav-label">Commercial Visuals</span>
   </a>
   <a class="bottom-nav-item" data-nav="future" href="#future">
     <span class="bottom-nav-dot"></span><span class="bottom-nav-label">AI</span>
@@ -424,7 +440,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
 <section id="hero" class="section">
   <div class="hero-video-wrap">
     <video class="hero-video" id="hero-video" autoplay muted loop playsinline preload="auto"
-      src="gifs26/Art%20-%20Silent%20Trees.mp4"></video>
+      src="media/hero-silent-trees.mp4"></video>
     <div class="hero-video-overlay"></div>
   </div>
   <p class="hero-eyebrow" id="ey">Director &middot; Editor &middot; Colorist</p>
@@ -441,32 +457,39 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   </div>
 </section>
 
+<!-- ═══ ABOUT ═════════════════════════════════════════ -->
+<section id="about" class="section about-section">
+  <div class="inner about-inner">
+    <p class="about-eyebrow" data-reveal>About</p>
+    <p class="about-body" data-reveal>I direct, edit, and color video in high volumes while consistently experimenting with emerging technologies. Welcome, scroll down for a glimpse of the work.</p>
+  </div>
+</section>
+
 <!-- ═══ MGC ═══════════════════════════════════════════ -->
 <section id="mgc" class="section">
   <div class="full-img" id="mgc-hero">
-    <img src="images/mgc/MGC6 - Fruit Salad - 2023.jpg" alt="Mother Goose Club Fruit Salad">
+    <img src="media/mgc-fruit-salad.jpg" alt="Mother Goose Club Fruit Salad">
     <div class="overlay" style="background:linear-gradient(to top,rgba(6,6,8,.92) 0%,rgba(6,6,8,.18) 55%,rgba(6,6,8,.45) 100%)"></div>
     <div class="text-wrap">
       <div class="ch" data-scramble>Joy at Scale</div>
-      <h2 class="mgc-title" data-title-reveal style="margin-top:1.4rem"><span class="mgc-line">Mother Goose</span> <span class="acc">Club</span></h2>
+      <h2 class="mgc-title" style="margin-top:1.4rem"><span class="mgc-line">Mother Goose</span> <span class="acc">Club</span></h2>
     </div>
   </div>
   <div class="inner">
     <div class="stats">
       <div class="stat"><div class="stat-n">20+ Billion</div><div class="stat-l">Views on YouTube</div></div>
       <div class="stat"><div class="stat-n">27 Million</div><div class="stat-l">Subscribers on 2 channels</div></div>
-      <div class="stat"><div class="stat-n">100s</div><div class="stat-l">Of videos produced</div></div>
+      <div class="stat"><div class="stat-n">300+</div><div class="stat-l">Videos produced</div></div>
     </div>
     <div class="mgc-grid">
-      <div class="img-reveal media-trigger" data-video="gifs26/MGC Selects.mp4" data-title="Mother Goose Club Selects" data-has-audio="false"><img src="MGCGIFS/MGC6 - Dance Party - 20230731 1.gif" alt="Mother Goose Club dance party"></div>
-      <div class="img-reveal media-trigger" data-video="gifs26/MGC Selects.mp4" data-title="Mother Goose Club Selects" data-has-audio="false"><img src="MGCGIFS/MGC6 - Hot Potato - 20230725 1.gif" alt="Mother Goose Club Hot Potato"></div>
-      <div class="img-reveal media-trigger" data-video="gifs26/MGC Selects.mp4" data-title="Mother Goose Club Selects" data-has-audio="false"><img src="MGCGIFS/Rainbow, Rainbow with Baa Baa - Mother Goose Club Nursery Rhymes.gif" alt="Mother Goose Club Rainbow"></div>
-      <div class="img-reveal media-trigger" data-video="gifs26/MGC Selects.mp4" data-title="Mother Goose Club Selects" data-has-audio="false"><img src="MGCGIFS/Baby Shark + More - Mother Goose Club Playhouse.gif" alt="Mother Goose Club Baby Shark"></div>
-      <div class="img-reveal media-trigger" data-video="gifs26/MGC Selects.mp4" data-title="Mother Goose Club Selects" data-has-audio="false"><img src="MGCGIFS/Monster Trucks - Superhero Cars Crash - Mother Goose Club Songs for Children.gif" alt="Mother Goose Club Monster Trucks"></div>
+      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title="Mother Goose Club Selects" data-has-audio="false"><img src="media/mgc-dance-party.gif" alt="Mother Goose Club dance party"></div>
+      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title="Mother Goose Club Selects" data-has-audio="false"><img src="media/mgc-hot-potato.gif" alt="Mother Goose Club Hot Potato"></div>
+      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title="Mother Goose Club Selects" data-has-audio="false"><img src="media/mgc-rainbow-baa-baa.gif" alt="Mother Goose Club Rainbow"></div>
+      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title="Mother Goose Club Selects" data-has-audio="false"><img src="media/mgc-baby-shark-playhouse.gif" alt="Mother Goose Club Baby Shark"></div>
+      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title="Mother Goose Club Selects" data-has-audio="false"><img src="media/mgc-monster-trucks.gif" alt="Mother Goose Club Monster Trucks"></div>
     </div>
     <div class="section-copy" data-reveal>
-      <p>Mother Goose Club grew into one of YouTube's most-watched children's brands, with billions of views, Emmy awards and a long-running relationship with families in over 100 countries.</p>
-      <p>My role centered on leading video production in NY across a high-volume slate of episodes, songs, and character-driven formats, keeping the work clear, musical, and production-ready at scale.</p>
+      <p>Over a decade in New York City helping build one of YouTube&rsquo;s most-watched children&rsquo;s channels, <em>Mother Goose Club Playhouse</em>. I created and oversaw more than 300 videos of live-action, songs, and branded content, adapting to the platform&rsquo;s ever-changing algorithm to forge lasting connections with families across more than 100 countries. Through a steady stream of episodes and character-driven stories, I kept every piece clear, musical, and optimized for massive audiences.</p>
     </div>
   </div>
 </section>
@@ -475,7 +498,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
 <section id="evg" class="section deferred-section">
   <!-- Alligator dramatic opener -->
   <div class="full-img" id="evg-gator">
-    <img src="images/egp/alligator-eye.jpg" alt="Alligator Eye">
+    <img src="media/everglades-alligator-eye.jpg" alt="Alligator Eye">
     <div class="overlay" style="background:linear-gradient(to bottom,rgba(6,6,8,.55) 0%,transparent 40%,rgba(6,6,8,.75) 100%)"></div>
     <div class="text-wrap" style="bottom:auto;top:50%;transform:translateY(-50%);text-align:center;left:0;right:0;padding:2rem">
       <div class="ch" style="justify-content:center" data-scramble>Meditative Cinema</div>
@@ -485,30 +508,30 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   </div>
 
   <div class="feature-physics">
-    <div class="feature-img-wrap media-trigger" id="ripple-wrap" data-video="gifs26/EGP Trailer.mp4" data-title="Everglades Trailer">
-      <img src="images/egp/dragonfly-gold.jpg" alt="Golden Dragonfly" id="ripple-img" class="bug-img">
+    <div class="feature-img-wrap media-trigger" id="ripple-wrap" data-video="media/everglades-trailer.mp4" data-title="Everglades Trailer">
+      <img src="media/everglades-dragonfly-gold.jpg" alt="Golden Dragonfly" id="ripple-img" class="bug-img">
       <span class="bug-play">Play Trailer</span>
       <canvas id="ripple-canvas"></canvas>
     </div>
   </div>
 
   <div class="inner" style="margin-top:-4vh">
-    <p class="section-quote" data-reveal style="font-style:normal">Deep in the Florida Everglades, time moves differently — measured in the passage of light through cypress canopy and the patient drift of water through sawgrass prairie.</p>
+    <p class="section-quote" data-reveal style="font-style:normal">Deep in the Florida Everglades, time moves differently &mdash; measured in the passage of light through cypress canopy and the patient drift of water through sawgrass prairie.</p>
     <p class="section-quote" data-reveal style="font-style:normal;padding-top:0">Shot entirely on 16mm film, this experimental documentary explores the ecological texture of one of North America's most endangered landscapes. The camera becomes a witness, not a narrator.</p>
     <div class="film-strip" id="film-strip">
-      <div class="film-cell"><img src="gifs26/Everglades 1.gif" alt=""></div>
-      <div class="film-cell"><img src="gifs26/Everglades 2.gif" alt=""></div>
-      <div class="film-cell"><img src="gifs26/Everglades 3.gif" alt=""></div>
-      <div class="film-cell"><img src="gifs26/Everglades 4.gif" alt=""></div>
-      <div class="film-cell"><img src="gifs26/Everglades 5.gif" alt=""></div>
-      <div class="film-cell"><img src="gifs26/Everglades 6.gif" alt=""></div>
-      <div class="film-cell"><img src="gifs26/Everglades 7.gif" alt=""></div>
+      <div class="film-cell"><video src="media/everglades-01.mp4" poster="media/everglades-alligator-eye.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
+      <div class="film-cell"><video src="media/everglades-02.mp4" poster="media/everglades-dragonfly-gold.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
+      <div class="film-cell"><video src="media/everglades-03.mp4" poster="media/everglades-still-24.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
+      <div class="film-cell"><video src="media/everglades-04.mp4" poster="media/everglades-still-22.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
+      <div class="film-cell"><video src="media/everglades-05.mp4" poster="media/everglades-alligator-eye.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
+      <div class="film-cell"><video src="media/everglades-06.mp4" poster="media/everglades-dragonfly-gold.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
+      <div class="film-cell"><video src="media/everglades-07.mp4" poster="media/everglades-still-24.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
     </div>
   </div>
   <div class="inner" style="padding-bottom:10vh">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
-      <div class="img-reveal" style="aspect-ratio:16/9"><img src="images/egp/24.jpg" alt=""></div>
-      <div class="img-reveal" style="aspect-ratio:16/9"><img src="images/egp/egp-22.jpg" alt=""></div>
+      <div class="img-reveal" style="aspect-ratio:16/9"><img src="media/everglades-still-24.jpg" alt=""></div>
+      <div class="img-reveal" style="aspect-ratio:16/9"><img src="media/everglades-still-22.jpg" alt=""></div>
     </div>
   </div>
 </section>
@@ -518,7 +541,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   <div class="inner" style="padding-top:12vh;padding-bottom:6vh">
     <div style="display:flex;align-items:flex-end;justify-content:center;gap:4vw;flex-wrap:wrap;text-align:center">
       <div class="edge-title-wrap">
-        <h2 class="edge-title" id="edge-title" data-title-reveal style="margin-top:1.4rem">Commercial Visuals</h2>
+        <h2 class="edge-title" id="edge-title" style="margin-top:1.4rem">Commercial Visuals</h2>
       </div>
     </div>
   </div>
@@ -526,17 +549,17 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   <!-- Editorial layout: big feature + stacked pair -->
   <div class="inner" style="padding-top:0">
     <div class="edge-editorial" id="edge-editorial">
-      <div class="edge-main media-trigger" data-tilt data-image="images/reality/Cobie Smulders Interview 1.jpg" data-title="Cobie Smulders Interview">
-        <img src="images/reality/Cobie Smulders Interview 1.jpg" alt="Cobie Smulders Interview">
+      <div class="edge-main media-trigger" data-tilt data-image="media/branded-cobie-smulders.jpg" data-title="Cobie Smulders Interview">
+        <img src="media/branded-cobie-smulders.jpg" alt="Cobie Smulders Interview">
         <div class="c-lbl">Cobie Smulders Interview</div>
       </div>
       <div class="edge-stack">
-        <div class="edge-stack-item media-trigger" data-tilt style="--erot:2deg" data-image="images/reality/Parquet Courts feature.jpg" data-title="Parquet Courts Feature">
-          <img src="images/reality/Parquet Courts feature.jpg" alt="Parquet Courts feature">
+        <div class="edge-stack-item media-trigger" data-tilt style="--erot:2deg" data-image="media/branded-parquet-courts.jpg" data-title="Parquet Courts Feature">
+          <img src="media/branded-parquet-courts.jpg" alt="Parquet Courts feature">
           <div class="c-lbl">Parquet Courts Feature</div>
         </div>
-        <div class="edge-stack-item media-trigger" data-tilt style="--erot:-1.8deg" data-image="images/reality/Hardeman NYFW18 4 color_1.mp4.00_00_04_27.Still024.jpg" data-title="Hardeman NYFW">
-          <img src="images/reality/Hardeman NYFW18 4 color_1.mp4.00_00_04_27.Still024.jpg" alt="Hardeman NYFW backstage">
+        <div class="edge-stack-item media-trigger" data-tilt style="--erot:-1.8deg" data-image="media/branded-hardeman-nyfw-backstage.jpg" data-title="Hardeman NYFW">
+          <img src="media/branded-hardeman-nyfw-backstage.jpg" alt="Hardeman NYFW backstage">
           <div class="c-lbl">Hardeman NYFW</div>
         </div>
       </div>
@@ -545,29 +568,29 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
     <!-- Discovery strip -->
     <p class="edge-discover-hint" style="margin-top:2.5rem">Drag to discover</p>
     <div class="edge-discover" id="edge-discover">
-      <div class="edge-disc-card media-trigger" style="--erot:-1.5deg;--ew:300px" data-video="gifs26/LEXUS%20Miami.mp4" data-title="Lexus Miami" data-has-audio="false">
-        <img src="ADGIFS/LEXUS%20Miami.gif" alt="Lexus Miami"><span></span>
+      <div class="edge-disc-card media-trigger" style="--erot:-1.5deg;--ew:300px" data-video="media/branded-lexus-miami.mp4" data-title="Lexus Miami" data-has-audio="false">
+        <img src="media/branded-lexus-miami.gif" alt="Lexus Miami"><span></span>
       </div>
-      <div class="edge-disc-card media-trigger" style="--erot:2.2deg;--ew:310px" data-video="gifs26/Time%20Inc%20webisode%20-%20One%20Lap%20of%20Rennsport%20in%20the%202017%20Porsche%20911%20Carrera.mp4" data-title="Porsche 911 — Rennsport" data-has-audio="false">
-        <img src="ADGIFS/One%20Lap%20of%20Rennsport%20in%20the%202017%20Porsche%20911%20Carrera%20-%20The%20Drive%201.gif" alt="Porsche Rennsport"><span></span>
+      <div class="edge-disc-card media-trigger" style="--erot:2.2deg;--ew:310px" data-video="media/branded-porsche-rennsport.mp4" data-title="Porsche 911 — Rennsport" data-has-audio="false">
+        <img src="media/branded-porsche-rennsport.gif" alt="Porsche Rennsport"><span></span>
       </div>
-      <div class="edge-disc-card media-trigger" style="--erot:-2.8deg;--ew:280px" data-video="gifs26/Honda%20-%20Freestylers.mp4" data-title="Honda — Freestylers" data-has-audio="false">
-        <img src="images/reality/Freestylers%20%20Daniel-MASTER%20HQ.mov.01_00_01_19.Still001.jpg" alt="Honda Freestylers"><span></span>
+      <div class="edge-disc-card media-trigger" style="--erot:-2.8deg;--ew:280px" data-video="media/branded-honda-freestylers.mp4" data-title="Honda — Freestylers" data-has-audio="false">
+        <img src="media/branded-honda-freestylers-daniel.jpg" alt="Honda Freestylers"><span></span>
       </div>
-      <div class="edge-disc-card media-trigger" style="--erot:1.6deg;--ew:270px" data-image="images/reality/Freestylers%20%20John_20140626_3.mov.01_00_10_23.Still004.jpg" data-title="Freestylers John">
-        <img src="images/reality/Freestylers%20%20John_20140626_3.mov.01_00_10_23.Still004.jpg" alt="Freestylers John"><span></span>
+      <div class="edge-disc-card media-trigger" style="--erot:1.6deg;--ew:270px" data-image="media/branded-freestylers-john.jpg" data-title="Freestylers John">
+        <img src="media/branded-freestylers-john.jpg" alt="Freestylers John"><span></span>
       </div>
-      <div class="edge-disc-card media-trigger" style="--erot:-3.2deg;--ew:260px" data-image="images/reality/Freestylers%20%20Noe_20140627.mov.01_01_27_29.Still009.jpg" data-title="Freestylers Noe">
-        <img src="images/reality/Freestylers%20%20Noe_20140627.mov.01_01_27_29.Still009.jpg" alt="Freestylers Noe"><span></span>
+      <div class="edge-disc-card media-trigger" style="--erot:-3.2deg;--ew:260px" data-image="media/branded-freestylers-noe.jpg" data-title="Freestylers Noe">
+        <img src="media/branded-freestylers-noe.jpg" alt="Freestylers Noe"><span></span>
       </div>
-      <div class="edge-disc-card media-trigger" style="--erot:2.5deg;--ew:250px" data-image="images/reality/Pencil.MOV.19_23_56_28.Still005.jpg" data-title="Pencil Still">
-        <img src="images/reality/Pencil.MOV.19_23_56_28.Still005.jpg" alt="Pencil still"><span></span>
+      <div class="edge-disc-card media-trigger" style="--erot:2.5deg;--ew:250px" data-image="media/still-pencil.jpg" data-title="Pencil Still">
+        <img src="media/still-pencil.jpg" alt="Pencil still"><span></span>
       </div>
-      <div class="edge-disc-card media-trigger" style="--erot:-1.8deg;--ew:240px" data-image="images/reality/Onion%203.MOV.17_05_26_13.Still003.jpg" data-title="Onion Still">
-        <img src="images/reality/Onion%203.MOV.17_05_26_13.Still003.jpg" alt="Onion still"><span></span>
+      <div class="edge-disc-card media-trigger" style="--erot:-1.8deg;--ew:240px" data-image="media/still-onion.jpg" data-title="Onion Still">
+        <img src="media/still-onion.jpg" alt="Onion still"><span></span>
       </div>
-      <div class="edge-disc-card media-trigger" style="--erot:3deg;--ew:260px" data-image="images/stilllife/Lebrons__XIIIq.mov.00_00_02_05.Still001.jpg" data-title="LeBrons XIII">
-        <img src="images/stilllife/Lebrons__XIIIq.mov.00_00_02_05.Still001.jpg" alt="LeBrons XIII"><span></span>
+      <div class="edge-disc-card media-trigger" style="--erot:3deg;--ew:260px" data-image="media/branded-lebron-xiii-still.jpg" data-title="LeBrons XIII">
+        <img src="media/branded-lebron-xiii-still.jpg" alt="LeBrons XIII"><span></span>
       </div>
     </div>
   </div>
@@ -575,17 +598,17 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   <!-- GIF accents -->
   <div class="inner">
     <div class="gif-row">
-      <div class="media-trigger" data-video="gifs26/Music - David Byrne.mp4" data-title="Music - David Byrne" data-has-audio="false">
-        <video src="gifs26/Music - David Byrne.mp4" autoplay muted loop playsinline></video>
+      <div class="media-trigger" data-video="media/music-david-byrne.mp4" data-title="Music - David Byrne" data-has-audio="false">
+        <video src="media/music-david-byrne.mp4" autoplay muted loop playsinline></video>
       </div>
-      <div class="media-trigger" data-video="gifs26/Music - Valerie June.mp4" data-title="Music - Valerie June" data-has-audio="false">
-        <video src="gifs26/Music - Valerie June.mp4" autoplay muted loop playsinline></video>
+      <div class="media-trigger" data-video="media/music-valerie-june.mp4" data-title="Music - Valerie June" data-has-audio="false">
+        <video src="media/music-valerie-june.mp4" autoplay muted loop playsinline></video>
       </div>
-      <div class="media-trigger" data-video="gifs26/Music - Warpaint encore.mp4" data-title="Music - Warpaint Encore" data-has-audio="false">
-        <video src="gifs26/Music - Warpaint encore.mp4" autoplay muted loop playsinline></video>
+      <div class="media-trigger" data-video="media/music-warpaint-encore.mp4" data-title="Music - Warpaint Encore" data-has-audio="false">
+        <video src="media/music-warpaint-encore.mp4" autoplay muted loop playsinline></video>
       </div>
-      <div class="media-trigger" data-video="gifs26/Music Video - Kylian.mp4" data-title="Music Video - Kylian" data-has-audio="false">
-        <video src="gifs26/Music Video - Kylian.mp4" autoplay muted loop playsinline></video>
+      <div class="media-trigger" data-video="media/music-video-kylian.mp4" data-title="Music Video - Kylian" data-has-audio="false">
+        <video src="media/music-video-kylian.mp4" autoplay muted loop playsinline></video>
       </div>
     </div>
   </div>
@@ -596,7 +619,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
       <div class="clients" data-reveal>
         <span>HBO</span><span>NFL</span><span>Netflix</span><span>Honda</span>
         <span>Nokia</span><span>Lexus</span><span>BMW</span><span>Porsche</span>
-        <span>Time Inc.</span><span>Think Visual Group</span><span>Sockeye Media LLC</span>
+        <span>Time Inc.</span><span>Think Visual Group</span><span>Sockeye Media LLC</span><span>Imaginarium Lab</span>
       </div>
     </div>
   </section>
@@ -609,36 +632,36 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   <div id="paper-zone">
     <div class="inner">
       <div class="spotlight-frame">
-        <img src="images/experimental/art-basel-color.jpg" alt="Art Basel" draggable="false">
+        <img src="media/personal-art-basel.jpg" alt="Art Basel" draggable="false">
       </div>
     </div>
   </div>
 
   <div class="inner">
     <div class="art-grid">
-      <div class="media-trigger" data-video="gifs26/Music%20Video%20-%20letter-.mp4" data-title="Music Video - Letter" data-has-audio="false">
-        <video src="gifs26/Music%20Video%20-%20letter-.mp4" autoplay muted loop playsinline></video>
+      <div class="media-trigger" data-video="media/music-video-letter.mp4" data-title="Music Video - Letter" data-has-audio="false">
+        <video src="media/music-video-letter.mp4" autoplay muted loop playsinline></video>
       </div>
-      <div class="media-trigger" data-video="gifs26/Art%20-%20Fire%20Escape.mp4" data-title="Art - Fire Escape" data-has-audio="false">
-        <video src="gifs26/Art%20-%20Fire%20Escape.mp4" autoplay muted loop playsinline></video>
+      <div class="media-trigger" data-video="media/personal-fire-escape.mp4" data-title="Art - Fire Escape" data-has-audio="false">
+        <video src="media/personal-fire-escape.mp4" autoplay muted loop playsinline></video>
       </div>
-      <div class="media-trigger" data-video="gifs26/Art%20-%20Man's%20Field%201.mp4" data-title="Art - Man's Field" data-has-audio="false">
-        <video src="gifs26/Art%20-%20Man's%20Field%201.mp4" autoplay muted loop playsinline></video>
+      <div class="media-trigger" data-video="media/personal-mans-field.mp4" data-title="Art - Man's Field" data-has-audio="false">
+        <video src="media/personal-mans-field.mp4" autoplay muted loop playsinline></video>
       </div>
-      <div class="media-trigger" data-image="ARTGIFS/Street%20Art%20-%20Colors%201.gif" data-title="Street Art - Colors">
-        <img src="ARTGIFS/Street%20Art%20-%20Colors%201.gif" alt="Street art colors">
+      <div class="media-trigger" data-image="media/personal-street-art-colors.gif" data-title="Street Art - Colors">
+        <img src="media/personal-street-art-colors.gif" alt="Street art colors">
       </div>
-      <div class="media-trigger" data-image="ARTGIFS/Crater%20Lake.gif" data-title="Crater Lake">
-        <img src="ARTGIFS/Crater%20Lake.gif" alt="Crater Lake">
+      <div class="media-trigger" data-image="media/crater-lake.gif" data-title="Crater Lake">
+        <img src="media/crater-lake.gif" alt="Crater Lake" draggable="false">
       </div>
-      <div class="media-trigger" data-image="ARTGIFS/California%201.gif" data-title="California">
-        <img src="ARTGIFS/California%201.gif" alt="California">
+      <div class="media-trigger" data-image="media/california.gif" data-title="California">
+        <img src="media/california.gif" alt="California" draggable="false">
       </div>
-      <div class="media-trigger" data-image="ARTGIFS/Snow%20Roofs.gif" data-title="Snow Roofs">
-        <img src="ARTGIFS/Snow%20Roofs.gif" alt="Snow Roofs">
+      <div class="media-trigger" data-image="media/personal-snow-roofs.gif" data-title="Snow Roofs">
+        <img src="media/personal-snow-roofs.gif" alt="Snow Roofs">
       </div>
-      <div class="media-trigger" data-image="ARTGIFS/Bushwick%20Bookstore.gif" data-title="Bushwick Bookstore">
-        <img src="ARTGIFS/Bushwick%20Bookstore.gif" alt="Bushwick Bookstore">
+      <div class="media-trigger" data-image="media/bushwick-bookstore.gif" data-title="Bushwick Bookstore">
+        <img src="media/bushwick-bookstore.gif" alt="Bushwick Bookstore" draggable="false">
       </div>
     </div>
   </div>
@@ -659,7 +682,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
       <div class="portal-frame-shell">
         <div class="portal-frame-wrap">
           <div class="portal-frame">
-            <img class="portal-media is-active" id="portal-image" alt="AI portal preview" src="ai/whimsy_02.png">
+            <img class="portal-media is-active" id="portal-image" alt="AI portal preview" src="ai/The Suds 01.png">
             <video class="portal-media" id="portal-video" muted playsinline preload="metadata"></video>
             <div class="portal-overlay">
               <div class="portal-badge">AI</div>
@@ -700,11 +723,40 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
+function mixChannel(a,b,t){
+  return Math.round(a+(b-a)*t);
+}
+function mixRgb(a,b,t){
+  return `rgb(${mixChannel(a[0],b[0],t)},${mixChannel(a[1],b[1],t)},${mixChannel(a[2],b[2],t)})`;
+}
+function mixRgba(a,b,t){
+  const alpha=(a[3]+(b[3]-a[3])*t).toFixed(3);
+  return `rgba(${mixChannel(a[0],b[0],t)},${mixChannel(a[1],b[1],t)},${mixChannel(a[2],b[2],t)},${alpha})`;
+}
 function syncPageBackground(){
   const maxScroll=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);
   const progress=Math.min(1,Math.max(0,window.scrollY/maxScroll));
-  const pos=(progress*100).toFixed(2)+'%';
-  document.body.style.setProperty('--page-bg-pos',pos);
+  const palettes=[
+    {bg1:[7,19,39],bg2:[13,36,72],bg3:[18,61,47],bg4:[74,37,56],s1:[28,64,122,.78],s2:[24,96,58,.72],s3:[118,50,60,.65],s4:[90,60,132,.58]},
+    {bg1:[10,30,56],bg2:[26,74,102],bg3:[45,104,74],bg4:[96,70,50],s1:[52,106,174,.82],s2:[72,142,102,.7],s3:[162,104,68,.56],s4:[104,92,150,.45]},
+    {bg1:[11,32,39],bg2:[22,72,61],bg3:[72,108,58],bg4:[120,83,52],s1:[44,108,90,.72],s2:[110,152,84,.58],s3:[170,118,72,.45],s4:[86,120,152,.34]},
+    {bg1:[27,21,44],bg2:[73,35,72],bg3:[116,56,68],bg4:[150,102,70],s1:[120,66,148,.62],s2:[166,78,108,.55],s3:[208,128,88,.44],s4:[88,98,154,.28]},
+    {bg1:[24,18,52],bg2:[53,30,84],bg3:[100,52,120],bg4:[164,110,86],s1:[92,60,170,.65],s2:[140,70,156,.54],s3:[214,144,98,.4],s4:[88,118,176,.22]}
+  ];
+  const scaled=progress*(palettes.length-1);
+  const index=Math.min(palettes.length-2,Math.floor(scaled));
+  const blend=scaled-index;
+  const from=palettes[index];
+  const to=palettes[index+1];
+  document.body.style.setProperty('--bg-1',mixRgb(from.bg1,to.bg1,blend));
+  document.body.style.setProperty('--bg-2',mixRgb(from.bg2,to.bg2,blend));
+  document.body.style.setProperty('--bg-3',mixRgb(from.bg3,to.bg3,blend));
+  document.body.style.setProperty('--bg-4',mixRgb(from.bg4,to.bg4,blend));
+  document.body.style.setProperty('--bg-spot-1',mixRgba(from.s1,to.s1,blend));
+  document.body.style.setProperty('--bg-spot-2',mixRgba(from.s2,to.s2,blend));
+  document.body.style.setProperty('--bg-spot-3',mixRgba(from.s3,to.s3,blend));
+  document.body.style.setProperty('--bg-spot-4',mixRgba(from.s4,to.s4,blend));
+  document.body.style.setProperty('--page-bg-shift',`${(progress*42).toFixed(2)}%`);
 }
 window.addEventListener('scroll',syncPageBackground,{passive:true});
 window.addEventListener('resize',syncPageBackground);
@@ -1027,12 +1079,33 @@ void main(){
 })();
 
 /* ══════════════════════════════════════════════════════
-   LOADER
+   LOADER  —  fires on DOMContentLoaded + small delay (so
+   missing/slow images & videos can't strand the page)
+   with a hard 3.5s fallback timeout as a safety net.
 ══════════════════════════════════════════════════════ */
-window.addEventListener('load',()=>{
-  gsap.to('#loader',{opacity:0,duration:.55,delay:.12,ease:'power2.inOut',
-    onComplete:()=>{document.getElementById('loader').style.display='none';heroIn();}});
-});
+(function(){
+  var hidden=false;
+  function hide(){
+    if(hidden) return; hidden=true;
+    var loaderEl=document.getElementById('loader');
+    if(!loaderEl) return;
+    if(typeof gsap!=='undefined' && gsap.to){
+      gsap.to('#loader',{opacity:0,duration:.55,ease:'power2.inOut',
+        onComplete:()=>{loaderEl.style.display='none'; if(typeof heroIn==='function') heroIn();}});
+    } else {
+      loaderEl.style.transition='opacity .55s ease';
+      loaderEl.style.opacity='0';
+      setTimeout(()=>{loaderEl.style.display='none'; if(typeof heroIn==='function') heroIn();},600);
+    }
+  }
+  if(document.readyState==='complete' || document.readyState==='interactive'){
+    setTimeout(hide,700);
+  } else {
+    document.addEventListener('DOMContentLoaded',()=>setTimeout(hide,500));
+  }
+  window.addEventListener('load',()=>setTimeout(hide,80));
+  setTimeout(hide,3500); // hard fallback — never strand the page
+})();
 
 /* ══════════════════════════════════════════════════════
    CURSOR — spring ring + magnetic snap
@@ -1302,91 +1375,42 @@ document.querySelectorAll('[data-tilt]').forEach(card=>{
   if(!imageEl||!videoEl||!wrap)return;
 
   const mediaItems=[
-    'ai/whimsy_02.png',
-    'ai/whimsy_01.png',
-    'ai/vid_hf_03.mp4',
-    'ai/vid_hf_02.mp4',
-    'ai/vid_hf_01.mp4',
-    'ai/vid_grok_05.mp4',
-    'ai/vid_grok_04.mp4',
-    'ai/vid_grok_03.mp4',
-    'ai/vid_grok_02.mp4',
-    'ai/vid_grok_01.mp4',
-    'ai/vid_coffee_01.mp4',
-    'ai/versions_02.png',
-    'ai/versions_01.png',
-    'ai/sand_01.png',
-    'ai/rock_01.png',
-    'ai/richard_lewis_02.png',
-    'ai/richard_lewis_01.png',
-    'ai/portrait_02.jpg',
-    'ai/portrait_01.jpg',
-    'ai/pixel_game_01.png',
-    'ai/nyc_decay_01.png',
-    'ai/ninja_02.png',
-    'ai/ninja_01.png',
-    'ai/melies_01.png',
-    'ai/manboy_10.png',
-    'ai/manboy_09.png',
-    'ai/manboy_08.png',
-    'ai/manboy_07.png',
-    'ai/manboy_06.png',
-    'ai/manboy_05.png',
-    'ai/manboy_04.png',
-    'ai/manboy_03.png',
-    'ai/manboy_02.png',
-    'ai/manboy_01.png',
-    'ai/leaf_monster_04.png',
-    'ai/leaf_monster_03.png',
-    'ai/leaf_monster_02.png',
-    'ai/leaf_monster_01.png',
-    'ai/highway_median_01.png',
-    'ai/highway_girl_01.png',
-    'ai/hf_still_01.png',
-    'ai/harry_smith_01.png',
-    'ai/hamm_bike_01.png',
-    'ai/ground_01.png',
-    'ai/goofy_01.png',
-    'ai/film_photo_02.png',
+    'ai/The Suds 01.png',
+    'ai/The Suds 02.png',
+    'ai/Market Coffee.mp4',
+    'ai/Quieters Street Portal.mp4',
+    'ai/The Suds City.mp4',
+    'ai/Andrew Origin story.mp4',
+    'ai/Generation.png',
+    'ai/Portrait 01.jpg',
+    'ai/Portrait 02 ninja.png',
+    'ai/Portrait 04 ninja.png',
+    'ai/Dream Field 01.png',
+    'ai/Dream Field 02.png',
+    'ai/Quieters - the Walkers.png',
+    'ai/Quieters 02.png',
+    'ai/Quieters 03.png',
+    'ai/Quieters.png',
     'ai/film_photo_01.png',
-    'ai/fargo_clown_01.png',
-    'ai/egg_sneakers_01.png',
-    'ai/egg_runner_05.png',
-    'ai/egg_runner_04.png',
-    'ai/egg_runner_03.png',
-    'ai/egg_runner_02.png',
-    'ai/egg_runner_01.png',
-    'ai/egg_funky_01.png',
-    'ai/egg_ego_01.png',
-    'ai/doofus_01.png',
-    'ai/desert_melt_02.png',
-    'ai/desert_melt_01.png',
-    'ai/desert_digital_02.png',
-    'ai/desert_digital_01.png',
-    'ai/cute bubbebubble.mp4',
-    'ai/crowd_ants_01.png',
-    'ai/character_03.png',
-    'ai/character_02.png',
-    'ai/character_01.png',
-    'ai/char_hat_01.png',
-    'ai/cat_hand_02.png',
-    'ai/cat_hand_01.png',
-    'ai/car_smile_01.png',
-    'ai/car_animal_01.png',
-    'ai/bully_04.png',
-    'ai/bully_03.png',
-    'ai/bully_02.png',
-    'ai/bully_01.png',
-    'ai/being_01.png',
-    'ai/base_head_01.png',
-    'ai/asshole_02.png',
-    'ai/asshole_01.png',
-    'ai/architecture_02.png',
-    'ai/architecture_01.png',
-    'ai/angry_mother_01.png',
-    'ai/angry_father_01.png',
-    'ai/abstract_01.png'
+    'ai/film_photo_02.png',
+    'ai/Swim video game.mp4',
+    'ai/UGC influencer.mp4',
+    'ai/Chairmelt.mp4',
+    'ai/Tupac Closeup.mp4',
+    'ai/Finally You Are Just Another False Alarm.mp4',
+    'ai/gboy.mp4',
+    'ai/vid_grok_01.mp4',
+    'ai/Adventures of Thimsey.png',
+    'ai/Swim Game.png',
+    'ai/Social Media 01.png',
+    'ai/Social Media 02.png',
+    'ai/UGC Character 06.png',
+    'ai/goofy_01.png'
   ];
+
+  function portalUrl(src){
+    return src.split('/').map(part=>encodeURIComponent(part)).join('/');
+  }
 
   let index=0;
   let timer=null;
@@ -1414,7 +1438,7 @@ document.querySelectorAll('[data-tilt]').forEach(card=>{
     if(isVideo){
       imageEl.classList.remove('is-active');
       videoEl.pause();
-      videoEl.src=src;
+      videoEl.src=portalUrl(src);
       videoEl.currentTime=0;
       videoEl.classList.add('is-active');
       const playPromise=videoEl.play();
@@ -1427,7 +1451,7 @@ document.querySelectorAll('[data-tilt]').forEach(card=>{
     videoEl.removeAttribute('src');
     videoEl.load();
     videoEl.classList.remove('is-active');
-    imageEl.src=src;
+    imageEl.src=portalUrl(src);
     imageEl.classList.add('is-active');
     queueNext(3600);
   }

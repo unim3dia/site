@@ -550,98 +550,41 @@
    AI ASSETS — ai/ folder
    ═══════════════════════════════════════════════════════ */
 const ASSETS = [
-  // Characters
-  { cat:'Character',   lbl:'Egg Runner',        src:'ai/egg_runner_01.png' },
-  { cat:'Character',   lbl:'Egg Runner',        src:'ai/egg_runner_02.png' },
-  { cat:'Character',   lbl:'Egg Runner',        src:'ai/egg_runner_03.png' },
-  { cat:'Character',   lbl:'Egg Runner',        src:'ai/egg_runner_04.png' },
-  { cat:'Character',   lbl:'Egg Runner',        src:'ai/egg_runner_05.png' },
-  { cat:'Character',   lbl:'Egg Sneakers',      src:'ai/egg_sneakers_01.png' },
-  { cat:'Character',   lbl:'Egg Ego',           src:'ai/egg_ego_01.png' },
-  { cat:'Character',   lbl:'Funky Egg',         src:'ai/egg_funky_01.png' },
-  { cat:'Character',   lbl:'Manboy',            src:'ai/manboy_01.png' },
-  { cat:'Character',   lbl:'Manboy',            src:'ai/manboy_02.png' },
-  { cat:'Character',   lbl:'Manboy',            src:'ai/manboy_03.png' },
-  { cat:'Character',   lbl:'Manboy',            src:'ai/manboy_04.png' },
-  { cat:'Character',   lbl:'Manboy',            src:'ai/manboy_05.png' },
-  { cat:'Character',   lbl:'Manboy',            src:'ai/manboy_06.png' },
-  { cat:'Character',   lbl:'Manboy',            src:'ai/manboy_07.png' },
-  { cat:'Character',   lbl:'Manboy',            src:'ai/manboy_08.png' },
-  { cat:'Character',   lbl:'Manboy',            src:'ai/manboy_09.png' },
-  { cat:'Character',   lbl:'Manboy',            src:'ai/manboy_10.png' },
-  { cat:'Animation',   lbl:'Bully',             src:'ai/bully_01.png' },
-  { cat:'Animation',   lbl:'Bully',             src:'ai/bully_02.png' },
-  { cat:'Animation',   lbl:'Bully',             src:'ai/bully_03.png' },
-  { cat:'Animation',   lbl:'Bully',             src:'ai/bully_04.png' },
-  { cat:'Character',   lbl:'Character',         src:'ai/character_01.png' },
-  { cat:'Character',   lbl:'Character',         src:'ai/character_02.png' },
-  { cat:'Character',   lbl:'Character',         src:'ai/character_03.png' },
-  { cat:'Character',   lbl:'Being',             src:'ai/being_01.png' },
-  { cat:'Character',   lbl:'Char Hat',          src:'ai/char_hat_01.png' },
-  { cat:'Character',   lbl:'Whimsy',            src:'ai/whimsy_01.png' },
-  { cat:'Character',   lbl:'Whimsy',            src:'ai/whimsy_02.png' },
-  { cat:'Character',   lbl:'Doofus',            src:'ai/doofus_01.png' },
-  { cat:'Character',   lbl:'Goofy',             src:'ai/goofy_01.png' },
-  // Portraits
-  { cat:'Portrait',    lbl:'Asshole',           src:'ai/asshole_01.png' },
-  { cat:'Portrait',    lbl:'Asshole',           src:'ai/asshole_02.png' },
-  { cat:'Portrait',    lbl:'Versions',          src:'ai/versions_01.png' },
-  { cat:'Portrait',    lbl:'Versions',          src:'ai/versions_02.png' },
-  { cat:'Portrait',    lbl:'Harry Smith',       src:'ai/harry_smith_01.png' },
-  { cat:'Portrait',    lbl:'Hamm Bike',         src:'ai/hamm_bike_01.png' },
-  { cat:'Portrait',    lbl:'Richard Lewis',     src:'ai/richard_lewis_01.png' },
-  { cat:'Portrait',    lbl:'Richard Lewis',     src:'ai/richard_lewis_02.png' },
-  { cat:'Portrait',    lbl:'Base Head',         src:'ai/base_head_01.png' },
-  { cat:'Portrait',    lbl:'Portrait',          src:'ai/portrait_01.jpg' },
-  { cat:'Portrait',    lbl:'Portrait',          src:'ai/portrait_02.jpg' },
-  // Animation / Vintage
-  { cat:'Animation',   lbl:'Angry Father',      src:'ai/angry_father_01.png' },
-  { cat:'Animation',   lbl:'Angry Mother',      src:'ai/angry_mother_01.png' },
-  { cat:'Animation',   lbl:'Pixel Game',        src:'ai/pixel_game_01.png' },
-  { cat:'Animation',   lbl:'Méliès',            src:'ai/melies_01.png' },
-  { cat:'Animation',   lbl:'Fargo Clown',       src:'ai/fargo_clown_01.png' },
-  // Ninja
-  { cat:'Character',   lbl:'Ninja',             src:'ai/ninja_01.png' },
-  { cat:'Character',   lbl:'Ninja',             src:'ai/ninja_02.png' },
-  // Cars
-  { cat:'Character',   lbl:'Car Animal',        src:'ai/car_animal_01.png' },
-  { cat:'Character',   lbl:'Car Smile',         src:'ai/car_smile_01.png' },
-  // World / Environment
-  { cat:'World',       lbl:'Desert Melt',       src:'ai/desert_melt_01.png' },
-  { cat:'World',       lbl:'Desert Melt',       src:'ai/desert_melt_02.png' },
-  { cat:'World',       lbl:'Desert Digital',    src:'ai/desert_digital_01.png' },
-  { cat:'World',       lbl:'Desert Digital',    src:'ai/desert_digital_02.png' },
-  { cat:'World',       lbl:'Leaf Monster',      src:'ai/leaf_monster_01.png' },
-  { cat:'World',       lbl:'Leaf Monster',      src:'ai/leaf_monster_02.png' },
-  { cat:'World',       lbl:'Leaf Monster',      src:'ai/leaf_monster_03.png' },
-  { cat:'World',       lbl:'Leaf Monster',      src:'ai/leaf_monster_04.png' },
-  { cat:'World',       lbl:'NYC Decay',         src:'ai/nyc_decay_01.png' },
-  { cat:'World',       lbl:'Architecture',      src:'ai/architecture_01.png' },
-  { cat:'World',       lbl:'Architecture',      src:'ai/architecture_02.png' },
-  { cat:'World',       lbl:'Ground',            src:'ai/ground_01.png' },
-  { cat:'World',       lbl:'Sand',              src:'ai/sand_01.png' },
-  { cat:'World',       lbl:'Rock',              src:'ai/rock_01.png' },
-  { cat:'World',       lbl:'Abstract',          src:'ai/abstract_01.png' },
-  { cat:'World',       lbl:'Crowd Ants',        src:'ai/crowd_ants_01.png' },
-  { cat:'World',       lbl:'Highway Girl',      src:'ai/highway_girl_01.png' },
-  { cat:'World',       lbl:'Highway Median',    src:'ai/highway_median_01.png' },
-  // Stills
-  { cat:'Still',       lbl:'Film Photo',        src:'ai/film_photo_01.png' },
-  { cat:'Still',       lbl:'Film Photo',        src:'ai/film_photo_02.png' },
-  { cat:'Still',       lbl:'Cat Hand',          src:'ai/cat_hand_01.png' },
-  { cat:'Still',       lbl:'Cat Hand',          src:'ai/cat_hand_02.png' },
-  { cat:'Still',       lbl:'HF Still',          src:'ai/hf_still_01.png' },
-  // Video
-  { cat:'Video', lbl:'Bubble',  src:'ai/cute bubbebubble.mp4', isVideo:true },
-  { cat:'Video', lbl:'Coffee',  src:'ai/vid_coffee_01.mp4',    isVideo:true },
-  { cat:'Video', lbl:'Grok',    src:'ai/vid_grok_01.mp4',      isVideo:true },
-  { cat:'Video', lbl:'Grok',    src:'ai/vid_grok_02.mp4',      isVideo:true },
-  { cat:'Video', lbl:'Grok',    src:'ai/vid_grok_03.mp4',      isVideo:true },
-  { cat:'Video', lbl:'Grok',    src:'ai/vid_grok_04.mp4',      isVideo:true },
-  { cat:'Video', lbl:'Grok',    src:'ai/vid_grok_05.mp4',      isVideo:true },
-  { cat:'Video', lbl:'HF',      src:'ai/vid_hf_01.mp4',        isVideo:true },
-  { cat:'Video', lbl:'HF',      src:'ai/vid_hf_02.mp4',        isVideo:true },
-  { cat:'Video', lbl:'HF',      src:'ai/vid_hf_03.mp4',        isVideo:true },
+  { cat:'Character', lbl:'Thimsey',       src:'ai/Adventures of Thimsey.png' },
+  { cat:'Character', lbl:'Generation',    src:'ai/Generation.png' },
+  { cat:'Character', lbl:'Goofy',         src:'ai/goofy_01.png' },
+  { cat:'Character', lbl:'UGC Character', src:'ai/UGC Character 06.png' },
+  { cat:'Character', lbl:'The Suds',      src:'ai/The Suds 01.png' },
+  { cat:'Character', lbl:'The Suds',      src:'ai/The Suds 02.png' },
+  { cat:'Character', lbl:'Social Media',  src:'ai/Social Media 01.png' },
+  { cat:'Character', lbl:'Social Media',  src:'ai/Social Media 02.png' },
+  { cat:'Character', lbl:'Swim Game',     src:'ai/Swim Game.png' },
+  { cat:'Portrait',  lbl:'Portrait',      src:'ai/Portrait 01.jpg' },
+  { cat:'Portrait',  lbl:'Ninja Portrait',src:'ai/Portrait 02 ninja.png' },
+  { cat:'Portrait',  lbl:'Ninja Portrait',src:'ai/Portrait 04 ninja.png' },
+  { cat:'World',     lbl:'Dream Field',   src:'ai/Dream Field 01.png' },
+  { cat:'World',     lbl:'Dream Field',   src:'ai/Dream Field 02.png' },
+  { cat:'World',     lbl:'Quieters',      src:'ai/Quieters.png' },
+  { cat:'World',     lbl:'Quieters',      src:'ai/Quieters 02.png' },
+  { cat:'World',     lbl:'Quieters',      src:'ai/Quieters 03.png' },
+  { cat:'World',     lbl:'The Walkers',   src:'ai/Quieters - the Walkers.png' },
+  { cat:'Still',     lbl:'Film Photo',    src:'ai/film_photo_01.png' },
+  { cat:'Still',     lbl:'Film Photo',    src:'ai/film_photo_02.png' },
+  { cat:'Video',     lbl:'Andrew Origin Story', src:'ai/Andrew Origin story.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Chairmelt',     src:'ai/Chairmelt.mp4', isVideo:true },
+  { cat:'Video',     lbl:'False Alarm',   src:'ai/Finally You Are Just Another False Alarm.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Market Coffee', src:'ai/Market Coffee.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters',      src:'ai/Quieters.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Graffiti', src:'ai/Quieters - Graffiti.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Street Scene', src:'ai/Quieters - Street Scene.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Street Portal', src:'ai/Quieters Street Portal.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Swim Video Game', src:'ai/Swim video game.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Scattered Man', src:'ai/The Scattered Man 01.mp4', isVideo:true },
+  { cat:'Video',     lbl:'The Suds City', src:'ai/The Suds City.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Tupac Closeup', src:'ai/Tupac Closeup.mp4', isVideo:true },
+  { cat:'Video',     lbl:'UGC Influencer', src:'ai/UGC influencer.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Gboy',          src:'ai/gboy.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Grok',          src:'ai/vid_grok_01.mp4', isVideo:true },
 ];
 
 /* ── URL-encode each path segment so spaces / parens / special chars resolve ── */
@@ -1147,52 +1090,52 @@ function announce(text) {
 function dropFromTop(shape, w, h, delay) {
   setTimeout(() => {
     const x  = W*0.18 + Math.random()*W*0.64;
-    const fallSpeed = shape === 'circle' ? 7 + Math.random()*4.5 : 4 + Math.random()*3;
+    const fallSpeed = shape === 'circle' ? 9 + Math.random()*4.5 : 5.5 + Math.random()*3;
     spawnTile(shape, w, h, x, -h-10, (Math.random()-0.5)*3, fallSpeed);
   }, delay);
 }
 
-// 30s: first wave of circles
+// 8s: circles arrive early and recur more quickly
 setTimeout(() => {
   announce('new shapes entering');
-  [[190,190],[220,220],[175,175]].forEach(([s,_], i) => dropFromTop('circle', Math.round(s*MS), Math.round(s*MS), i*900));
+  [[190,190],[220,220],[175,175]].forEach(([s,_], i) => dropFromTop('circle', Math.round(s*MS), Math.round(s*MS), i*450));
   (function recurringCircle() {
     const sizes = [165,180,195,210,225,175,200];
     const s = Math.round(sizes[Math.floor(Math.random()*sizes.length)] * MS);
     dropFromTop('circle', s, s, 0);
-    setTimeout(recurringCircle, 12000 + Math.random()*7000);
+    setTimeout(recurringCircle, 8500 + Math.random()*3500);
   })();
-}, 30*1000);
+}, 8*1000);
 
-// 75s: pentagons — 5-sided digital shields
+// 32s: pentagons follow shortly after
 setTimeout(() => {
   announce('pentagons entering');
-  [[210,210],[190,190],[225,225]].forEach(([s,_], i) => dropFromTop('penta', Math.round(s*MS), Math.round(s*MS), i*2500));
+  [[210,210],[190,190],[225,225]].forEach(([s,_], i) => dropFromTop('penta', Math.round(s*MS), Math.round(s*MS), i*1400));
   (function recurringPenta() {
     const sizes = [185,200,215,195,205];
     const s = Math.round(sizes[Math.floor(Math.random()*sizes.length)] * MS);
     dropFromTop('penta', s, s, 0);
-    setTimeout(recurringPenta, 26000 + Math.random()*14000);
+    setTimeout(recurringPenta, 18000 + Math.random()*10000);
   })();
-}, 75*1000);
+}, 32*1000);
 
-// 2 min: hexagons — honeycomb infrastructure cells
+// 55s: hexagons build the field sooner
 setTimeout(() => {
   announce('hexagons entering');
-  [[200,200],[220,220],[185,185]].forEach(([s,_], i) => dropFromTop('hex', Math.round(s*MS), Math.round(s*MS), i*2500));
+  [[200,200],[220,220],[185,185]].forEach(([s,_], i) => dropFromTop('hex', Math.round(s*MS), Math.round(s*MS), i*1400));
   (function recurringHex() {
     const sizes = [180,200,215,195,210];
     const s = Math.round(sizes[Math.floor(Math.random()*sizes.length)] * MS);
     dropFromTop('hex', s, s, 0);
-    setTimeout(recurringHex, 28000 + Math.random()*16000);
+    setTimeout(recurringHex, 22000 + Math.random()*12000);
   })();
-}, 2*60*1000);
+}, 55*1000);
 
-// 3 min: triangles
+// 78s: triangles arrive after the circle-led field is established
 setTimeout(() => {
   announce('triangles entering');
-  [[200,200],[185,185],[215,215]].forEach(([s,_], i) => dropFromTop('tri', Math.round(s*MS), Math.round(s*MS), i*2000));
-}, 3*60*1000);
+  [[200,200],[185,185],[215,215]].forEach(([s,_], i) => dropFromTop('tri', Math.round(s*MS), Math.round(s*MS), i*1400));
+}, 78*1000);
 
 /* ═══════════════════════════════════════════════════════
    CONSTELLATION CANVAS
@@ -1975,7 +1918,7 @@ const HERO_DATA = {
     role:  'Producer · Director · Editor',
     scale: '24,000,000,000+ views',
     desc:  'One of the most-watched children\'s media brands on Earth. Built and led the creative from the ground up — directing talent, designing visual systems, editing at volume without losing the handmade spark. A masterclass in sustainable creative production at global scale.',
-    img:   'MGCGIFS/Baby Shark + More - Mother Goose Club Playhouse.gif'
+    img:   'media/mgc-dance-party.gif'
   },
   music: {
     num:   '02 / HERO CASE STUDY',
@@ -1983,7 +1926,7 @@ const HERO_DATA = {
     role:  'Director · Camera · Edit',
     scale: 'Jagwar Ma · David Byrne · Parquet Courts',
     desc:  'Experimental live coverage built on instinct, energy, and the refusal to over-plan. Festival stages and intimate venues — capturing what can\'t be rehearsed. A body of work pointing toward music video direction with playful experimental visual rhythm at its core.',
-    img:   'ADGIFS/Valerie June.gif'
+    img:   'media/branded-parquet-courts.jpg'
   },
   evg: {
     num:   '03 / HERO CASE STUDY',
@@ -1991,7 +1934,7 @@ const HERO_DATA = {
     role:  'Cinematographer · Director',
     scale: 'Documentary Film',
     desc:  'A film about patience and light. Brown Pelicans at dawn, swamp water, wild sky — footage that required showing up and waiting. Documentary craft grounded in a cinematographer\'s instinct for the decisive frame. The soul of the practice.',
-    img:   'EGPGIFS/EGP Master 021612.gif'
+    img:   'media/everglades-alligator-eye.jpg'
   }
 };
 
