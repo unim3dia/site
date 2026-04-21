@@ -14,16 +14,32 @@
       --font-body:'Inter',sans-serif;
       --font-display:'EB Garamond',serif;
     }
-    #back-link {
-      position:fixed; top:26px; left:32px; z-index:5000;
-      font-family:var(--font-body); font-size:calc(13px * var(--type-scale)); letter-spacing:0.18em; font-weight:600;
-      text-transform:uppercase; color:rgba(240,237,232,0); text-decoration:none;
-      pointer-events:none; transition:color 1.4s ease 0.8s;
-      border:1px solid rgba(240,237,232,0);
-      padding:10px 18px;
+    #top-menu {
+      position:fixed; top:26px; left:50%; transform:translateX(-50%); z-index:5000;
+      display:flex; flex-wrap:wrap; justify-content:center; gap:6px; padding:6px;
+      border:1px solid rgba(240,237,232,0.12);
+      background:rgba(6,12,12,0.42); backdrop-filter:blur(12px);
+      border-radius:999px;
+      opacity:0; pointer-events:none; transition:opacity 1.4s ease 0.8s;
     }
-    #back-link.show { color:rgba(240,237,232,0.45); pointer-events:all; }
-    #back-link.show:hover { color:rgba(240,237,232,0.9); border-color:rgba(240,237,232,0.45); }
+    #top-menu.show { opacity:1; pointer-events:all; }
+    .menu-link {
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width:46px; padding:8px 12px; text-decoration:none;
+      color:rgba(240,237,232,0.55); font-family:var(--font-body);
+      font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:600;
+      border:1px solid rgba(240,237,232,0.1); border-radius:999px;
+      transition:background .2s,color .2s,border-color .2s;
+    }
+    .menu-link:hover { color:rgba(240,237,232,0.92); border-color:rgba(240,237,232,0.24); }
+    .menu-link.active { background:rgba(240,237,232,0.12); color:rgba(240,237,232,0.95); border-color:rgba(240,237,232,0.18); }
+    .menu-link.lang-link { color:rgba(200,169,110,0.8); border-color:rgba(200,169,110,0.22); }
+    .menu-link.lang-link:hover { color:rgba(237,214,150,0.98); border-color:rgba(200,169,110,0.38); }
+    .menu-link.lang-link.active { background:rgba(200,169,110,0.14); color:rgba(245,222,160,0.98); border-color:rgba(200,169,110,0.42); }
+    #back-link {
+      font-family:var(--font-body); font-size:calc(13px * var(--type-scale)); letter-spacing:0.18em; font-weight:600;
+      text-transform:uppercase;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
   <style>
@@ -61,7 +77,7 @@
     #constellation { position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:5; }
 
     /* ── HEADER ─────────────────────────── */
-    #header { position:fixed; top:26px; left:50%; transform:translateX(-50%); text-align:center; z-index:400; pointer-events:none; }
+    #header { position:fixed; top:92px; left:50%; transform:translateX(-50%); text-align:center; z-index:400; pointer-events:none; }
     #name {
       font-family:var(--font-body); font-size:calc(18px * var(--type-scale)); letter-spacing:0.2em; font-weight:700; text-transform:uppercase;
       color:rgba(240,237,232,0); transition:color 1.4s ease; white-space:nowrap;
@@ -394,7 +410,9 @@
 
       /* Tighter corner buttons */
       #sound-btn { font-size:11px; padding:8px 14px; left:12px;  bottom:12px; }
-      #back-link { top:18px; left:18px; font-size:12px; padding:8px 14px; }
+      #top-menu { top:18px; max-width:calc(100vw - 24px); }
+      .menu-link { font-size:11px; padding:8px 12px; }
+      #header { top:86px; }
 
       /* Photo overlay */
       #ov-img  { max-width:94vw; max-height:52vh; }
@@ -433,10 +451,11 @@
       #hero-text-col .h-back  { font-size:11px; }
     }
     @media (max-width: 520px) {
-      #header { top:18px; width:calc(100vw - 110px); }
+      #top-menu { top:14px; max-width:calc(100vw - 18px); }
+      .menu-link { min-width:40px; padding:7px 10px; font-size:11px; letter-spacing:0.12em; }
+      #header { top:82px; width:calc(100vw - 32px); }
       #name { font-size:11px; letter-spacing:0.14em; }
       #tagline { font-size:14px; margin-top:3px; white-space:normal; line-height:1.15; }
-      #back-link { top:14px; left:12px; padding:7px 10px; font-size:11px; letter-spacing:0.12em; }
       #sound-btn { left:10px; bottom:10px; padding:7px 10px; font-size:10px; }
       #ov-box { padding:16px 12px 14px; width:96vw; }
       #ov-img, #ov-vid { max-width:92vw; max-height:46vh; }
@@ -479,14 +498,19 @@
   </svg>
 </div>
 <canvas id="grain"></canvas>
-<a id="back-link" href="./index.html">← home</a>
+<nav id="top-menu" aria-label="Primary">
+  <a class="menu-link" id="back-link" href="./index.html" data-i18n="home">home</a>
+  <a class="menu-link" href="mailto:aylonbenami@gmail.com" data-i18n="contact">contact</a>
+  <a class="menu-link lang-link" id="lang-en" href="?lang=en">EN</a>
+  <a class="menu-link lang-link" id="lang-he" href="?lang=he">HE</a>
+</nav>
 <div id="header">
   <div id="name">Aylon Ben-Ami</div>
-  <div id="tagline">AI image and motion studies</div>
+  <div id="tagline" data-i18n="tagline">AI image and motion studies</div>
 </div>
-<div id="mode">hold space — pull &nbsp;·&nbsp; release — push</div>
+<div id="mode" data-i18n="modeHint">hold space — pull &nbsp;·&nbsp; release — push</div>
 <div id="announcer"></div>
-<div id="sound-btn" role="button" tabindex="0">&#9675; sound off</div>
+<div id="sound-btn" role="button" tabindex="0"></div>
 <div id="ring"></div>
 <div id="overlay">
   <div id="ov-box">
@@ -494,14 +518,14 @@
     <video id="ov-vid" muted loop playsinline></video>
     <div id="ov-cat"></div>
     <div id="ov-lbl"></div>
-    <span id="ov-close">esc &nbsp;·&nbsp; click outside to close</span>
+    <span id="ov-close" data-i18n="overlayClose">esc &nbsp;·&nbsp; click outside to close</span>
   </div>
 </div>
 
 <div id="exec-overlay">
   <div id="exec-panel">
-    <div class="ep-name">AI Studies</div>
-    <div class="ep-tagline">An experimental image-and-motion practice focused on character, worldbuilding, and visual tone. This page works like a sandbox: pull elements around, open pieces up close, and scan the range of visual directions.</div>
+    <div class="ep-name" data-i18n="execName">AI Studies</div>
+    <div class="ep-tagline" data-i18n="execTagline">An experimental image-and-motion practice focused on character, worldbuilding, and visual tone. This page works like a sandbox: pull elements around, open pieces up close, and scan the range of visual directions.</div>
     <div class="ep-studies">
       <div class="ep-card">
         <div class="ep-num">01</div>
@@ -523,12 +547,12 @@
       </div>
     </div>
     <div class="ep-clients">
-      <div class="ep-clients-label">Tools</div>
+      <div class="ep-clients-label" data-i18n="tools">Tools</div>
       <div class="ep-clients-list">Midjourney &nbsp;&middot;&nbsp; Grok &nbsp;&middot;&nbsp; Hugging Face &nbsp;&middot;&nbsp; Dreamina &nbsp;&middot;&nbsp; Haprojector</div>
     </div>
     <div class="ep-contact">
       aylonft@gmail.com
-      <div class="ep-hint">press e or esc to return &nbsp;&middot;&nbsp; <a href="index.html" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">← back to home</a></div>
+      <div class="ep-hint"><span data-i18n="execHint">press e or esc to return</span> &nbsp;&middot;&nbsp; <a href="index.html" id="back-home-inline" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">← <span data-i18n="backHome">back to home</span></a></div>
     </div>
   </div>
 </div>
@@ -541,11 +565,68 @@
     <div id="hero-role" class="h-role"></div>
     <div id="hero-scale" class="h-scale"></div>
     <div id="hero-desc" class="h-desc"></div>
-    <div class="h-back" id="hero-back">&#8592; back to brief</div>
+    <div class="h-back" id="hero-back">&#8592; <span data-i18n="backBrief">back to brief</span></div>
   </div>
 </div>
 
 <script>
+const TRANSLATIONS={
+  en:{
+    title:'Aylon Ben-Ami — AI',
+    home:'home',
+    contact:'contact',
+    tagline:'AI image and motion studies',
+    modeHint:'hold space — pull &nbsp;·&nbsp; release — push',
+    soundOff:'○ sound off',
+    soundOn:'◉ sound on',
+    overlayClose:'esc &nbsp;·&nbsp; click outside to close',
+    execName:'AI Studies',
+    execTagline:'An experimental image-and-motion practice focused on character, worldbuilding, and visual tone. This page works like a sandbox: pull elements around, open pieces up close, and scan the range of visual directions.',
+    tools:'Tools',
+    execHint:'press e or esc to return',
+    backHome:'back to home',
+    backBrief:'back to brief'
+  },
+  he:{
+    title:'אילון בן-עמי — AI',
+    home:'בית',
+    contact:'יצירת קשר',
+    tagline:'מחקרי דימוי ותנועה בבינה מלאכותית',
+    modeHint:'החזיקו רווח — משכו &nbsp;·&nbsp; שחררו — דחפו',
+    soundOff:'○ סאונד כבוי',
+    soundOn:'◉ סאונד פועל',
+    overlayClose:'esc &nbsp;·&nbsp; לחצו בחוץ כדי לסגור',
+    execName:'מחקרי AI',
+    execTagline:'פרקטיקה ניסיונית של דימוי ותנועה, המתמקדת בדמויות, בבניית עולמות ובטון חזותי. העמוד הזה פועל כמו ארגז חול: מזיזים אלמנטים, פותחים עבודות מקרוב וסורקים טווחים שונים של שפה ויזואלית.',
+    tools:'כלים',
+    execHint:'לחצו e או esc כדי לחזור',
+    backHome:'חזרה לאתר',
+    backBrief:'חזרה לתקציר'
+  }
+};
+function getLang(){
+  const params=new URLSearchParams(window.location.search);
+  return params.get('lang')==='he'?'he':'en';
+}
+function tt(key){
+  return (TRANSLATIONS[window.currentLanguage]&&TRANSLATIONS[window.currentLanguage][key])||TRANSLATIONS.en[key]||'';
+}
+function applyTranslations(lang){
+  window.currentLanguage=lang;
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==='he'?'rtl':'ltr';
+  document.title=tt('title');
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.innerHTML=tt(el.dataset.i18n);});
+  document.getElementById('name').textContent=lang==='he'?'אילון בן-עמי':'Aylon Ben-Ami';
+  document.getElementById('back-link').innerHTML=`&#8592; ${tt('home')}`;
+  document.getElementById('back-link').href=`./index.html?lang=${lang}`;
+  document.getElementById('back-home-inline').href=`index.html?lang=${lang}`;
+  document.getElementById('lang-en').classList.toggle('active',lang==='en');
+  document.getElementById('lang-he').classList.toggle('active',lang==='he');
+  const soundBtn=document.getElementById('sound-btn');
+  if(soundBtn) soundBtn.textContent=(window.__soundOn||false)?tt('soundOn'):tt('soundOff');
+}
+applyTranslations(getLang());
 /* ═══════════════════════════════════════════════════════
    AI ASSETS — ai/ folder
    ═══════════════════════════════════════════════════════ */
@@ -1558,16 +1639,8 @@ let gts=0;
 setTimeout(() => {
   document.getElementById('name').classList.add('show');
   document.getElementById('tagline').classList.add('show');
-  document.getElementById('back-link').classList.add('show');
+  document.getElementById('top-menu').classList.add('show');
 }, 2800);
-
-const homeLink = document.getElementById('back-link');
-if (homeLink) {
-  homeLink.addEventListener('click', (event) => {
-    event.preventDefault();
-    window.location.href = new URL('./index.html', window.location.href).href;
-  });
-}
 
 /* ═══════════════════════════════════════════════════════
    PRELOAD next batch of assets silently in background
@@ -1804,6 +1877,7 @@ function playWhoosh() {
    AMBIENT SOUNDSCAPE — deep cinematic drone, starts on first interaction
    ═══════════════════════════════════════════════════════ */
 let soundOn        = false;
+window.__soundOn   = false;
 let soundscapeNode = null;   // master gain (mutable)
 let soundInited    = false;
 
@@ -1870,6 +1944,7 @@ function buildSoundscape() {
 
 function setSoundOn(on) {
   soundOn = on;
+  window.__soundOn = on;
   const ctx = getAudioCtx();
   if (!soundInited) { buildSoundscape(); soundInited = true; }
   const now = ctx.currentTime;
@@ -1883,7 +1958,7 @@ function setSoundOn(on) {
     soundscapeNode.gain.linearRampToValueAtTime(0.001, now + 1.0);
   }
   const btn = document.getElementById('sound-btn');
-  btn.textContent = soundOn ? '◉ sound on' : '○ sound off';
+  btn.textContent = soundOn ? tt('soundOn') : tt('soundOff');
   btn.classList.toggle('on', soundOn);
 }
 
@@ -2038,7 +2113,7 @@ if (isMobile) {
     touchStartPt = null;
 
     if (el && el.closest('#back-link')) {
-      window.location.href = new URL('./index.html', window.location.href).href;
+      window.location.href = `./index.html?lang=${window.currentLanguage || 'en'}`;
       return;
     }
 
