@@ -6,21 +6,23 @@
   <title>Aylon Ben-Ami — AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --type-scale: 1.18;
       --type-scale-mobile: 1.12;
       --font-body:'Inter',sans-serif;
       --font-display:'EB Garamond',serif;
+      --font-he:'Assistant',sans-serif;
     }
     #top-menu {
       position:fixed; top:26px; left:50%; transform:translateX(-50%); z-index:5000;
-      display:flex; flex-wrap:wrap; justify-content:center; gap:6px; padding:6px;
+      display:flex; flex-wrap:nowrap; justify-content:center; gap:6px; padding:6px;
       border:1px solid rgba(240,237,232,0.12);
       background:rgba(6,12,12,0.42); backdrop-filter:blur(12px);
       border-radius:999px;
       opacity:0; pointer-events:none; transition:opacity 1.4s ease 0.8s;
+      white-space:nowrap;
     }
     #top-menu.show { opacity:1; pointer-events:all; }
     .menu-link {
@@ -30,6 +32,7 @@
       font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:600;
       border:1px solid rgba(240,237,232,0.1); border-radius:999px;
       transition:background .2s,color .2s,border-color .2s;
+      position:relative; z-index:1;
     }
     .menu-link:hover { color:rgba(240,237,232,0.92); border-color:rgba(240,237,232,0.24); }
     .menu-link.active { background:rgba(240,237,232,0.12); color:rgba(240,237,232,0.95); border-color:rgba(240,237,232,0.18); }
@@ -38,6 +41,8 @@
     .lang-option { opacity:0.46; transition:opacity .2s, color .2s; }
     .lang-option.active { opacity:1; color:rgba(245,222,160,0.98); }
     .lang-divider { opacity:0.34; }
+    .lang-he .menu-link,
+    .lang-he #back-link { font-family:var(--font-he); }
     #back-link {
       font-family:var(--font-body); font-size:calc(13px * var(--type-scale)); letter-spacing:0.18em; font-weight:600;
       text-transform:uppercase;
@@ -412,9 +417,12 @@
 
       /* Tighter corner buttons */
       #sound-btn { font-size:11px; padding:8px 14px; left:12px;  bottom:12px; }
-      #top-menu { top:18px; max-width:calc(100vw - 24px); }
-      .menu-link { font-size:11px; padding:8px 12px; }
-      #header { top:86px; }
+      #top-menu { top:12px; max-width:calc(100vw - 14px); gap:4px; padding:4px 5px; overflow-x:auto; overflow-y:hidden; scrollbar-width:none; }
+      #top-menu::-webkit-scrollbar { display:none; }
+      .menu-link { min-width:auto; font-size:10px; padding:7px 10px; letter-spacing:0.1em; flex:0 0 auto; }
+      .menu-link.lang-link { gap:6px; }
+      #back-link { font-size:11px; }
+      #header { top:72px; width:88vw; }
 
       /* Photo overlay */
       #ov-img  { max-width:94vw; max-height:52vh; }
@@ -453,9 +461,10 @@
       #hero-text-col .h-back  { font-size:11px; }
     }
     @media (max-width: 520px) {
-      #top-menu { top:14px; max-width:calc(100vw - 18px); }
-      .menu-link { min-width:40px; padding:7px 10px; font-size:11px; letter-spacing:0.12em; }
-      #header { top:82px; width:calc(100vw - 32px); }
+      #top-menu { top:8px; max-width:calc(100vw - 10px); gap:3px; padding:3px 4px; }
+      .menu-link { min-width:auto; padding:6px 8px; font-size:9px; letter-spacing:0.08em; }
+      .menu-link.lang-link { padding-inline:8px; }
+      #header { top:64px; width:calc(100vw - 24px); }
       #name { font-size:11px; letter-spacing:0.14em; }
       #tagline { font-size:14px; margin-top:3px; white-space:normal; line-height:1.15; }
       #sound-btn { left:10px; bottom:10px; padding:7px 10px; font-size:10px; }
@@ -620,6 +629,7 @@ function applyTranslations(lang){
   window.currentLanguage=lang;
   document.documentElement.lang=lang;
   document.documentElement.dir=lang==='he'?'rtl':'ltr';
+  document.documentElement.classList.toggle('lang-he',lang==='he');
   document.title=tt('title');
   document.querySelectorAll('[data-i18n]').forEach(el=>{el.innerHTML=tt(el.dataset.i18n);});
   document.getElementById('name').textContent=lang==='he'?'אילון בן-עמי':'Aylon Ben-Ami';
@@ -2092,6 +2102,9 @@ document.addEventListener('keydown', e => {
    MOBILE TOUCH SUPPORT
    ═══════════════════════════════════════════════════════ */
 if (isMobile) {
+  function isUiTarget(el) {
+    return !!(el && el.closest('#top-menu, #sound-btn, #overlay, #exec-overlay, #hero-overlay, a, button'));
+  }
 
   /* ── Track touch position for cursor/ring ── */
   document.addEventListener('touchmove', e => {
@@ -2128,6 +2141,10 @@ if (isMobile) {
       return;
     }
 
+    if (isUiTarget(el) && !(expanded && el && !el.closest('#ov-box'))) {
+      return;
+    }
+
     /* Dismiss exec mode by tapping the dark backdrop */
     if (execMode && el === execOverlay) { toggleExec(false); return; }
     /* Dismiss hero by tapping back button or outside text col */
@@ -2156,12 +2173,15 @@ if (isMobile) {
     }));
   }
   mcEl.addEventListener('touchstart', e => {
+    if (isUiTarget(e.target)) return;
     touchToMouse('mousedown', e.touches[0]);
   }, { passive: true });
   mcEl.addEventListener('touchmove', e => {
+    if (isUiTarget(e.target)) return;
     touchToMouse('mousemove', e.touches[0]);
   }, { passive: true });
   mcEl.addEventListener('touchend', e => {
+    if (isUiTarget(e.target)) return;
     touchToMouse('mouseup', e.changedTouches[0]);
   }, { passive: true });
 }
