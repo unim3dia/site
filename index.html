@@ -428,7 +428,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
 @media(max-width:768px){
   body{cursor:auto}
   #cur{display:none!important}
-  .hero-menu-wrap{display:flex;position:fixed;top:.75rem;left:50%;transform:translateX(-50%);width:min(100vw - 1rem,720px);z-index:9200}
+  .hero-menu-wrap{display:flex;position:absolute;top:.75rem;left:50%;transform:translateX(-50%);width:min(100vw - 1rem,720px);z-index:9200}
   .top-nav{width:100%;flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:.32rem;padding:.35rem .38rem;scrollbar-width:none}
   .top-nav::-webkit-scrollbar{display:none}
   .top-nav-link{flex:0 0 auto;padding:.62rem .78rem;font-size:.54rem;letter-spacing:.14em;white-space:nowrap}
@@ -445,7 +445,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   .hero-video{filter:brightness(.32) saturate(.6)}
   .hero-eyebrow{margin-bottom:2rem;letter-spacing:.28em;text-align:center;padding:0 1rem;line-height:1.6}
   .hero-name{font-size:clamp(3.5rem,21vw,6.2rem);line-height:.9}
-  .scroll-hint{bottom:1.5rem}
+  .scroll-hint{bottom:calc(env(safe-area-inset-bottom) + 4.9rem)}
   #mgc-hero{height:84svh}
   #mgc-hero img{object-position:center center}
   .text-wrap{padding:0 1.35rem 6vh}
@@ -509,6 +509,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   .hero-menu-wrap{top:.55rem;width:min(100vw - .7rem,680px)}
   .top-nav{padding:.28rem .3rem;gap:.26rem}
   .top-nav-link{padding:.54rem .66rem;font-size:.5rem;letter-spacing:.1em}
+  .scroll-hint{bottom:calc(env(safe-area-inset-bottom) + 5.6rem)}
   .hero-eyebrow{font-size:.74rem}
   #mgc-hero{height:88svh}
   #mgc-hero img{object-position:center center}
@@ -584,10 +585,10 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
     <nav class="top-nav" aria-label="Primary">
       <a class="top-nav-link is-active" data-nav="mgc" href="#mgc">MGC</a>
       <a class="top-nav-link" data-nav="evg" href="#evg" data-i18n="navEverglades">Everglades</a>
-      <a class="top-nav-link" data-nav="edge" href="#edge" data-i18n="commercialVisuals">Commercial Visuals</a>
-      <a class="top-nav-link" data-nav="paper-zone" href="#paper-zone" data-i18n="personalVisuals">Personal Visuals</a>
+      <a class="top-nav-link" data-nav="edge" href="#edge" data-i18n="navCommercial">Commercial</a>
+      <a class="top-nav-link" data-nav="paper-zone" href="#paper-zone" data-i18n="navPersonal">Personal</a>
       <a class="top-nav-link" data-nav="future" href="#future">AI</a>
-      <a class="top-nav-link" href="mailto:aylonbenami@gmail.com" data-i18n="contact">Contact</a>
+      <a class="top-nav-link" data-nav="contact" href="#contact" data-i18n="contact">Contact</a>
       <a class="top-nav-link lang-toggle" id="lang-toggle" href="?lang=he" aria-label="Toggle language">
         <span class="lang-option" data-lang-label="en">EN</span>
         <span class="lang-divider">/</span>
@@ -862,7 +863,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
 </section>
 
 <!-- ═══ FOOTER ════════════════════════════════════════ -->
-<footer>
+<footer id="contact">
   <div class="signet"><span class="signet-text">A·B</span></div>
   <div class="foot-name">Aylon<br><em>Ben-Ami</em></div>
   <p class="foot-tag" data-i18n="loaderInfinite">Infinite Expressions</p>
@@ -1919,7 +1920,7 @@ ScrollTrigger.create({trigger:'#mgc',start:'top 80%',
   const navItems=document.querySelectorAll('[data-nav]');
   if(!navItems.length)return;
 
-  const sections=['hero','mgc','evg','edge','paper-zone','future'];
+  const sections=['hero','mgc','evg','edge','paper-zone','future','contact'];
 
   let mobileNavVisible=false;
   function checkNavVisibility(){

@@ -2141,6 +2141,17 @@ if (isMobile) {
       return;
     }
 
+    if (el && el.closest('#lang-toggle')) {
+      window.location.href = `?lang=${window.currentLanguage === 'he' ? 'en' : 'he'}`;
+      return;
+    }
+
+    const contactLink = el && el.closest('#top-menu a[href^="mailto:"]');
+    if (contactLink) {
+      window.location.href = contactLink.href;
+      return;
+    }
+
     if (isUiTarget(el) && !(expanded && el && !el.closest('#ov-box'))) {
       return;
     }
