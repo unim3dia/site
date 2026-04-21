@@ -607,7 +607,7 @@ function assetUrl(src) {
   }
 })(ASSETS);
 
-/* Always start with 4 videos — separately shuffled so the opening field includes motion */
+/* Always start with 6 videos — separately shuffled so the opening field includes motion */
 {
   const vids = ASSETS.filter(a =>  a.isVideo);
   const imgs  = ASSETS.filter(a => !a.isVideo);
@@ -616,8 +616,8 @@ function assetUrl(src) {
     const j=Math.floor(Math.random()*(i+1));
     [vids[i],vids[j]]=[vids[j],vids[i]];
   }
-  /* Rebuild: 4 random videos first, then all images (already shuffled), then remaining videos */
-  ASSETS.splice(0, ASSETS.length, ...vids.slice(0,4), ...imgs, ...vids.slice(4));
+  /* Rebuild: 6 random videos first, then all images (already shuffled), then remaining videos */
+  ASSETS.splice(0, ASSETS.length, ...vids.slice(0,6), ...imgs, ...vids.slice(6));
 }
 
 /* ═══════════════════════════════════════════════════════
