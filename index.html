@@ -120,6 +120,7 @@ body::before{
 body{cursor:none}
 #cur{display:none;position:fixed;top:0;left:0;z-index:12000;pointer-events:none;will-change:transform}
 #cur svg{transform:translate(-50%,-50%)}
+#cur svg path{stroke:rgba(0,255,200,0.7)}
 
 /* ── LOADER ─────────────────────────────────────────── */
 #loader{position:fixed;inset:0;background:linear-gradient(135deg,#07111f 0%,#0d2f1a 45%,#461118 72%,#240d3d 100%);z-index:10000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2rem}
@@ -223,6 +224,8 @@ body{cursor:none}
 .media-trigger{cursor:pointer}
 .section-copy{font-family:var(--serif);font-size:clamp(1.42rem,2.1vw,2.15rem);line-height:1.66;color:var(--copy-bright);max-width:980px;padding:3vh 0 9vh;margin:0 auto;text-align:center}
 .section-copy p+ p{margin-top:1.4rem}
+.mgc-inline-video{padding:0 0 8vh}
+.mgc-inline-video video{width:100%;display:block;border-radius:1rem;min-height:340px;object-fit:cover;box-shadow:0 24px 60px rgba(0,0,0,.35)}
 .section-quote{font-family:var(--serif);font-style:italic;font-size:clamp(1.24rem,2.1vw,2.2rem);color:rgba(255,255,255,.72);line-height:1.75;text-align:center;padding:8vh 0;max-width:900px;margin:0 auto}
 
 /* ── ABOUT ──────────────────────────────────────────── */
@@ -443,10 +446,11 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   .bottom-nav-item.is-active .bottom-nav-dot{transform:scale(1.6)}
   .bottom-nav-label{font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;font-weight:300}
   body.modal-open .bottom-nav{opacity:0!important;pointer-events:none}
-  #hero{min-height:100svh;padding:3.8rem 1rem 0}
+  #hero{min-height:100svh;padding:2.9rem 1rem 0}
   .hero-video{filter:brightness(.32) saturate(.6)}
   .hero-eyebrow{margin-bottom:2rem;letter-spacing:.28em;text-align:center;padding:0 1rem;line-height:1.6}
-  .hero-name{font-size:clamp(3.5rem,21vw,6.2rem);line-height:.9}
+  .hero-name{font-size:clamp(3.5rem,21vw,6.2rem);line-height:.9;margin-top:-5vh}
+  .hero-eyebrow{margin-top:-3vh}
   .scroll-hint{bottom:calc(env(safe-area-inset-bottom) + 4.9rem)}
   #mgc-hero{height:84svh}
   #mgc-hero img{object-position:center center}
@@ -460,6 +464,7 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   .mgc-grid{grid-template-columns:1fr 1fr;gap:3px}
   .mgc-grid .img-reveal:first-child{grid-column:span 2;aspect-ratio:16/9}
   .section-copy,.section-quote{font-size:clamp(1.08rem,4.8vw,1.45rem);line-height:1.58;padding-left:.25rem;padding-right:.25rem}
+  .mgc-inline-video video{min-height:220px}
   .about-section{padding:11vh 0 10vh}
   .about-eyebrow{margin-bottom:2.2rem}
   .about-body{font-size:clamp(1.28rem,5.4vw,1.7rem);line-height:1.42}
@@ -511,6 +516,7 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   .scroll-hint{bottom:calc(env(safe-area-inset-bottom) + 5.6rem)}
   .lang-he .scroll-hint span{font-size:1rem}
   .hero-eyebrow{font-size:.74rem}
+  .mgc-inline-video video{min-height:188px}
   #mgc-hero{height:88svh}
   #mgc-hero img{object-position:center center}
   .mgc-title{font-size:clamp(1.8rem,8.4vw,2.6rem);line-height:1.02}
@@ -641,14 +647,17 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
       <div class="stat"><div class="stat-n">300+</div><div class="stat-l" data-i18n="videosProduced">Videos produced</div></div>
     </div>
     <div class="mgc-grid">
-      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-dance-party.gif" alt="Mother Goose Club dance party"></div>
-      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-hot-potato.gif" alt="Mother Goose Club Hot Potato"></div>
-      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-rainbow-baa-baa.gif" alt="Mother Goose Club Rainbow"></div>
-      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-baby-shark-playhouse.gif" alt="Mother Goose Club Baby Shark"></div>
-      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-monster-trucks.gif" alt="Mother Goose Club Monster Trucks"></div>
+      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-dance-party.gif" alt="Mother Goose Club dance party"></div>
+      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-hot-potato.gif" alt="Mother Goose Club Hot Potato"></div>
+      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-rainbow-baa-baa.gif" alt="Mother Goose Club Rainbow"></div>
+      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-baby-shark-playhouse.gif" alt="Mother Goose Club Baby Shark"></div>
+      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-monster-trucks.gif" alt="Mother Goose Club Monster Trucks"></div>
     </div>
     <div class="section-copy" data-reveal>
       <p data-i18n="mgcCopy">Over a decade in New York City helping build one of YouTube&rsquo;s most-watched children&rsquo;s channels, <em>Mother Goose Club Playhouse</em>. I created and oversaw more than 300 videos of live-action, songs, and branded content, adapting to the platform&rsquo;s ever-changing algorithm and forging lasting connections with families across more than 100 countries. Through a steady stream of episodes and character-driven stories, I kept every piece clear, musical, and optimized for massive audiences.</p>
+    </div>
+    <div class="mgc-inline-video" data-reveal>
+      <video src="media/mgc-selects.mp4" autoplay muted loop playsinline preload="metadata"></video>
     </div>
   </div>
 </section>
