@@ -153,10 +153,12 @@ body{cursor:none}
 .lang-he .hero-name,.lang-he .mgc-title,.lang-he .section-copy,.lang-he .section-quote,.lang-he .about-body,.lang-he .art-title,.lang-he .portal-prompt,.lang-he .foot-name,.lang-he .stat-n,.lang-he .evg-intro,.lang-he .edge-title{font-family:var(--serif-he)}
 .lang-he .hero-eyebrow,.lang-he .about-eyebrow,.lang-he .ch,.lang-he .stat-l,.lang-he .evg-meta,.lang-he .contact-link,.lang-he .media-btn,.lang-he .media-title,.lang-he .top-section-nav-link{font-family:var(--serif-he)}
 .lang-he .top-nav-link,.lang-he .bottom-nav-label,.lang-he .bottom-nav-item{font-family:var(--sans-he)}
-.lang-he .hero-eyebrow{font-size:clamp(1.08rem,1.45vw,1.34rem)}
+.lang-he .hero-eyebrow{font-size:clamp(1.2rem,1.65vw,1.5rem)}
+.lang-he .scroll-hint span{font-size:clamp(.9rem,1.2vw,1.06rem)}
 .lang-he .hero-name{letter-spacing:0}
 .lang-he .section-copy,.lang-he .section-quote,.lang-he .about-body{line-height:1.8}
-.lang-he .evg-meta,.lang-he .about-eyebrow,.lang-he .top-nav-link,.lang-he .top-section-nav-link,.lang-he .contact-link{font-size:clamp(.8rem,1vw,1rem)}
+.lang-he .evg-meta,.lang-he .top-nav-link,.lang-he .top-section-nav-link,.lang-he .contact-link{font-size:clamp(.8rem,1vw,1rem)}
+.lang-he .about-eyebrow{font-size:clamp(1.26rem,1.8vw,1.72rem)}
 .lang-he .evg-intro,.lang-he .edge-title{font-size:clamp(2.2rem,4.2vw,4.6rem)}
 .lang-he .section-copy,.lang-he .section-quote{font-size:clamp(1.58rem,2.35vw,2.45rem)}
 
@@ -221,16 +223,6 @@ body{cursor:none}
 .media-trigger{cursor:pointer}
 .section-copy{font-family:var(--serif);font-size:clamp(1.42rem,2.1vw,2.15rem);line-height:1.66;color:var(--copy-bright);max-width:980px;padding:3vh 0 9vh;margin:0 auto;text-align:center}
 .section-copy p+ p{margin-top:1.4rem}
-.mgc-youtube-wrap{display:flex;justify-content:center;padding:0 0 8vh}
-.mgc-youtube-btn{position:relative;display:inline-flex;align-items:center;gap:1rem;padding:1rem 1.25rem;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,70,70,.08));backdrop-filter:blur(14px);color:#fff;text-decoration:none;box-shadow:0 18px 50px rgba(0,0,0,.24);transition:transform .3s,border-color .3s,box-shadow .3s}
-.mgc-youtube-btn:hover{transform:translateY(-3px) scale(1.01);border-color:rgba(255,255,255,.28);box-shadow:0 28px 64px rgba(0,0,0,.32)}
-.mgc-youtube-logo{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,.22);box-shadow:0 10px 24px rgba(0,0,0,.24)}
-.mgc-youtube-logo img{width:100%;height:100%;object-fit:cover}
-.mgc-youtube-copy{display:flex;flex-direction:column;align-items:flex-start;gap:.25rem}
-.mgc-youtube-kicker{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.58)}
-.mgc-youtube-title{font-family:var(--serif);font-size:clamp(1.12rem,1.7vw,1.4rem);color:#fff}
-.mgc-youtube-icon{width:2.6rem;height:2.6rem;display:grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,#ff4c4c,#ff0033);box-shadow:0 8px 18px rgba(255,0,51,.32)}
-.mgc-youtube-icon::before{content:'';border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:4px}
 .section-quote{font-family:var(--serif);font-style:italic;font-size:clamp(1.24rem,2.1vw,2.2rem);color:rgba(255,255,255,.72);line-height:1.75;text-align:center;padding:8vh 0;max-width:900px;margin:0 auto}
 
 /* ── ABOUT ──────────────────────────────────────────── */
@@ -360,7 +352,7 @@ body{cursor:none}
 .contact-link{display:inline-block;margin-top:1.35rem;font-size:.82rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.82);text-decoration:none;border:1px solid rgba(255,255,255,.24);padding:.9rem 1.4rem}
 
 /* ── FOOTER ─────────────────────────────────────────── */
-footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,255,.04);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
 .foot-name{font-family:var(--serif);font-size:clamp(3rem,7vw,7rem);line-height:1;color:rgba(255,255,255,.78);text-align:center}
 .foot-name em{font-style:italic;color:rgba(200,169,110,.7)}
 
@@ -372,6 +364,13 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
 .media-image{object-fit:contain}
 .media-video[hidden],.media-image[hidden]{display:none}
 .media-actions{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-top:1rem;flex-wrap:wrap}
+.media-copy-panel{display:none;margin-top:1rem;padding:1rem 1rem 1.1rem;border-radius:1rem;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08)}
+.media-copy-panel.is-visible{display:block}
+.media-copy-kicker{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.54);margin-bottom:.8rem}
+.media-copy-body{max-height:clamp(12rem,32vh,22rem);overflow:auto;padding-right:.35rem;font-size:1.08rem;line-height:1.82;color:rgba(255,255,255,.78);scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.28) transparent}
+.media-copy-body::-webkit-scrollbar{width:8px}
+.media-copy-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.24);border-radius:999px}
+.media-copy-body p+p{margin-top:1rem}
 .media-title{font-size:.76rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.56)}
 .media-controls{display:flex;gap:.75rem;flex-wrap:wrap}
 .media-btn{background:transparent;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.82);padding:.75rem 1rem;font:inherit;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .25s,border-color .25s,color .25s}
@@ -432,8 +431,11 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   .top-nav{width:100%;flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:.32rem;padding:.35rem .38rem;scrollbar-width:none}
   .top-nav::-webkit-scrollbar{display:none}
   .top-nav-link{flex:0 0 auto;padding:.62rem .78rem;font-size:.54rem;letter-spacing:.14em;white-space:nowrap}
-  .lang-toggle{margin-left:auto}
-  .bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:9100;background:rgba(6,6,8,.85);backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,.06);padding:.6rem .4rem calc(.6rem + env(safe-area-inset-bottom));justify-content:space-around;opacity:0;transition:opacity .6s ease}
+  [data-nav="paper-zone"]{order:4}
+  #lang-toggle{order:5}
+  [data-nav="future"]{order:6}
+  [data-nav="contact"]{order:7}
+  .bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:9100;background:rgba(6,6,8,.85);backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,.06);padding:.45rem .4rem max(.12rem,env(safe-area-inset-bottom));justify-content:space-around;opacity:0;transition:opacity .6s ease}
   .bottom-nav.is-visible{opacity:1}
   .bottom-nav-item{display:flex;flex-direction:column;align-items:center;gap:.3rem;text-decoration:none;color:rgba(255,255,255,.4);transition:color .3s ease;padding:.3rem .4rem;-webkit-tap-highlight-color:transparent;text-align:center}
   .bottom-nav-item.is-active{color:var(--gold)}
@@ -458,9 +460,6 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   .mgc-grid{grid-template-columns:1fr 1fr;gap:3px}
   .mgc-grid .img-reveal:first-child{grid-column:span 2;aspect-ratio:16/9}
   .section-copy,.section-quote{font-size:clamp(1.08rem,4.8vw,1.45rem);line-height:1.58;padding-left:.25rem;padding-right:.25rem}
-  .mgc-youtube-wrap{padding:0 0 6vh}
-  .mgc-youtube-btn{width:100%;max-width:24rem;justify-content:space-between;padding:.95rem 1rem}
-  .mgc-youtube-title{font-size:1rem}
   .about-section{padding:11vh 0 10vh}
   .about-eyebrow{margin-bottom:2.2rem}
   .about-body{font-size:clamp(1.28rem,5.4vw,1.7rem);line-height:1.42}
@@ -486,7 +485,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   .art-sub{font-size:.95rem;line-height:1.65}
   .art-grid{grid-template-columns:1fr}
   .art-grid video,.art-grid img{aspect-ratio:16/9;object-position:center center}
-  .future-inner{padding:0 1.5rem 1rem}
+  .future-inner{padding:0 1.5rem .35rem}
   .portal-frame-shell{gap:.35rem}
   .portal-frame-wrap{padding:.75rem;border-radius:1.25rem;transform:none}
   .portal-link:hover .portal-frame-wrap{transform:none}
@@ -510,6 +509,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   .top-nav{padding:.28rem .3rem;gap:.26rem}
   .top-nav-link{padding:.54rem .66rem;font-size:.5rem;letter-spacing:.1em}
   .scroll-hint{bottom:calc(env(safe-area-inset-bottom) + 5.6rem)}
+  .lang-he .scroll-hint span{font-size:1rem}
   .hero-eyebrow{font-size:.74rem}
   #mgc-hero{height:88svh}
   #mgc-hero img{object-position:center center}
@@ -533,6 +533,7 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   .youtube-window-preview{aspect-ratio:16/9.5}
   .youtube-side{padding:.8rem}
   .youtube-side-copy{max-height:23vh;font-size:.9rem;line-height:1.58}
+  .media-copy-body{font-size:1.03rem;line-height:1.64;max-height:26vh}
 }
 </style>
 </head>
@@ -640,24 +641,14 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
       <div class="stat"><div class="stat-n">300+</div><div class="stat-l" data-i18n="videosProduced">Videos produced</div></div>
     </div>
     <div class="mgc-grid">
-      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false"><img src="media/mgc-dance-party.gif" alt="Mother Goose Club dance party"></div>
-      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false"><img src="media/mgc-hot-potato.gif" alt="Mother Goose Club Hot Potato"></div>
-      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false"><img src="media/mgc-rainbow-baa-baa.gif" alt="Mother Goose Club Rainbow"></div>
-      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false"><img src="media/mgc-baby-shark-playhouse.gif" alt="Mother Goose Club Baby Shark"></div>
-      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false"><img src="media/mgc-monster-trucks.gif" alt="Mother Goose Club Monster Trucks"></div>
+      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-dance-party.gif" alt="Mother Goose Club dance party"></div>
+      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-hot-potato.gif" alt="Mother Goose Club Hot Potato"></div>
+      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-rainbow-baa-baa.gif" alt="Mother Goose Club Rainbow"></div>
+      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-baby-shark-playhouse.gif" alt="Mother Goose Club Baby Shark"></div>
+      <div class="img-reveal media-trigger" data-video="media/mgc-selects.mp4" data-title-en="Mother Goose Club Selects" data-title-he="בחירות מתוך Mother Goose Club" data-has-audio="false" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-monster-trucks.gif" alt="Mother Goose Club Monster Trucks"></div>
     </div>
     <div class="section-copy" data-reveal>
       <p data-i18n="mgcCopy">Over a decade in New York City helping build one of YouTube&rsquo;s most-watched children&rsquo;s channels, <em>Mother Goose Club Playhouse</em>. I created and oversaw more than 300 videos of live-action, songs, and branded content, adapting to the platform&rsquo;s ever-changing algorithm and forging lasting connections with families across more than 100 countries. Through a steady stream of episodes and character-driven stories, I kept every piece clear, musical, and optimized for massive audiences.</p>
-    </div>
-    <div class="mgc-youtube-wrap" data-reveal>
-      <a class="mgc-youtube-btn" href="https://www.youtube.com/@mgcplayhouse" id="mgc-youtube-btn" target="_blank" rel="noopener">
-        <span class="mgc-youtube-logo"><img src="media/mgc-sailor.jpg" alt="Mother Goose Club Playhouse"></span>
-        <span class="mgc-youtube-copy">
-          <span class="mgc-youtube-kicker" data-i18n="watchPlayhouse">Watch the channel</span>
-          <span class="mgc-youtube-title">Mother Goose Club Playhouse</span>
-        </span>
-        <span class="mgc-youtube-icon" aria-hidden="true"></span>
-      </a>
     </div>
   </div>
 </section>
@@ -874,47 +865,16 @@ footer{padding:12vh clamp(2rem,6vw,5rem) 9vh;border-top:1px solid rgba(255,255,2
   <div class="media-shell">
     <video class="media-video" id="modal-video" playsinline></video>
     <img class="media-image" id="modal-image" alt="" hidden>
+    <div class="media-copy-panel" id="modal-copy-panel">
+      <div class="media-copy-kicker" id="modal-copy-kicker"></div>
+      <div class="media-copy-body" id="modal-copy-body"></div>
+    </div>
     <div class="media-actions">
       <div class="media-title" id="modal-title" data-i18n="video">Video</div>
       <div class="media-controls">
         <button class="media-btn" id="modal-play" type="button" data-i18n="pause">Pause</button>
         <button class="media-btn" id="modal-mute" type="button" data-i18n="muted">Muted</button>
         <button class="media-btn" id="modal-close" type="button" data-i18n="close">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="media-modal youtube-modal" id="youtube-modal" aria-hidden="true">
-  <div class="media-shell">
-    <div class="youtube-shell">
-      <div class="youtube-window">
-        <a class="youtube-window-link" id="youtube-window-link" href="https://www.youtube.com/@mgcplayhouse" target="_blank" rel="noopener">
-          <div class="youtube-window-bar">
-            <div class="youtube-window-dots"><span></span><span></span><span></span></div>
-            <div class="youtube-window-url">youtube.com/@mgcplayhouse</div>
-          </div>
-          <div class="youtube-window-preview">
-            <img src="media/mgc-sailor.jpg" alt="Mother Goose Club Playhouse channel preview">
-            <div class="youtube-window-badge" data-i18n="openChannelYoutube">Open Channel</div>
-          </div>
-        </a>
-      </div>
-      <div class="youtube-side">
-        <div>
-          <div class="youtube-side-head">
-            <div class="youtube-side-logo"><img src="media/mgc-sailor.jpg" alt="Mother Goose Club Playhouse"></div>
-            <div>
-              <div class="youtube-side-name">Mother Goose Club Playhouse</div>
-              <div class="youtube-side-sub" data-i18n="youtubeHoverLabel">YouTube window</div>
-            </div>
-          </div>
-          <div class="youtube-side-copy" data-i18n="youtubeHoverCopy"><p>A floating Playhouse window so people can dip into the channel without leaving the site.</p></div>
-        </div>
-        <div class="media-controls">
-          <a class="youtube-linkout" href="https://www.youtube.com/@mgcplayhouse" target="_blank" rel="noopener" data-i18n="openChannelYoutube">Open Channel</a>
-          <button class="media-btn" id="youtube-close" type="button" data-i18n="close">Close</button>
-        </div>
       </div>
     </div>
   </div>
@@ -931,6 +891,7 @@ const TRANSLATIONS={
     contact:'Contact',
     neuralGenerated:'Neural-generated',
     watchPlayhouse:'Watch the channel',
+    mgcTrailerLabel:'Play the reel',
     youtubeHoverLabel:'YouTube window',
     youtubeHoverCopy:'<p>MGC Playhouse focuses on live-action skits, pranks, and original songs performed by a diverse cast of child actors, designed to promote social-emotional learning and creativity and early literacy. The flagship Mother Goose Club channel focuses on classic nursery rhymes and full-length episodes with animated characters. I created content for both channels and was integral in building Playhouse.</p><p>The Playhouse format features real-life kids being kids with an approachable style designed to have children singing and dancing along. Playhouse leans into real human children making it feel more like peer-to-peer content, much closer to how kids naturally experience YouTube. All the while teaching reading readiness through sound recognition, rhyme patterns and language comprehension.</p><p>Color grading at this scale is its own discipline. The palette has to be saturated and stimulating without being fatiguing, consistent across hundreds of videos, and built to age. Content from 2010 still pulls views today.</p><p>Mother Goose Club is available on Netflix, Amazon Prime Video, Kidoodle.TV, Tubi, HappyKidsTV, and Spotify. The brand has won four Midsouth Emmy awards and 15 other industry awards.</p>',
     openChannelYoutube:'Open Channel',
@@ -980,6 +941,7 @@ const TRANSLATIONS={
     contact:'יצירת קשר',
     neuralGenerated:'נוצר עצבית',
     watchPlayhouse:'לערוץ ביוטיוב',
+    mgcTrailerLabel:'נגנו את הריל',
     youtubeHoverLabel:'חלון יוטיוב',
     youtubeHoverCopy:'<p>MGC Playhouse מתמקד במערכוני לייב אקשן, מתיחות ושירים מקוריים בביצוע קאסט מגוון של ילדים, ונבנה כדי לעודד למידה חברתית-רגשית, יצירתיות ואוריינות מוקדמת. ערוץ הדגל Mother Goose Club מתמקד בשירי ילדים קלאסיים ובפרקים מלאים עם דמויות אנימציה. יצרתי תוכן עבור שני הערוצים והייתי חלק מרכזי בבניית Playhouse.</p><p>הפורמט של Playhouse מציג ילדים אמיתיים פשוט נהנים, בסגנון נגיש שנועד לגרום לילדים בבית לשיר ולרקוד יחד איתם. Playhouse נשען על נוכחות של ילדים אמיתיים, ולכן הוא מרגיש הרבה יותר כמו תוכן peer-to-peer, קרוב יותר לאופן שבו ילדים חווים את YouTube באופן טבעי. ובו בזמן הוא מלמד מוכנות לקריאה דרך זיהוי צלילים, תבניות חריזה והבנת שפה.</p><p>עשיית צבע בקנה מידה כזה היא תחום בפני עצמו. הפלטה צריכה להיות רוויה ומגרה בלי לעייף, עקבית לאורך מאות סרטונים, ובנויה כך שתחזיק לאורך זמן. תוכן משנת 2010 עדיין ממשיך להביא צפיות גם היום.</p><p>Mother Goose Club זמין ב-Netflix, Amazon Prime Video, Kidoodle.TV, Tubi, HappyKidsTV ו-Spotify. המותג זכה בארבעה פרסי Midsouth Emmy ובעוד 15 פרסי תעשייה נוספים.</p>',
     openChannelYoutube:'פתחו את הערוץ',
@@ -991,7 +953,7 @@ const TRANSLATIONS={
     heroEyebrow:'במאי &middot; עורך &middot; צבע',
     scroll:'גללו',
     about:'אודות',
-    aboutBody:'אני במאי, עורך ומבצע צבע לווידאו, ובימים אלה גם כותב פרומפטים ומייצר בעזרתם תוכן. במשך למעלה מ־15 שנה עיצבתי את השפה החזותית של ערוצי ילדים עם מיליארדי צפיות — מתוכן אנימטיבי ועד פורמטים דרמטיים שהגדירו מחדש מה זה וידאו לילדים. עבודתי מאופיינת בחשיבה שיטתית על סיפור, המיושמת על פני מדיומים וקני מידה שונים מאוד — מקולנוע מדיטטיבי על סופר 16 מ&quot;מ ועד אמנות דיגיטלית ניסיונית. ברוכים הבאים לאתר שלי — גללו למטה להצצה בעבודות.',
+    aboutBody:'אני במאי, עורך ומבצע צבע לווידאו, ובימים אלה גם כותב פרומפטים ומייצר תוכן בעזרתם. במשך למעלה מ־15 שנה עיצבתי את השפה החזותית של ערוצי ילדים עם מיליארדי צפיות, מאנימציה ועד פורמטים דרמטיים שהגדירו מחדש מה זה וידאו לילדים. עבודתי מאופיינת בחשיבה שיטתית על סיפור, המיושמת על פני מדיומים וקני מידה שונים מאוד, מקולנוע מדיטטיבי על סופר 16 מ&quot;מ ועד אמנות דיגיטלית ניסיונית. ברוכים הבאים לאתר שלי, גללו למטה להצצה בעבודות.',
     joyAtScale:'שמחה בקנה מידה עצום',
     viewsOnYoutube:'צפיות ביוטיוב',
     subscribersOn2Channels:'מנויים בשני ערוצים',
@@ -1427,7 +1389,7 @@ void main(){
     requestAnimationFrame(tick);
   })();
 
-  document.querySelectorAll('a:not(.portal-link),.clients span,.media-btn,.media-trigger,.mgc-youtube-btn').forEach(el=>{
+  document.querySelectorAll('a:not(.portal-link),.clients span,.media-btn,.media-trigger').forEach(el=>{
     el.addEventListener('mousemove',e=>{
       const r=el.getBoundingClientRect();
       const x=(e.clientX-r.left-r.width/2)*.35;
@@ -1784,6 +1746,9 @@ ScrollTrigger.create({trigger:'#future',start:'top 55%',
   const playBtn=document.getElementById('modal-play');
   const muteBtn=document.getElementById('modal-mute');
   const closeBtn=document.getElementById('modal-close');
+  const copyPanel=document.getElementById('modal-copy-panel');
+  const copyKicker=document.getElementById('modal-copy-kicker');
+  const copyBody=document.getElementById('modal-copy-body');
   if(!modal||!video||!image)return;
 
   function syncButtons(){
@@ -1793,13 +1758,24 @@ ScrollTrigger.create({trigger:'#future',start:'top 55%',
     }
   }
 
-  function openModal({src,label,hasAudio=true,type='video'}){
+  function openModal({src,label,hasAudio=true,type='video',copyKey='',copyKickerKey=''}){
     title.textContent=label||t('video');
     const isVideo=type==='video';
     video.hidden=!isVideo;
     image.hidden=isVideo;
     playBtn.style.display=isVideo?'inline-flex':'none';
     muteBtn.style.display=isVideo&&hasAudio?'inline-flex':'none';
+    if(copyPanel&&copyBody&&copyKicker){
+      if(copyKey){
+        copyPanel.classList.add('is-visible');
+        copyKicker.textContent=copyKickerKey?t(copyKickerKey):'';
+        copyBody.innerHTML=t(copyKey);
+      }else{
+        copyPanel.classList.remove('is-visible');
+        copyKicker.textContent='';
+        copyBody.innerHTML='';
+      }
+    }
     if(isVideo){
       image.removeAttribute('src');
       image.alt='';
@@ -1829,6 +1805,11 @@ ScrollTrigger.create({trigger:'#future',start:'top 55%',
     video.load();
     image.removeAttribute('src');
     image.alt='';
+    if(copyPanel&&copyBody&&copyKicker){
+      copyPanel.classList.remove('is-visible');
+      copyKicker.textContent='';
+      copyBody.innerHTML='';
+    }
     modal.classList.remove('open');
     document.body.classList.remove('modal-open');
     modal.setAttribute('aria-hidden','true');
@@ -1837,11 +1818,11 @@ ScrollTrigger.create({trigger:'#future',start:'top 55%',
   document.querySelectorAll('.media-trigger').forEach(el=>{
     el.addEventListener('click',()=>{
       if(el.dataset.image){
-        openModal({src:el.dataset.image,label:el.dataset.title,type:'image'});
+        openModal({src:el.dataset.image,label:el.dataset.title,type:'image',copyKey:el.dataset.copyKey||'',copyKickerKey:el.dataset.copyKickerKey||''});
         return;
       }
       if(el.dataset.video){
-        openModal({src:el.dataset.video,label:el.dataset.title,hasAudio:el.dataset.hasAudio!=='false',type:'video'});
+        openModal({src:el.dataset.video,label:el.dataset.title,hasAudio:el.dataset.hasAudio!=='false',type:'video',copyKey:el.dataset.copyKey||'',copyKickerKey:el.dataset.copyKickerKey||''});
       }
     });
   });
@@ -1862,33 +1843,6 @@ ScrollTrigger.create({trigger:'#future',start:'top 55%',
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open')) closeModal();});
   video.addEventListener('play',syncButtons);
   video.addEventListener('pause',syncButtons);
-})();
-
-/* ══════════════════════════════════════════════════════
-   PLAYHOUSE YOUTUBE WINDOW
-══════════════════════════════════════════════════════ */
-(function(){
-  const trigger=document.getElementById('mgc-youtube-btn');
-  const modal=document.getElementById('youtube-modal');
-  const closeBtn=document.getElementById('youtube-close');
-  if(!trigger||!modal||!closeBtn)return;
-  function openModal(){
-    modal.classList.add('open');
-    document.body.classList.add('modal-open');
-    modal.setAttribute('aria-hidden','false');
-  }
-  function closeModal(){
-    modal.classList.remove('open');
-    document.body.classList.remove('modal-open');
-    modal.setAttribute('aria-hidden','true');
-  }
-  trigger.addEventListener('click',e=>{
-    e.preventDefault();
-    openModal();
-  });
-  closeBtn.addEventListener('click',closeModal);
-  modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});
 })();
 
 /* ══════════════════════════════════════════════════════
