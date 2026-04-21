@@ -33,9 +33,11 @@
     }
     .menu-link:hover { color:rgba(240,237,232,0.92); border-color:rgba(240,237,232,0.24); }
     .menu-link.active { background:rgba(240,237,232,0.12); color:rgba(240,237,232,0.95); border-color:rgba(240,237,232,0.18); }
-    .menu-link.lang-link { color:rgba(200,169,110,0.8); border-color:rgba(200,169,110,0.22); }
-    .menu-link.lang-link:hover { color:rgba(237,214,150,0.98); border-color:rgba(200,169,110,0.38); }
-    .menu-link.lang-link.active { background:rgba(200,169,110,0.14); color:rgba(245,222,160,0.98); border-color:rgba(200,169,110,0.42); }
+    .menu-link.lang-link { gap:8px; color:rgba(200,169,110,0.88); border-color:rgba(200,169,110,0.24); background:rgba(200,169,110,0.08); }
+    .menu-link.lang-link:hover { color:rgba(237,214,150,0.98); border-color:rgba(200,169,110,0.38); background:rgba(200,169,110,0.14); }
+    .lang-option { opacity:0.46; transition:opacity .2s, color .2s; }
+    .lang-option.active { opacity:1; color:rgba(245,222,160,0.98); }
+    .lang-divider { opacity:0.34; }
     #back-link {
       font-family:var(--font-body); font-size:calc(13px * var(--type-scale)); letter-spacing:0.18em; font-weight:600;
       text-transform:uppercase;
@@ -501,8 +503,11 @@
 <nav id="top-menu" aria-label="Primary">
   <a class="menu-link" id="back-link" href="./index.html" data-i18n="home">home</a>
   <a class="menu-link" href="mailto:aylonbenami@gmail.com" data-i18n="contact">contact</a>
-  <a class="menu-link lang-link" id="lang-en" href="?lang=en">EN</a>
-  <a class="menu-link lang-link" id="lang-he" href="?lang=he">HE</a>
+  <a class="menu-link lang-link" id="lang-toggle" href="?lang=he" aria-label="Toggle language">
+    <span class="lang-option" data-lang-label="en">EN</span>
+    <span class="lang-divider">/</span>
+    <span class="lang-option" data-lang-label="he">עברית</span>
+  </a>
 </nav>
 <div id="header">
   <div id="name">Aylon Ben-Ami</div>
@@ -621,8 +626,14 @@ function applyTranslations(lang){
   document.getElementById('back-link').innerHTML=`&#8592; ${tt('home')}`;
   document.getElementById('back-link').href=`./index.html?lang=${lang}`;
   document.getElementById('back-home-inline').href=`index.html?lang=${lang}`;
-  document.getElementById('lang-en').classList.toggle('active',lang==='en');
-  document.getElementById('lang-he').classList.toggle('active',lang==='he');
+  const langToggle=document.getElementById('lang-toggle');
+  if(langToggle){
+    langToggle.href=`?lang=${lang==='he'?'en':'he'}`;
+    langToggle.setAttribute('aria-label',lang==='he'?'Switch to English':'החלפה לעברית');
+    langToggle.querySelectorAll('[data-lang-label]').forEach(el=>{
+      el.classList.toggle('active',el.dataset.langLabel===lang);
+    });
+  }
   const soundBtn=document.getElementById('sound-btn');
   if(soundBtn) soundBtn.textContent=(window.__soundOn||false)?tt('soundOn'):tt('soundOff');
 }
