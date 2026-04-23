@@ -606,7 +606,7 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
     </nav>
   </div>
   <div class="hero-video-wrap">
-    <video class="hero-video" id="hero-video" autoplay muted loop playsinline preload="auto"
+    <video class="hero-video" id="hero-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" disablepictureinpicture tabindex="-1" aria-hidden="true"
       src="media/hero-silent-trees.mp4"></video>
     <div class="hero-video-overlay"></div>
   </div>
@@ -635,7 +635,7 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
 <!-- ═══ MGC ═══════════════════════════════════════════ -->
 <section id="mgc" class="section">
   <div class="full-img" id="mgc-hero">
-    <img src="media/mgc-fruit-salad.jpg" alt="Mother Goose Club Fruit Salad">
+    <img src="media/mgc-fruit-salad.jpg" alt="Mother Goose Club Fruit Salad" loading="lazy" decoding="async" fetchpriority="low">
     <div class="overlay" style="background:linear-gradient(to top,rgba(6,6,8,.92) 0%,rgba(6,6,8,.18) 55%,rgba(6,6,8,.45) 100%)"></div>
     <div class="text-wrap">
       <div class="ch" data-scramble data-i18n="joyAtScale">Joy at Scale</div>
@@ -649,17 +649,17 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
       <div class="stat"><div class="stat-n">300+</div><div class="stat-l" data-i18n="videosProduced">Videos produced</div></div>
     </div>
     <div class="mgc-grid">
-      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-dance-party.gif" alt="Mother Goose Club dance party"></div>
-      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-hot-potato.gif" alt="Mother Goose Club Hot Potato"></div>
-      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-rainbow-baa-baa.gif" alt="Mother Goose Club Rainbow"></div>
-      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-baby-shark-playhouse.gif" alt="Mother Goose Club Baby Shark"></div>
-      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-monster-trucks.gif" alt="Mother Goose Club Monster Trucks"></div>
+      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-dance-party.gif" alt="Mother Goose Club dance party" loading="lazy" decoding="async" fetchpriority="low"></div>
+      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-hot-potato.gif" alt="Mother Goose Club Hot Potato" loading="lazy" decoding="async" fetchpriority="low"></div>
+      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-rainbow-baa-baa.gif" alt="Mother Goose Club Rainbow" loading="lazy" decoding="async" fetchpriority="low"></div>
+      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-baby-shark-playhouse.gif" alt="Mother Goose Club Baby Shark" loading="lazy" decoding="async" fetchpriority="low"></div>
+      <div class="img-reveal media-trigger" data-video="media/MGCP Trailer.mp4" data-title-en="Mother Goose Club Playhouse Trailer" data-title-he="טריילר של Mother Goose Club Playhouse" data-copy-key="youtubeHoverCopy" data-copy-kicker-key="youtubeHoverLabel"><img src="media/mgc-monster-trucks.gif" alt="Mother Goose Club Monster Trucks" loading="lazy" decoding="async" fetchpriority="low"></div>
     </div>
     <div class="section-copy" data-reveal>
       <p data-i18n="mgcCopy">Over a decade in New York City helping build one of YouTube&rsquo;s most-watched children&rsquo;s channels, <em>Mother Goose Club Playhouse</em>. I created and oversaw more than 300 videos of live-action, songs, and branded content, adapting to the platform&rsquo;s ever-changing algorithm and forging lasting connections with families across more than 100 countries. Through a steady stream of episodes and character-driven stories, I kept every piece clear, musical, and optimized for massive audiences.</p>
     </div>
     <div class="mgc-inline-video" data-reveal>
-      <video src="media/mgc-selects.mp4" autoplay muted loop playsinline preload="metadata"></video>
+      <video class="deferred-video" data-src="media/mgc-selects.mp4" autoplay muted loop playsinline preload="none"></video>
     </div>
   </div>
 </section>
@@ -668,7 +668,7 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
 <section id="evg" class="section deferred-section">
   <!-- Alligator dramatic opener -->
   <div class="full-img" id="evg-gator">
-    <img src="media/everglades-alligator-eye.jpg" alt="Alligator Eye">
+    <img src="media/everglades-alligator-eye.jpg" alt="Alligator Eye" loading="lazy" decoding="async" fetchpriority="low">
     <div class="overlay" style="background:linear-gradient(to bottom,rgba(6,6,8,.55) 0%,transparent 40%,rgba(6,6,8,.75) 100%)"></div>
     <div class="text-wrap" style="bottom:auto;top:50%;transform:translateY(-50%);text-align:center;left:0;right:0;padding:2rem">
       <div class="ch" style="justify-content:center" data-scramble data-i18n="meditativeCinema">Meditative Cinema</div>
@@ -679,7 +679,7 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
 
   <div class="feature-physics">
     <div class="feature-img-wrap media-trigger" id="ripple-wrap" data-video="media/everglades-trailer.mp4" data-title-en="Everglades Trailer" data-title-he="טריילר: אוורגליידס">
-      <img src="media/everglades-dragonfly-gold.jpg" alt="Golden Dragonfly" id="ripple-img" class="bug-img">
+      <img src="media/everglades-dragonfly-gold.jpg" alt="Golden Dragonfly" id="ripple-img" class="bug-img" loading="lazy" decoding="async" fetchpriority="low">
       <span class="bug-play" data-i18n="playTrailer">Play Trailer</span>
       <canvas id="ripple-canvas"></canvas>
     </div>
@@ -689,18 +689,18 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
     <p class="section-quote" data-reveal style="font-style:normal" data-i18n="evgQuote1">Deep in the Florida Everglades, time moves differently &mdash; measured in the passage of light through cypress canopy and the patient drift of water through sawgrass prairie.</p>
     <p class="section-quote" data-reveal style="font-style:normal;padding-top:0" data-i18n="evgQuote2">Shot entirely on 16mm film, this experimental documentary explores the ecological texture of one of North America's most endangered landscapes. The camera becomes a witness, not a narrator.</p>
     <div class="film-strip" id="film-strip">
-      <div class="film-cell"><img src="media/Everglades 3.gif" alt="Everglades"></div>
-      <div class="film-cell"><img src="media/Everglades 7.gif" alt="Everglades"></div>
-      <div class="film-cell"><img src="media/Everglades 2.gif" alt="Everglades"></div>
-      <div class="film-cell"><img src="media/Everglades 1.gif" alt="Everglades"></div>
-      <div class="film-cell"><img src="media/Everglades 5.gif" alt="Everglades"></div>
-      <div class="film-cell"><img src="media/Everglades 6.gif" alt="Everglades"></div>
+      <div class="film-cell"><img src="media/Everglades 3.gif" alt="Everglades" loading="lazy" decoding="async" fetchpriority="low"></div>
+      <div class="film-cell"><img src="media/Everglades 7.gif" alt="Everglades" loading="lazy" decoding="async" fetchpriority="low"></div>
+      <div class="film-cell"><img src="media/Everglades 2.gif" alt="Everglades" loading="lazy" decoding="async" fetchpriority="low"></div>
+      <div class="film-cell"><img src="media/Everglades 1.gif" alt="Everglades" loading="lazy" decoding="async" fetchpriority="low"></div>
+      <div class="film-cell"><img src="media/Everglades 5.gif" alt="Everglades" loading="lazy" decoding="async" fetchpriority="low"></div>
+      <div class="film-cell"><img src="media/Everglades 6.gif" alt="Everglades" loading="lazy" decoding="async" fetchpriority="low"></div>
     </div>
   </div>
   <div class="inner" style="padding-bottom:10vh">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
-      <div class="img-reveal" style="aspect-ratio:16/9;background:#000;overflow:hidden"><img src="media/everglades-still-24.jpg" alt=""></div>
-      <div class="img-reveal" style="aspect-ratio:16/9;background:#000;overflow:hidden"><img src="media/everglades-still-22.jpg" alt=""></div>
+      <div class="img-reveal" style="aspect-ratio:16/9;background:#000;overflow:hidden"><img src="media/everglades-still-24.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low"></div>
+      <div class="img-reveal" style="aspect-ratio:16/9;background:#000;overflow:hidden"><img src="media/everglades-still-22.jpg" alt="" loading="lazy" decoding="async" fetchpriority="low"></div>
     </div>
   </div>
 </section>
@@ -720,16 +720,16 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   <div class="inner" style="padding-top:0">
     <div class="edge-editorial" id="edge-editorial">
       <div class="edge-main media-trigger" data-tilt data-image="media/branded-cobie-smulders.jpg" data-title-en="Cobie Smulders Interview" data-title-he="ראיון עם Cobie Smulders">
-        <img src="media/branded-cobie-smulders.jpg" alt="Cobie Smulders Interview">
+        <img src="media/branded-cobie-smulders.jpg" alt="Cobie Smulders Interview" loading="lazy" decoding="async" fetchpriority="low">
         <div class="c-lbl" data-i18n="cobieInterview">Cobie Smulders Interview</div>
       </div>
       <div class="edge-stack">
         <div class="edge-stack-item media-trigger" data-tilt style="--erot:2deg" data-image="media/branded-parquet-courts.jpg" data-title-en="Parquet Courts Feature" data-title-he="פיצ'ר על Parquet Courts">
-          <img src="media/branded-parquet-courts.jpg" alt="Parquet Courts feature">
+          <img src="media/branded-parquet-courts.jpg" alt="Parquet Courts feature" loading="lazy" decoding="async" fetchpriority="low">
           <div class="c-lbl" data-i18n="parquetFeature">Parquet Courts Feature</div>
         </div>
         <div class="edge-stack-item media-trigger" data-tilt style="--erot:-1.8deg" data-image="media/branded-hardeman-nyfw-backstage.jpg" data-title-en="Hardeman NYFW" data-title-he="Hardeman בשבוע האופנה של ניו יורק">
-          <img src="media/branded-hardeman-nyfw-backstage.jpg" alt="Hardeman NYFW backstage">
+          <img src="media/branded-hardeman-nyfw-backstage.jpg" alt="Hardeman NYFW backstage" loading="lazy" decoding="async" fetchpriority="low">
           <div class="c-lbl" data-i18n="hardemanNyfw">Hardeman NYFW</div>
         </div>
       </div>
@@ -739,25 +739,25 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
     <p class="edge-discover-hint" style="margin-top:2.5rem" data-i18n="dragToDiscover">Drag to discover</p>
     <div class="edge-discover" id="edge-discover">
       <div class="edge-disc-card media-trigger" style="--erot:-1.5deg;--ew:300px" data-video="media/branded-lexus-miami.mp4" data-title-en="Lexus Miami" data-title-he="לקסוס מיאמי" data-has-audio="false">
-        <img src="media/branded-lexus-miami.gif" alt="Lexus Miami"><span></span>
+        <img src="media/branded-lexus-miami.gif" alt="Lexus Miami" loading="lazy" decoding="async" fetchpriority="low"><span></span>
       </div>
       <div class="edge-disc-card media-trigger" style="--erot:2.2deg;--ew:310px" data-video="media/branded-porsche-rennsport.mp4" data-title-en="Porsche 911 — Rennsport" data-title-he="פורשה 911 — Rennsport" data-has-audio="false">
-        <video src="media/branded-porsche-rennsport.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Porsche Rennsport"></video><span></span>
+        <video class="deferred-video" data-src="media/branded-porsche-rennsport.mp4" autoplay muted loop playsinline preload="none" aria-label="Porsche Rennsport"></video><span></span>
       </div>
       <div class="edge-disc-card media-trigger" style="--erot:-3.2deg;--ew:260px" data-video="media/branded-honda-freestylers.mp4" data-title-en="Freestylers Noe" data-title-he="פריסטיילרס נואה" data-has-audio="false">
-        <img src="media/branded-freestylers-noe.jpg" alt="Freestylers Noe"><span></span>
+        <img src="media/branded-freestylers-noe.jpg" alt="Freestylers Noe" loading="lazy" decoding="async" fetchpriority="low"><span></span>
       </div>
       <div class="edge-disc-card media-trigger" style="--erot:1.7deg;--ew:285px" data-image="media/Branded-Kylian.jpg" data-title-en="Kylian, Music Video." data-title-he="קיליאן, קליפ">
-        <img src="media/Branded-Kylian.jpg" alt="Kylian"><span></span>
+        <img src="media/Branded-Kylian.jpg" alt="Kylian" loading="lazy" decoding="async" fetchpriority="low"><span></span>
       </div>
       <div class="edge-disc-card media-trigger" style="--erot:2.5deg;--ew:290px" data-video="media/Branded-Current-TV-News.mp4" data-title-en="Current TV, News" data-title-he="Current TV, News" data-has-audio="false">
-        <video src="media/Branded-Current-TV-News.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Current TV News"></video><span></span>
+        <video class="deferred-video" data-src="media/Branded-Current-TV-News.mp4" autoplay muted loop playsinline preload="none" aria-label="Current TV News"></video><span></span>
       </div>
       <div class="edge-disc-card media-trigger" style="--erot:-2.1deg;--ew:295px" data-image="media/branded-jagwar-crowd.jpg" data-title-en="Jagwar Ma, HBO Rocks" data-title-he="ג'אגוור מא, HBO Rocks">
-        <img src="media/branded-jagwar-crowd.jpg" alt="Jagwar Crowd"><span></span>
+        <img src="media/branded-jagwar-crowd.jpg" alt="Jagwar Crowd" loading="lazy" decoding="async" fetchpriority="low"><span></span>
       </div>
       <div class="edge-disc-card media-trigger" style="--erot:2.9deg;--ew:275px" data-image="media/branded-jagwar-clap.jpg" data-title-en="Jagwar Ma, HBO Rocks" data-title-he="ג'אגוור מא, HBO Rocks">
-        <img src="media/branded-jagwar-clap.jpg" alt="Jagwar Clap"><span></span>
+        <img src="media/branded-jagwar-clap.jpg" alt="Jagwar Clap" loading="lazy" decoding="async" fetchpriority="low"><span></span>
       </div>
     </div>
   </div>
@@ -766,16 +766,16 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   <div class="inner">
     <div class="gif-row">
       <div class="media-trigger" data-video="media/music-david-byrne.mp4" data-title-en="Music - David Byrne" data-title-he="מוזיקה - David Byrne" data-has-audio="false">
-        <video src="media/music-david-byrne.mp4" autoplay muted loop playsinline></video>
+        <video class="deferred-video" data-src="media/music-david-byrne.mp4" autoplay muted loop playsinline preload="none"></video>
       </div>
       <div class="media-trigger" data-video="media/music-valerie-june.mp4" data-title-en="Music - Valerie June" data-title-he="מוזיקה - Valerie June" data-has-audio="false">
-        <video src="media/music-valerie-june.mp4" autoplay muted loop playsinline></video>
+        <video class="deferred-video" data-src="media/music-valerie-june.mp4" autoplay muted loop playsinline preload="none"></video>
       </div>
       <div class="media-trigger" data-video="media/music-warpaint-encore.mp4" data-title-en="Music - Warpaint Encore" data-title-he="מוזיקה - Warpaint Encore" data-has-audio="false">
-        <video src="media/music-warpaint-encore.mp4" autoplay muted loop playsinline></video>
+        <video class="deferred-video" data-src="media/music-warpaint-encore.mp4" autoplay muted loop playsinline preload="none"></video>
       </div>
       <div class="media-trigger" data-video="media/music-video-kylian.mp4" data-title-en="Music Video - Kylian" data-title-he="קליפ - Kylian" data-has-audio="false">
-        <video src="media/music-video-kylian.mp4" autoplay muted loop playsinline></video>
+        <video class="deferred-video" data-src="media/music-video-kylian.mp4" autoplay muted loop playsinline preload="none"></video>
       </div>
     </div>
   </div>
@@ -800,7 +800,7 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   <div id="paper-zone">
     <div class="inner">
       <div class="spotlight-frame">
-        <img src="media/personal-art-basel.jpg" alt="Art Basel" draggable="false">
+        <img src="media/personal-art-basel.jpg" alt="Art Basel" draggable="false" loading="lazy" decoding="async" fetchpriority="low">
       </div>
     </div>
   </div>
@@ -808,28 +808,28 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   <div class="inner">
     <div class="art-grid">
       <div class="media-trigger" data-video="media/Branded-Letter.mp4" data-title-en="Music Video - Letter" data-title-he="קליפ - Letter" data-has-audio="false">
-        <video src="media/music-video-letter.mp4" autoplay muted loop playsinline></video>
+        <video class="deferred-video" data-src="media/music-video-letter.mp4" autoplay muted loop playsinline preload="none"></video>
       </div>
       <div class="media-trigger" data-video="media/personal-fire-escape.mp4" data-title-en="Art - Fire Escape" data-title-he="אמנות - מדרגות חירום" data-has-audio="false">
-        <video src="media/personal-fire-escape.mp4" autoplay muted loop playsinline></video>
+        <video class="deferred-video" data-src="media/personal-fire-escape.mp4" autoplay muted loop playsinline preload="none"></video>
       </div>
       <div class="media-trigger" data-image="media/personal-street-art-colors.gif" data-title-en="Street Art - Colors" data-title-he="אמנות רחוב - צבעים">
-        <img src="media/personal-street-art-colors.gif" alt="Street art colors">
+        <img src="media/personal-street-art-colors.gif" alt="Street art colors" loading="lazy" decoding="async" fetchpriority="low">
       </div>
       <div class="media-trigger" data-video="media/personal-mans-field.mp4" data-title-en="Art - Man's Field" data-title-he="אמנות - השדה של האיש" data-has-audio="false">
-        <video src="media/personal-mans-field.mp4" autoplay muted loop playsinline></video>
+        <video class="deferred-video" data-src="media/personal-mans-field.mp4" autoplay muted loop playsinline preload="none"></video>
       </div>
       <div class="media-trigger" data-video="media/Personal-Gainesville.mp4" data-title-en="Gainesville" data-title-he="גיינסוויל" data-has-audio="false">
-        <video src="media/Personal-Gainesville.mp4" autoplay muted loop playsinline></video>
+        <video class="deferred-video" data-src="media/Personal-Gainesville.mp4" autoplay muted loop playsinline preload="none"></video>
       </div>
       <div class="media-trigger" data-image="media/crater-lake.gif" data-title-en="Crater Lake" data-title-he="אגם קרייטר">
-        <img src="media/crater-lake.gif" alt="Crater Lake" draggable="false">
+        <img src="media/crater-lake.gif" alt="Crater Lake" draggable="false" loading="lazy" decoding="async" fetchpriority="low">
       </div>
       <div class="media-trigger" data-video="media/personal-bookstore.mp4" data-title-en="Bookstore" data-title-he="חנות ספרים" data-has-audio="false">
-        <video src="media/personal-bookstore.mp4" autoplay muted loop playsinline></video>
+        <video class="deferred-video" data-src="media/personal-bookstore.mp4" autoplay muted loop playsinline preload="none"></video>
       </div>
       <div class="media-trigger" data-image="media/california.gif" data-title-en="California" data-title-he="קליפורניה">
-        <img src="media/california.gif" alt="California" draggable="false">
+        <img src="media/california.gif" alt="California" draggable="false" loading="lazy" decoding="async" fetchpriority="low">
       </div>
     </div>
   </div>
@@ -851,7 +851,7 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
       <div class="portal-frame-shell">
         <div class="portal-frame-wrap">
           <div class="portal-frame">
-            <img class="portal-media is-active" id="portal-image" alt="AI portal preview" src="ai/The Suds 01.png">
+            <img class="portal-media is-active" id="portal-image" alt="AI portal preview" src="ai/The Suds 01.png" loading="lazy" decoding="async" fetchpriority="low">
             <video class="portal-media" id="portal-video" muted playsinline preload="metadata"></video>
             <div class="portal-overlay">
               <div class="portal-prompt" data-i18n="enterTheExperiments">Enter the experiments</div>
@@ -1674,13 +1674,51 @@ document.querySelectorAll('[data-tilt]').forEach(card=>{
 })();
 
 /* ══════════════════════════════════════════════════════
+   DEFERRED MEDIA — keep below-the-fold previews from
+   competing with the hero on first load
+══════════════════════════════════════════════════════ */
+(function(){
+  const deferredVideos=[...document.querySelectorAll('video.deferred-video[data-src]')];
+  if(!deferredVideos.length) return;
+
+  const loadVideo=video=>{
+    if(video.dataset.loaded==='true') return;
+    video.dataset.loaded='true';
+    video.src=video.dataset.src;
+    video.load();
+
+    if(video.autoplay){
+      const play=()=>video.play().catch(()=>{});
+      if(video.readyState>=2) play();
+      else video.addEventListener('canplay',play,{once:true});
+    }
+  };
+
+  if(!('IntersectionObserver' in window)){
+    deferredVideos.forEach(loadVideo);
+    return;
+  }
+
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting) return;
+      loadVideo(entry.target);
+      io.unobserve(entry.target);
+    });
+  },{rootMargin:'600px 0px'});
+
+  deferredVideos.forEach(video=>io.observe(video));
+})();
+
+/* ══════════════════════════════════════════════════════
    AI PORTAL FRAME
 ══════════════════════════════════════════════════════ */
 (function(){
+  const futureEl=document.getElementById('future');
   const imageEl=document.getElementById('portal-image');
   const videoEl=document.getElementById('portal-video');
   const wrap=document.querySelector('.portal-frame-wrap');
-  if(!imageEl||!videoEl||!wrap)return;
+  if(!futureEl||!imageEl||!videoEl||!wrap)return;
 
   const mediaItems=[
     'ai/The Suds 01.png',
@@ -1722,6 +1760,7 @@ document.querySelectorAll('[data-tilt]').forEach(card=>{
 
   let index=0;
   let timer=null;
+  let started=false;
 
   function clearTimer(){
     if(timer){
@@ -1764,13 +1803,32 @@ document.querySelectorAll('[data-tilt]').forEach(card=>{
     queueNext(3600);
   }
 
+  function startPortal(){
+    if(started) return;
+    started=true;
+    showMedia(index);
+  }
+
   videoEl.addEventListener('ended',()=>showMedia((index+1)%mediaItems.length));
   videoEl.addEventListener('loadedmetadata',()=>{
     clearTimer();
     queueNext(Math.max(3200,Math.min(videoEl.duration*1000,9000)));
   });
 
-  showMedia(index);
+  if(!('IntersectionObserver' in window)){
+    startPortal();
+    return;
+  }
+
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting) return;
+      startPortal();
+      io.disconnect();
+    });
+  },{rootMargin:'500px 0px'});
+
+  io.observe(futureEl);
 })();
 
 /* ══════════════════════════════════════════════════════
@@ -1908,6 +1966,20 @@ ScrollTrigger.create({trigger:'#mgc',start:'top 80%',
   const heroVid=document.getElementById('hero-video');
   if(!heroVid)return;
   const heroSection=document.getElementById('hero');
+  heroVid.muted=true;
+  heroVid.defaultMuted=true;
+  heroVid.autoplay=true;
+  heroVid.loop=true;
+  heroVid.playsInline=true;
+  heroVid.setAttribute('muted','');
+  heroVid.setAttribute('autoplay','');
+  heroVid.setAttribute('loop','');
+  heroVid.setAttribute('playsinline','');
+  heroVid.setAttribute('webkit-playsinline','');
+  const ensureHeroPlayback=()=>heroVid.play().catch(()=>{});
+  if(heroVid.readyState>=2) ensureHeroPlayback();
+  else heroVid.addEventListener('canplay',ensureHeroPlayback,{once:true});
+  window.addEventListener('load',ensureHeroPlayback,{once:true});
   gsap.to(heroVid,{
     scale:1.18,filter:'brightness(.2) saturate(.4)',ease:'none',
     scrollTrigger:{trigger:heroSection,start:'top top',end:'bottom top',scrub:1.2}
