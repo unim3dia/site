@@ -120,7 +120,8 @@ body::before{
 body{cursor:none}
 #cur{display:none;position:fixed;top:0;left:0;z-index:12000;pointer-events:none;will-change:transform}
 #cur svg{transform:translate(-50%,-50%)}
-#cur svg path{stroke:rgba(0,255,200,0.7)}
+#cur svg path{stroke:var(--cursor-stroke,rgba(255,255,255,0.72))}
+#cur svg circle{fill:var(--cursor-dot,rgba(255,255,255,0.55))}
 
 /* ── LOADER ─────────────────────────────────────────── */
 #loader{position:fixed;inset:0;background:linear-gradient(135deg,#07111f 0%,#0d2f1a 45%,#461118 72%,#240d3d 100%);z-index:10000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2rem}
@@ -550,10 +551,10 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
 
 <div id="cur">
   <svg width="36" height="36" viewBox="-18 -18 36 36" fill="none" aria-hidden="true">
-    <path d="M-14,-6 L-14,-14 L-6,-14" stroke="rgba(240,237,232,0.72)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M6,-14 L14,-14 L14,-6" stroke="rgba(240,237,232,0.72)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M-14,6 L-14,14 L-6,14" stroke="rgba(240,237,232,0.72)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M6,14 L14,14 L14,6" stroke="rgba(240,237,232,0.72)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-14,-6 L-14,-14 L-6,-14" stroke="rgba(186,0,186,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M6,-14 L14,-14 L14,-6" stroke="rgba(186,0,186,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-14,6 L-14,14 L-6,14" stroke="rgba(186,0,186,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M6,14 L14,14 L14,6" stroke="rgba(186,0,186,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
     <circle cx="0" cy="0" r="1.1" fill="rgba(240,237,232,0.55)"/>
   </svg>
 </div>
@@ -687,13 +688,13 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
     <p class="section-quote" data-reveal style="font-style:normal" data-i18n="evgQuote1">Deep in the Florida Everglades, time moves differently &mdash; measured in the passage of light through cypress canopy and the patient drift of water through sawgrass prairie.</p>
     <p class="section-quote" data-reveal style="font-style:normal;padding-top:0" data-i18n="evgQuote2">Shot entirely on 16mm film, this experimental documentary explores the ecological texture of one of North America's most endangered landscapes. The camera becomes a witness, not a narrator.</p>
     <div class="film-strip" id="film-strip">
-      <div class="film-cell"><video src="media/everglades-01.mp4" poster="media/everglades-alligator-eye.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
-      <div class="film-cell"><video src="media/everglades-02.mp4" poster="media/everglades-dragonfly-gold.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
-      <div class="film-cell"><video src="media/everglades-03.mp4" poster="media/everglades-still-24.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
-      <div class="film-cell"><video src="media/everglades-04.mp4" poster="media/everglades-still-22.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
-      <div class="film-cell"><video src="media/everglades-05.mp4" poster="media/everglades-alligator-eye.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
-      <div class="film-cell"><video src="media/everglades-06.mp4" poster="media/everglades-dragonfly-gold.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
-      <div class="film-cell"><video src="media/everglades-07.mp4" poster="media/everglades-still-24.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
+      <div class="film-cell"><img src="media/Everglades 3.gif" alt="Everglades"></div>
+      <div class="film-cell"><img src="media/Everglades 7.gif" alt="Everglades"></div>
+      <div class="film-cell"><img src="media/Everglades 2.gif" alt="Everglades"></div>
+      <div class="film-cell"><img src="media/Everglades 1.gif" alt="Everglades"></div>
+      <div class="film-cell"><img src="media/Everglades 5.gif" alt="Everglades"></div>
+      <div class="film-cell"><img src="media/Everglades 4.gif" alt="Everglades"></div>
+      <div class="film-cell"><img src="media/Everglades 6.gif" alt="Everglades"></div>
     </div>
   </div>
   <div class="inner" style="padding-bottom:10vh">
@@ -709,7 +710,8 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   <div class="inner" style="padding-top:12vh;padding-bottom:6vh">
     <div style="display:flex;align-items:flex-end;justify-content:center;gap:4vw;flex-wrap:wrap;text-align:center">
       <div class="edge-title-wrap">
-        <h2 class="edge-title" id="edge-title" style="margin-top:1.4rem" data-i18n="commercialVisuals">Commercial Visuals</h2>
+        <div class="ch" data-scramble style="justify-content:center;margin-bottom:.8rem">Craft for Hire</div>
+        <h2 class="edge-title" id="edge-title" style="margin-top:1.4rem" data-i18n="commercialVisuals">Commercial &amp; Editorial</h2>
       </div>
     </div>
   </div>
@@ -745,20 +747,11 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
       <div class="edge-disc-card media-trigger" style="--erot:-2.8deg;--ew:280px" data-video="media/branded-honda-freestylers.mp4" data-title-en="Honda — Freestylers" data-title-he="הונדה — Freestylers" data-has-audio="false">
         <img src="media/branded-honda-freestylers-daniel.jpg" alt="Honda Freestylers"><span></span>
       </div>
-      <div class="edge-disc-card media-trigger" style="--erot:1.6deg;--ew:270px" data-image="media/branded-freestylers-john.jpg" data-title-en="Freestylers John" data-title-he="Freestylers John">
-        <img src="media/branded-freestylers-john.jpg" alt="Freestylers John"><span></span>
-      </div>
       <div class="edge-disc-card media-trigger" style="--erot:-3.2deg;--ew:260px" data-image="media/branded-freestylers-noe.jpg" data-title-en="Freestylers Noe" data-title-he="Freestylers Noe">
         <img src="media/branded-freestylers-noe.jpg" alt="Freestylers Noe"><span></span>
       </div>
-      <div class="edge-disc-card media-trigger" style="--erot:2.5deg;--ew:250px" data-image="media/still-pencil.jpg" data-title-en="Pencil Still" data-title-he="סטיל: עיפרון">
-        <img src="media/still-pencil.jpg" alt="Pencil still"><span></span>
-      </div>
-      <div class="edge-disc-card media-trigger" style="--erot:-1.8deg;--ew:240px" data-image="media/still-onion.jpg" data-title-en="Onion Still" data-title-he="סטיל: בצל">
-        <img src="media/still-onion.jpg" alt="Onion still"><span></span>
-      </div>
-      <div class="edge-disc-card media-trigger" style="--erot:3deg;--ew:260px" data-image="media/branded-lebron-xiii-still.jpg" data-title-en="LeBrons XIII" data-title-he="LeBrons XIII">
-        <img src="media/branded-lebron-xiii-still.jpg" alt="LeBrons XIII"><span></span>
+      <div class="edge-disc-card media-trigger" style="--erot:2.5deg;--ew:290px" data-video="media/Branded-Current-TV-News.mp4" data-title-en="Current TV News" data-title-he="חדשות Current TV" data-has-audio="false">
+        <video src="media/Branded-Current-TV-News.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Current TV News"></video><span></span>
       </div>
     </div>
   </div>
@@ -783,17 +776,18 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
 
   <section class="section clients-section" style="margin-top:-1vh">
     <div class="inner">
-      <p class="ch" data-scramble data-i18n="partnersClients">Partners &amp; Clients</p>
-      <div class="clients" data-reveal>
+      <p class="ch" id="clients-ch" data-i18n="partnersClients">Partners &amp; Clients</p>
+      <div class="clients" id="clients-list">
         <span>HBO</span><span>NFL</span><span>Netflix</span><span>Honda</span>
-        <span>Nokia</span><span>Lexus</span><span>BMW</span><span>Porsche</span>
+        <span>Nokia</span><span>Lexus</span><span>BMW</span>
         <span>Time Inc.</span><span>Think Visual Group</span><span>Sockeye Media LLC</span><span>Imaginarium Lab</span>
       </div>
     </div>
   </section>
 
   <div class="inner art-intro" style="padding-top:6vh">
-    <h2 class="art-title" data-i18n="personalVisuals">Personal Visuals</h2>
+    <div class="ch" data-scramble style="justify-content:center;margin-bottom:.8rem">No Client, No Brief</div>
+    <h2 class="art-title" data-i18n="personalVisuals">Personal Work</h2>
   </div>
 
   <!-- Art spotlight -->
@@ -807,34 +801,35 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
 
   <div class="inner">
     <div class="art-grid">
-      <div class="media-trigger" data-video="media/music-video-letter.mp4" data-title-en="Music Video - Letter" data-title-he="קליפ - Letter" data-has-audio="false">
+      <div class="media-trigger" data-video="media/Branded-Letter.mp4" data-title-en="Music Video - Letter" data-title-he="קליפ - Letter" data-has-audio="false">
         <video src="media/music-video-letter.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="media-trigger" data-video="media/personal-fire-escape.mp4" data-title-en="Art - Fire Escape" data-title-he="אמנות - מדרגות חירום" data-has-audio="false">
         <video src="media/personal-fire-escape.mp4" autoplay muted loop playsinline></video>
       </div>
+      <div class="media-trigger" data-image="media/personal-street-art-colors.gif" data-title-en="Street Art - Colors" data-title-he="אמנות רחוב - צבעים">
+        <img src="media/personal-street-art-colors.gif" alt="Street art colors">
+      </div>
       <div class="media-trigger" data-video="media/personal-mans-field.mp4" data-title-en="Art - Man's Field" data-title-he="אמנות - השדה של האיש" data-has-audio="false">
         <video src="media/personal-mans-field.mp4" autoplay muted loop playsinline></video>
       </div>
-      <div class="media-trigger" data-image="media/personal-street-art-colors.gif" data-title-en="Street Art - Colors" data-title-he="אמנות רחוב - צבעים">
-        <img src="media/personal-street-art-colors.gif" alt="Street art colors">
+      <div class="media-trigger" data-video="media/Personal-Gainesville.mp4" data-title-en="Gainesville" data-title-he="גיינסוויל" data-has-audio="false">
+        <video src="media/Personal-Gainesville.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="media-trigger" data-image="media/crater-lake.gif" data-title-en="Crater Lake" data-title-he="אגם קרייטר">
         <img src="media/crater-lake.gif" alt="Crater Lake" draggable="false">
       </div>
+      <div class="media-trigger" data-video="media/personal-bookstore.mp4" data-title-en="Bookstore" data-title-he="חנות ספרים" data-has-audio="false">
+        <video src="media/personal-bookstore.mp4" autoplay muted loop playsinline></video>
+      </div>
       <div class="media-trigger" data-image="media/california.gif" data-title-en="California" data-title-he="קליפורניה">
         <img src="media/california.gif" alt="California" draggable="false">
-      </div>
-      <div class="media-trigger" data-image="media/personal-snow-roofs.gif" data-title-en="Snow Roofs" data-title-he="גגות מושלגים">
-        <img src="media/personal-snow-roofs.gif" alt="Snow Roofs">
-      </div>
-      <div class="media-trigger" data-image="media/bushwick-bookstore.gif" data-title-en="Bushwick Bookstore" data-title-he="חנות ספרים בבושוויק">
-        <img src="media/bushwick-bookstore.gif" alt="Bushwick Bookstore" draggable="false">
       </div>
     </div>
   </div>
 
   <div class="inner art-intro" style="padding-bottom:1.2vh">
+    <div class="ch" data-scramble style="justify-content:center;margin-bottom:.8rem">Generated, not Captured</div>
     <h2 class="art-title" data-i18n="computerGenerated">Computer-Generated</h2>
     <p class="art-sub" data-i18n="computerGeneratedSub">Experiments and work that lives beyond the camera.</p>
   </div>
@@ -908,7 +903,7 @@ const TRANSLATIONS={
     navCommercial:'Commercial',
     navPersonal:'Personal',
     navEverglades:'Everglades',
-    commercialVisuals:'Commercial Visuals',
+    commercialVisuals:'Commercial &amp; Editorial',
     heroEyebrow:'Director &middot; Editor &middot; Colorist',
     scroll:'Scroll',
     about:'About',
@@ -929,7 +924,7 @@ const TRANSLATIONS={
     hardemanNyfw:'Hardeman NYFW',
     dragToDiscover:'Drag to discover',
     partnersClients:'Partners &amp; Clients',
-    personalVisuals:'Personal Visuals',
+    personalVisuals:'Personal Work',
     computerGenerated:'Computer-Generated',
     computerGeneratedSub:'Experiments and work that lives beyond the camera.',
     openAiGeneratedWork:'Open AI and computer generated work',
@@ -958,7 +953,7 @@ const TRANSLATIONS={
     navCommercial:'מסחרי',
     navPersonal:'אישי',
     navEverglades:'אוורגליידס',
-    commercialVisuals:'ויזואלים מסחריים',
+    commercialVisuals:'מסחרי &amp; עריכה',
     heroEyebrow:'במאי &middot; עורך &middot; צבע',
     scroll:'גללו',
     about:'אודות',
@@ -979,7 +974,7 @@ const TRANSLATIONS={
     hardemanNyfw:'Hardeman בשבוע האופנה של ניו יורק',
     dragToDiscover:'גררו כדי לגלות',
     partnersClients:'שותפים ולקוחות',
-    personalVisuals:'ויזואלים אישיים',
+    personalVisuals:'עבודה אישית',
     computerGenerated:'נוצר במחשב',
     computerGeneratedSub:'ניסויים ועבודות שחיים מעבר למצלמה.',
     openAiGeneratedWork:'פתחו עבודות בינה מלאכותית ויצירה ממוחשבת',
@@ -1460,7 +1455,22 @@ function heroIn(){
    SCROLL PROGRESS
 ══════════════════════════════════════════════════════ */
 window.addEventListener('scroll',()=>{
-  document.getElementById('progress').style.transform=`scaleX(${window.scrollY/(document.body.scrollHeight-window.innerHeight)})`;
+  const sy=window.scrollY;
+  const totalH=document.body.scrollHeight-window.innerHeight;
+  document.getElementById('progress').style.transform=`scaleX(${Math.min(1,sy/totalH)})`;
+  /* Cursor: white → magenta (hero→commercial), magenta → red (after commercial) */
+  const edgeEl=document.getElementById('edge');
+  const threshold=edgeEl?(edgeEl.offsetTop+edgeEl.offsetHeight):totalH*0.7;
+  let cr,cg,cb,ca;
+  if(sy<=threshold){
+    const p=Math.min(1,sy/threshold);
+    cr=Math.round(255+(186-255)*p);cg=Math.round(255*(1-p));cb=Math.round(255+(186-255)*p);ca=(0.72+(0.85-0.72)*p).toFixed(2);
+  }else{
+    const p=Math.min(1,(sy-threshold)/(totalH-threshold));
+    cr=Math.round(186+(220-186)*p);cg=Math.round(0+30*p);cb=Math.round(186+(30-186)*p);ca=(0.85).toFixed(2);
+  }
+  document.documentElement.style.setProperty('--cursor-stroke',`rgba(${cr},${cg},${cb},${ca})`);
+  document.documentElement.style.setProperty('--cursor-dot',`rgba(${cr},${cg},${cb},0.6)`);
 },{passive:true});
 
 gsap.to('#hn',{
@@ -1543,6 +1553,23 @@ document.querySelectorAll('[data-reveal]').forEach(el=>{
   gsap.fromTo(el,{opacity:0,y:22},{opacity:1,y:0,duration:1,ease:'power3.out',
     scrollTrigger:{trigger:el,start:'top 90%',toggleActions:'play none none none'}});
 });
+
+/* Partners & Clients — slide-up reveal from below */
+(function(){
+  const ch=document.getElementById('clients-ch');
+  const clientList=document.getElementById('clients-list');
+  if(!clientList)return;
+  const spans=clientList.querySelectorAll('span');
+  const tl=gsap.timeline({
+    scrollTrigger:{trigger:ch||clientList,start:'top 85%',once:true}
+  });
+  if(ch){
+    gsap.set(ch,{opacity:0,y:52,filter:'blur(3px)'});
+    tl.to(ch,{opacity:1,y:0,filter:'blur(0px)',duration:1.6,ease:'power3.out'});
+  }
+  gsap.set(spans,{opacity:0,y:48,filter:'blur(2px)'});
+  tl.to(spans,{opacity:1,y:0,filter:'blur(0px)',duration:1.2,stagger:.1,ease:'power3.out'},ch?'-=.9':'0');
+})();
 
 /* ══════════════════════════════════════════════════════
    STATS
