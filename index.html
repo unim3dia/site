@@ -155,13 +155,16 @@ body{cursor:none}
 .lang-he .hero-name,.lang-he .mgc-title,.lang-he .section-copy,.lang-he .section-quote,.lang-he .about-body,.lang-he .art-title,.lang-he .portal-prompt,.lang-he .foot-name,.lang-he .stat-n,.lang-he .evg-intro,.lang-he .edge-title{font-family:var(--serif-he)}
 .lang-he .hero-eyebrow,.lang-he .about-eyebrow,.lang-he .ch,.lang-he .stat-l,.lang-he .evg-meta,.lang-he .contact-link,.lang-he .media-btn,.lang-he .media-title,.lang-he .top-section-nav-link{font-family:var(--serif-he)}
 .lang-he .top-nav-link,.lang-he .bottom-nav-label,.lang-he .bottom-nav-item{font-family:var(--sans-he)}
-.lang-he .hero-eyebrow{font-size:clamp(1.2rem,1.65vw,1.5rem)}
+.lang-he .hero-eyebrow{font-size:clamp(1.28rem,1.85vw,1.72rem)}
 .lang-he .scroll-hint span{font-size:clamp(.9rem,1.2vw,1.06rem)}
 .lang-he .hero-name{letter-spacing:0}
 .lang-he .section-copy,.lang-he .section-quote,.lang-he .about-body{line-height:1.8}
-.lang-he .ch{font-size:clamp(.82rem,1.12vw,1.08rem)}
-.lang-he .evg-meta,.lang-he .top-nav-link,.lang-he .top-section-nav-link,.lang-he .contact-link{font-size:clamp(.8rem,1vw,1rem)}
-.lang-he .about-eyebrow{font-size:clamp(1.26rem,1.8vw,1.72rem)}
+.lang-he .ch{font-size:clamp(1rem,1.38vw,1.36rem)}
+.lang-he .stat-l{font-size:clamp(.88rem,1.08vw,1.08rem)}
+.lang-he .evg-meta,.lang-he .top-nav-link,.lang-he .top-section-nav-link,.lang-he .contact-link,.lang-he .media-title{font-size:clamp(.92rem,1.14vw,1.12rem)}
+.lang-he .about-eyebrow{font-size:clamp(1.34rem,1.95vw,1.86rem)}
+.lang-he .bottom-nav-label{font-size:clamp(.72rem,.9vw,.92rem)}
+.lang-he .edge-discover-hint{font-size:clamp(.62rem,.82vw,.76rem)}
 .lang-he .evg-intro,.lang-he .edge-title{font-size:clamp(2.2rem,4.2vw,4.6rem)}
 .lang-he .section-copy,.lang-he .section-quote{font-size:clamp(1.58rem,2.35vw,2.45rem)}
 
@@ -286,9 +289,9 @@ body{cursor:none}
 .edge-discover::-webkit-scrollbar{display:none}
 .edge-discover:active{cursor:auto}
 .edge-disc-card{flex:0 0 var(--ew,260px);position:relative;overflow:hidden;border-radius:2px;transform:rotate(var(--erot,0));transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .45s;cursor:pointer;will-change:transform}
-.edge-disc-card img,.edge-disc-card video{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .5s,filter .5s;filter:saturate(.7) brightness(.85)}
+.edge-disc-card img,.edge-disc-card video{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .5s}
 .edge-disc-card:hover{transform:rotate(0deg) scale(1.04) translateY(-4px);box-shadow:0 24px 60px rgba(0,0,0,.65);z-index:10}
-.edge-disc-card:hover img,.edge-disc-card:hover video{filter:saturate(1.05) brightness(1);transform:scale(1.08)}
+.edge-disc-card:hover img,.edge-disc-card:hover video{transform:scale(1.08)}
 .edge-disc-card span{display:none}
 
 /* Hint to scroll discovery */
@@ -299,8 +302,8 @@ body{cursor:none}
 .gif-row{display:flex;gap:8px;padding:1vh 0 5vh;justify-content:flex-start;overflow-x:auto;scrollbar-width:none}
 .gif-row::-webkit-scrollbar{display:none}
 .gif-row .media-trigger{flex:0 0 auto;cursor:pointer}
-.gif-row video,.gif-row img{height:clamp(90px,12vw,150px);width:auto;border-radius:2px;opacity:.7;transition:opacity .4s,transform .4s,box-shadow .4s;display:block}
-.gif-row .media-trigger:hover video,.gif-row .media-trigger:hover img{opacity:1;transform:translateY(-4px);box-shadow:0 22px 44px rgba(0,0,0,.34)}
+.gif-row video,.gif-row img{height:clamp(90px,12vw,150px);width:auto;border-radius:2px;transition:transform .4s,box-shadow .4s;display:block}
+.gif-row .media-trigger:hover video,.gif-row .media-trigger:hover img{transform:translateY(-4px);box-shadow:0 22px 44px rgba(0,0,0,.34)}
 
 /* ── ART SPOTLIGHT ─────────────────────────────────── */
 #paper-zone{min-height:60vh;display:flex;align-items:center;justify-content:center;position:relative;padding:4vh 0 4vh;overflow:hidden}
@@ -349,16 +352,18 @@ body{cursor:none}
 .portal-frame::after{content:'';position:absolute;left:0;right:0;bottom:0;height:26%;background:linear-gradient(180deg,rgba(3,4,7,0) 0%,rgba(3,4,7,.82) 100%);z-index:4;pointer-events:none}
 .portal-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .85s ease,transform 6s ease,filter .85s ease;filter:saturate(.88) brightness(.82);transform:scale(1.035)}
 .portal-media.is-active{opacity:1;filter:saturate(1) brightness(.94);transform:scale(1)}
-.portal-overlay{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:1rem 1.2rem .9rem;display:flex;justify-content:space-between;align-items:flex-end;gap:.65rem}
+.portal-overlay{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:1rem 1.2rem .9rem;display:flex;justify-content:space-between;align-items:flex-end;gap:.65rem;pointer-events:none}
 .portal-badge{font-size:.62rem;letter-spacing:.36em;text-transform:uppercase;color:rgba(255,255,255,.56)}
 .portal-prompt{font-family:var(--serif);font-size:clamp(1.35rem,2.2vw,2rem);line-height:1.02;color:rgba(255,255,255,.92);text-align:right;text-shadow:0 10px 30px rgba(0,0,0,.45)}
 .portal-caption{max-width:760px;font-family:var(--serif);font-size:clamp(1.3rem,2.1vw,2rem);line-height:1.45;color:rgba(255,255,255,.8)}
 .portal-meta{font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.48)}
-.contact-link{display:inline-block;margin-top:1.35rem;font-size:.82rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.82);text-decoration:none;border:1px solid rgba(255,255,255,.24);padding:.9rem 1.4rem}
+.contact-link{display:inline-flex;align-items:center;justify-content:center;margin-top:1.75rem;min-width:min(92vw,420px);font-size:clamp(1.08rem,1.75vw,1.48rem);letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.96);text-decoration:none;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:1.2rem 2.4rem;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.04));box-shadow:0 24px 70px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease,background .3s ease}
+.contact-link:hover{transform:translateY(-3px);box-shadow:0 30px 80px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.18);border-color:rgba(255,255,255,.42);background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.06))}
+.lang-he footer .contact-link{font-size:clamp(1.16rem,1.92vw,1.56rem)}
 
 /* ── FOOTER ─────────────────────────────────────────── */
-footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
-.foot-name{font-family:var(--serif);font-size:clamp(3rem,7vw,7rem);line-height:1;color:rgba(255,255,255,.78);text-align:center}
+footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem}
+.foot-name{font-family:var(--serif);font-size:clamp(4.2rem,8.8vw,8.6rem);line-height:.94;color:rgba(255,255,255,.82);text-align:center}
 .foot-name em{font-style:italic;color:rgba(200,169,110,.7)}
 
 /* ── MEDIA MODAL ───────────────────────────────────── */
@@ -426,7 +431,7 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
 .fg.br{bottom:0;right:0;transform:scale(-1)}
 
 /* ── FOOTER TAGLINE ──────────────────────────────────── */
-.foot-tag{font-size:.62rem;letter-spacing:.44em;text-transform:uppercase;color:rgba(255,255,255,.24);margin-top:-.6rem}
+.foot-tag{font-size:clamp(.9rem,1.35vw,1.28rem);letter-spacing:.36em;text-transform:uppercase;color:rgba(255,255,255,.34);margin-top:-.2rem}
 
 /* ── RESPONSIVE ─────────────────────────────────────── */
 @media(max-width:768px){
@@ -500,8 +505,10 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   .portal-prompt{text-align:left}
   .portal-caption{font-size:clamp(1.06rem,4.9vw,1.35rem);padding:0 .35rem}
   .portal-meta{font-size:.62rem;letter-spacing:.22em}
-  footer{padding:9vh 1.5rem calc(7vh + 4rem)}
-  .foot-name{font-size:clamp(2.6rem,13vw,4.4rem)}
+  footer{padding:6vh 1.5rem calc(7vh + 4rem)}
+  .foot-name{font-size:clamp(3.1rem,14vw,5.1rem)}
+  .foot-tag{font-size:clamp(.92rem,3.8vw,1.18rem);letter-spacing:.24em}
+  .contact-link{min-width:min(92vw,360px);padding:1.1rem 1.7rem}
   .media-modal{padding:1rem}
   .media-shell{padding:.75rem}
   .media-actions{align-items:flex-start}
@@ -529,9 +536,8 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   .gif-row video{height:96px}
   .art-grid{grid-template-columns:1fr;gap:10px}
   .art-grid video,.art-grid img{aspect-ratio:16/9}
-  .portal-overlay{gap:.35rem}
   .portal-badge{font-size:.56rem;letter-spacing:.28em}
-  .contact-link{font-size:.68rem;letter-spacing:.18em;padding:.8rem 1rem}
+  .contact-link{font-size:1rem;letter-spacing:.14em;padding:1rem 1.25rem}
   .bottom-nav-item{padding:.28rem .22rem}
   .bottom-nav-label{font-size:.46rem;letter-spacing:.11em}
   .youtube-modal .media-shell{width:min(80vw,420px);padding:.58rem}
@@ -738,26 +744,26 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
     <!-- Discovery strip -->
     <p class="edge-discover-hint" style="margin-top:2.5rem" data-i18n="dragToDiscover">Drag to discover</p>
     <div class="edge-discover" id="edge-discover">
-      <div class="edge-disc-card media-trigger" style="--erot:-1.5deg;--ew:300px" data-video="media/branded-lexus-miami.mp4" data-title-en="Lexus Miami" data-title-he="לקסוס מיאמי" data-has-audio="false">
+      <div class="edge-disc-card media-trigger" style="--erot:-1.5deg;--ew:300px" data-image="media/Branded-Lexus-2.gif" data-title-en="Lexus Miami" data-title-he="לקסוס מיאמי">
         <img src="media/branded-lexus-miami.gif" alt="Lexus Miami" loading="lazy" decoding="async" fetchpriority="low"><span></span>
+      </div>
+      <div class="edge-disc-card media-trigger" style="--erot:-3.2deg;--ew:260px" data-video="media/branded-honda-freestylers.mp4" data-title-en="Freestylers Noe" data-title-he="פריסטיילרס נואה" data-has-audio="false">
+        <video class="deferred-video" data-src="media/branded-honda-freestylers.mp4" autoplay muted loop playsinline preload="none" aria-label="Freestylers Noe"></video><span></span>
       </div>
       <div class="edge-disc-card media-trigger" style="--erot:2.2deg;--ew:310px" data-video="media/branded-porsche-rennsport.mp4" data-title-en="Porsche 911 — Rennsport" data-title-he="פורשה 911 — Rennsport" data-has-audio="false">
         <video class="deferred-video" data-src="media/branded-porsche-rennsport.mp4" autoplay muted loop playsinline preload="none" aria-label="Porsche Rennsport"></video><span></span>
       </div>
-      <div class="edge-disc-card media-trigger" style="--erot:-3.2deg;--ew:260px" data-video="media/branded-honda-freestylers.mp4" data-title-en="Freestylers Noe" data-title-he="פריסטיילרס נואה" data-has-audio="false">
-        <img src="media/branded-freestylers-noe.jpg" alt="Freestylers Noe" loading="lazy" decoding="async" fetchpriority="low"><span></span>
-      </div>
-      <div class="edge-disc-card media-trigger" style="--erot:1.7deg;--ew:285px" data-image="media/Branded-Kylian.jpg" data-title-en="Kylian, Music Video." data-title-he="קיליאן, קליפ">
+      <div class="edge-disc-card media-trigger" style="--erot:1.7deg;--ew:285px" data-image="media/Branded-Kylian.jpg" data-title-en="Kylian" data-title-he="קיליאן">
         <img src="media/Branded-Kylian.jpg" alt="Kylian" loading="lazy" decoding="async" fetchpriority="low"><span></span>
       </div>
       <div class="edge-disc-card media-trigger" style="--erot:2.5deg;--ew:290px" data-video="media/Branded-Current-TV-News.mp4" data-title-en="Current TV, News" data-title-he="Current TV, News" data-has-audio="false">
         <video class="deferred-video" data-src="media/Branded-Current-TV-News.mp4" autoplay muted loop playsinline preload="none" aria-label="Current TV News"></video><span></span>
       </div>
-      <div class="edge-disc-card media-trigger" style="--erot:-2.1deg;--ew:295px" data-image="media/branded-jagwar-crowd.jpg" data-title-en="Jagwar Ma, HBO Rocks" data-title-he="ג'אגוור מא, HBO Rocks">
-        <img src="media/branded-jagwar-crowd.jpg" alt="Jagwar Crowd" loading="lazy" decoding="async" fetchpriority="low"><span></span>
-      </div>
       <div class="edge-disc-card media-trigger" style="--erot:2.9deg;--ew:275px" data-image="media/branded-jagwar-clap.jpg" data-title-en="Jagwar Ma, HBO Rocks" data-title-he="ג'אגוור מא, HBO Rocks">
         <img src="media/branded-jagwar-clap.jpg" alt="Jagwar Clap" loading="lazy" decoding="async" fetchpriority="low"><span></span>
+      </div>
+      <div class="edge-disc-card media-trigger" style="--erot:-2.1deg;--ew:295px" data-image="media/branded-jagwar-crowd.jpg" data-title-en="Jagwar Ma, HBO Rocks" data-title-he="ג'אגוור מא, HBO Rocks">
+        <img src="media/branded-jagwar-crowd.jpg" alt="Jagwar Crowd" loading="lazy" decoding="async" fetchpriority="low"><span></span>
       </div>
     </div>
   </div>
@@ -774,8 +780,8 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
       <div class="media-trigger" data-video="media/music-warpaint-encore.mp4" data-title-en="Music - Warpaint Encore" data-title-he="מוזיקה - Warpaint Encore" data-has-audio="false">
         <video class="deferred-video" data-src="media/music-warpaint-encore.mp4" autoplay muted loop playsinline preload="none"></video>
       </div>
-      <div class="media-trigger" data-video="media/music-video-kylian.mp4" data-title-en="Music Video - Kylian" data-title-he="קליפ - Kylian" data-has-audio="false">
-        <video class="deferred-video" data-src="media/music-video-kylian.mp4" autoplay muted loop playsinline preload="none"></video>
+      <div class="media-trigger" data-image="media/Branded-KylianTitle.gif" data-title-en="Kylian" data-title-he="קיליאן">
+        <img src="media/Branded-KylianTitle.gif" alt="Kylian title" loading="lazy" decoding="async" fetchpriority="low">
       </div>
     </div>
   </div>
@@ -854,7 +860,7 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
             <img class="portal-media is-active" id="portal-image" alt="AI portal preview" src="ai/The Suds 01.png" loading="lazy" decoding="async" fetchpriority="low">
             <video class="portal-media" id="portal-video" muted playsinline preload="metadata"></video>
             <div class="portal-overlay">
-              <div class="portal-prompt" data-i18n="enterTheExperiments">Enter the experiments</div>
+              <div class="portal-prompt" data-i18n="enterTheExperiments">Enter</div>
             </div>
           </div>
         </div>
@@ -865,7 +871,6 @@ footer{padding:7vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
 
 <!-- ═══ FOOTER ════════════════════════════════════════ -->
 <footer id="contact">
-  <div class="signet"><span class="signet-text">A·B</span></div>
   <div class="foot-name">Aylon<br><em>Ben-Ami</em></div>
   <p class="foot-tag" data-i18n="loaderInfinite">Infinite Expressions</p>
   <a class="contact-link" href="mailto:aylonbenami@gmail.com" data-reveal data-i18n="sendMessage">Send a message</a>
@@ -936,8 +941,8 @@ const TRANSLATIONS={
     generatedNotCaptured:'Generated, not Captured',
     computerGenerated:'Computer-Generated',
     computerGeneratedSub:'Experiments and work that lives beyond the camera.',
-    openAiGeneratedWork:'Open AI and computer generated work',
-    enterTheExperiments:'Enter the experiments',
+    openAiGeneratedWork:'Enter',
+    enterTheExperiments:'Enter',
     sendMessage:'Send a message',
     video:'Video',
     play:'Play',
@@ -963,7 +968,7 @@ const TRANSLATIONS={
     navPersonal:'אישי',
     navEverglades:'אוורגליידס',
     craftForHire:'מלאכה בשירות הלקוח',
-    commercialVisuals:'מסחרי &amp; עריכה',
+    commercialVisuals:'פרסום &amp; תוכן שיווקי',
     heroEyebrow:'במאי &middot; עורך &middot; צבע',
     scroll:'גללו',
     about:'אודות',
@@ -989,8 +994,8 @@ const TRANSLATIONS={
     generatedNotCaptured:'נוצר, לא צולם',
     computerGenerated:'נוצר במחשב',
     computerGeneratedSub:'ניסויים ועבודות שחיים מעבר למצלמה.',
-    openAiGeneratedWork:'פתחו עבודות בינה מלאכותית ויצירה ממוחשבת',
-    enterTheExperiments:'הכינסו',
+    openAiGeneratedWork:'היכנסו',
+    enterTheExperiments:'היכנסו',
     sendMessage:'שלחו הודעה',
     video:'וידאו',
     play:'נגן',
@@ -1579,8 +1584,10 @@ document.querySelectorAll('[data-reveal]').forEach(el=>{
     gsap.set(ch,{opacity:0,y:52,filter:'blur(3px)'});
     tl.to(ch,{opacity:1,y:0,filter:'blur(0px)',duration:1.6,ease:'power3.out'});
   }
-  gsap.set(spans,{opacity:0,y:48,filter:'blur(2px)'});
-  tl.to(spans,{opacity:1,y:0,filter:'blur(0px)',duration:1.2,stagger:.1,ease:'power3.out'},ch?'-=.9':'0');
+  gsap.set(clientList,{opacity:0,y:28,scale:.97});
+  gsap.set(spans,{opacity:0,y:48,filter:'blur(2px)',scale:.92});
+  tl.to(clientList,{opacity:1,y:0,scale:1,duration:1.05,ease:'power2.out'},ch?'-=.95':'0');
+  tl.to(spans,{opacity:1,y:0,filter:'blur(0px)',scale:1,duration:1.15,stagger:.09,ease:'power3.out'},'-=.65');
 })();
 
 /* ══════════════════════════════════════════════════════
