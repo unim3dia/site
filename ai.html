@@ -655,23 +655,18 @@ const ASSETS = [
   { cat:'Character', lbl:'Thimsey',       src:'ai/Adventures of Thimsey.png' },
   { cat:'Character', lbl:'Generation',    src:'ai/Generation.png' },
   { cat:'Character', lbl:'Goofy',         src:'ai/goofy_01.png' },
-  { cat:'Character', lbl:'UGC Character', src:'ai/UGC Character 06.png' },
   { cat:'Character', lbl:'The Suds',      src:'ai/The Suds 01.png' },
-  { cat:'Character', lbl:'The Suds',      src:'ai/The Suds 02.png' },
   { cat:'Character', lbl:'Social Media',  src:'ai/Social Media 01.png' },
   { cat:'Character', lbl:'Social Media',  src:'ai/Social Media 02.png' },
   { cat:'Character', lbl:'Swim Game',     src:'ai/Swim Game.png' },
-  { cat:'Portrait',  lbl:'Portrait',      src:'ai/Portrait 01.jpg' },
+  { cat:'Portrait',  lbl:'Flower Portrait', src:'ai/Flower portrait.png' },
   { cat:'Portrait',  lbl:'Ninja Portrait',src:'ai/Portrait 02 ninja.png' },
   { cat:'Portrait',  lbl:'Ninja Portrait',src:'ai/Portrait 04 ninja.png' },
   { cat:'World',     lbl:'Dream Field',   src:'ai/Dream Field 01.png' },
   { cat:'World',     lbl:'Dream Field',   src:'ai/Dream Field 02.png' },
-  { cat:'World',     lbl:'Quieters',      src:'ai/Quieters.png' },
   { cat:'World',     lbl:'Quieters',      src:'ai/Quieters 02.png' },
   { cat:'World',     lbl:'Quieters',      src:'ai/Quieters 03.png' },
   { cat:'World',     lbl:'The Walkers',   src:'ai/Quieters - the Walkers.png' },
-  { cat:'Still',     lbl:'Film Photo',    src:'ai/film_photo_01.png' },
-  { cat:'Still',     lbl:'Film Photo',    src:'ai/film_photo_02.png' },
   { cat:'Video',     lbl:'Andrew Origin Story', src:'ai/Andrew Origin story.mp4', isVideo:true },
   { cat:'Video',     lbl:'Chairmelt',     src:'ai/Chairmelt.mp4', isVideo:true },
   { cat:'Video',     lbl:'False Alarm',   src:'ai/Finally You Are Just Another False Alarm.mp4', isVideo:true },
@@ -679,13 +674,24 @@ const ASSETS = [
   { cat:'Video',     lbl:'Quieters',      src:'ai/Quieters.mp4', isVideo:true },
   { cat:'Video',     lbl:'Quieters Graffiti', src:'ai/Quieters - Graffiti.mp4', isVideo:true },
   { cat:'Video',     lbl:'Quieters Street Scene', src:'ai/Quieters - Street Scene.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Street Portal', src:'ai/Quieters Street Portal.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Swim Video Game', src:'ai/Swim video game.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Rotten Beach',  src:'ai/Rotten beach - videogame project.mp4', isVideo:true },
+  { cat:'Video',     lbl:'The Quieters I', src:'ai/The Quieters 1.mp4', isVideo:true },
+  { cat:'Video',     lbl:'The Quieters II', src:'ai/The Quieters 2.mp4', isVideo:true },
+  { cat:'Video',     lbl:'The Quieters III', src:'ai/The Quieters 3.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Bike Escape', src:'ai/The Quieters bike escape.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Building', src:'ai/The Quieters bldg.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Clip', src:'ai/The Quieters clip.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Downtown', src:'ai/The Quieters downtown.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Help Is Coming', src:'ai/The Quieters help is coming.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Meet', src:'ai/The Quieters meet.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Scene', src:'ai/The Quieters scene.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Spaceship', src:'ai/The Quieters spaceship.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Street', src:'ai/The Quieters street.mp4', isVideo:true },
   { cat:'Video',     lbl:'Scattered Man', src:'ai/The Scattered Man 01.mp4', isVideo:true },
+  { cat:'Video',     lbl:'The Suds',      src:'ai/The Suds 01.mp4', isVideo:true },
   { cat:'Video',     lbl:'The Suds City', src:'ai/The Suds City.mp4', isVideo:true },
   { cat:'Video',     lbl:'Tupac Closeup', src:'ai/Tupac Closeup.mp4', isVideo:true },
   { cat:'Video',     lbl:'UGC Influencer', src:'ai/UGC influencer.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Gboy',          src:'ai/gboy.mp4', isVideo:true },
   { cat:'Video',     lbl:'Grok',          src:'ai/vid_grok_01.mp4', isVideo:true },
 ];
 
@@ -769,7 +775,7 @@ function nextAsset() {
     assetCursor++;
     if (!displayedSet.has(idx)) return idx;
   }
-  return null; // all on screen (shouldn't happen with 55 assets)
+  return null; // all available assets are already on screen
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1187,6 +1193,121 @@ function announce(text) {
   annEl.textContent = text;
   annEl.classList.add('show');
   setTimeout(() => annEl.classList.remove('show'), 3500);
+}
+
+/* ═══════════════════════════════════════════════════════
+   SHAKE RESET — mobile gesture repopulates the tile field
+   ═══════════════════════════════════════════════════════ */
+let shakePermissionRequested = false;
+let shakeListening = false;
+let shakeWindowStart = 0;
+let shakeHits = 0;
+let lastShakeAt = 0;
+let lastMotionMag = 0;
+const shakeBurstTimers = [];
+
+function scheduleShakeRebuild() {
+  shakeBurstTimers.splice(0).forEach(clearTimeout);
+  const shapes = ['rect', 'circle', 'penta', 'hex', 'tri'];
+  const burstCount = isMobile ? 12 : 15;
+  for (let i = 0; i < burstCount; i++) {
+    const timer = setTimeout(() => {
+      const shape = shapes[Math.floor(Math.random() * shapes.length)];
+      const rectSize = RECT_SIZES[Math.floor(Math.random() * RECT_SIZES.length)];
+      const side = Math.max(Math.min(rectSize.w, rectSize.h), Math.round(160 * MS));
+      if (shape === 'rect') {
+        dropFromTop('rect', rectSize.w, rectSize.h, 0);
+      } else {
+        dropFromTop(shape, side, side, 0);
+      }
+    }, 140 + i * 85);
+    shakeBurstTimers.push(timer);
+  }
+}
+
+function triggerShakeReset() {
+  const now = Date.now();
+  if (!isMobile || now - lastShakeAt < 4800) return;
+  lastShakeAt = now;
+
+  if (expanded) closeOverlay();
+  if (heroMode) closeHero();
+  if (execMode) toggleExec(false);
+
+  announce(window.currentLanguage === 'he' ? 'האריחים נטענים מחדש' : 'tiles resetting');
+
+  tileObjs.slice().forEach((obj, idx) => {
+    startEject(obj);
+    const angle = Math.atan2(obj.body.position.y - H * 0.42, obj.body.position.x - W / 2) + (Math.random() - 0.5) * 0.9;
+    const speed = 12 + Math.random() * 10;
+    Body.setVelocity(obj.body, {
+      x: Math.cos(angle) * speed,
+      y: Math.abs(Math.sin(angle)) * 11 + 7
+    });
+    Body.setAngularVelocity(obj.body, (Math.random() - 0.5) * 0.42);
+    obj.righting = false;
+    obj.rightWarmup = 0;
+    obj.restTimer = 0;
+    setTimeout(() => {
+      if (!obj.el.parentNode) return;
+      obj.el.remove();
+      World.remove(world, obj.body);
+      displayedSet.delete(obj.assetIdx);
+      const tileIdx = tileObjs.indexOf(obj);
+      if (tileIdx !== -1) tileObjs.splice(tileIdx, 1);
+    }, 760 + idx * 12);
+  });
+
+  scheduleShakeRebuild();
+}
+
+function handleShakeMotion(event) {
+  const acc = event.accelerationIncludingGravity || event.acceleration;
+  if (!acc) return;
+
+  const mag = Math.abs(acc.x || 0) + Math.abs(acc.y || 0) + Math.abs(acc.z || 0);
+  const delta = Math.abs(mag - lastMotionMag);
+  lastMotionMag = mag;
+
+  const rot = event.rotationRate
+    ? Math.abs(event.rotationRate.alpha || 0) + Math.abs(event.rotationRate.beta || 0) + Math.abs(event.rotationRate.gamma || 0)
+    : 0;
+
+  const shakeSample = delta > 17 || (delta > 11 && rot > 260) || (mag > 42 && rot > 170);
+  const now = Date.now();
+
+  if (now - shakeWindowStart > 800) {
+    shakeWindowStart = now;
+    shakeHits = 0;
+  }
+
+  if (!shakeSample) return;
+  shakeHits += 1;
+  if (shakeHits >= 2) {
+    shakeHits = 0;
+    triggerShakeReset();
+  }
+}
+
+function initShakeReset() {
+  if (!isMobile || shakeListening || !('DeviceMotionEvent' in window)) return;
+
+  const startListening = () => {
+    if (shakeListening) return;
+    shakeListening = true;
+    window.addEventListener('devicemotion', handleShakeMotion, { passive: true });
+  };
+
+  if (typeof DeviceMotionEvent.requestPermission === 'function') {
+    if (shakePermissionRequested) return;
+    shakePermissionRequested = true;
+    DeviceMotionEvent.requestPermission()
+      .then(state => { if (state === 'granted') startListening(); })
+      .catch(() => {});
+    return;
+  }
+
+  startListening();
 }
 
 function dropFromTop(shape, w, h, delay) {
@@ -2118,6 +2239,7 @@ if (isMobile) {
   let touchMoved    = false;
 
   document.addEventListener('touchstart', e => {
+    initShakeReset();
     const t = e.touches[0];
     touchStartPt = { x: t.clientX, y: t.clientY };
     touchMoved   = false;
