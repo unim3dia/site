@@ -25,7 +25,8 @@
       white-space:nowrap;
     }
     #top-menu.show { opacity:1; pointer-events:all; }
-    .menu-link {
+    .menu-link,
+    .menu-btn {
       display:inline-flex; align-items:center; justify-content:center;
       min-width:46px; padding:8px 12px; text-decoration:none;
       color:rgba(240,237,232,0.55); font-family:var(--font-body);
@@ -33,11 +34,17 @@
       border:1px solid rgba(240,237,232,0.1); border-radius:999px;
       transition:background .2s,color .2s,border-color .2s;
       position:relative; z-index:1;
+      background:transparent;
     }
-    .menu-link:hover { color:rgba(240,237,232,0.92); border-color:rgba(240,237,232,0.24); }
-    .menu-link.active { background:rgba(240,237,232,0.12); color:rgba(240,237,232,0.95); border-color:rgba(240,237,232,0.18); }
+    .menu-btn { cursor:pointer; appearance:none; -webkit-appearance:none; }
+    .menu-link:hover, .menu-btn:hover { color:rgba(240,237,232,0.92); border-color:rgba(240,237,232,0.24); }
+    .menu-link.active, .menu-btn.active { background:rgba(240,237,232,0.12); color:rgba(240,237,232,0.95); border-color:rgba(240,237,232,0.18); }
     .menu-link.lang-link { gap:8px; color:rgba(200,169,110,0.88); border-color:rgba(200,169,110,0.24); background:rgba(200,169,110,0.08); }
     .menu-link.lang-link:hover { color:rgba(237,214,150,0.98); border-color:rgba(200,169,110,0.38); background:rgba(200,169,110,0.14); }
+    .menu-btn.motion-btn { color:rgba(111,232,207,0.88); border-color:rgba(0,255,200,0.24); background:rgba(0,255,200,0.08); }
+    .menu-btn.motion-btn:hover,
+    .menu-btn.motion-btn.active { color:rgba(170,255,235,0.98); border-color:rgba(0,255,200,0.44); background:rgba(0,255,200,0.16); }
+    .menu-btn[hidden] { display:none !important; }
     .lang-option { opacity:0.46; transition:opacity .2s, color .2s; }
     .lang-option.active { opacity:1; color:rgba(245,222,160,0.98); }
     .lang-divider { opacity:0.34; }
@@ -419,7 +426,7 @@
       #sound-btn { font-size:11px; padding:8px 14px; left:12px;  bottom:12px; }
       #top-menu { top:12px; max-width:calc(100vw - 14px); gap:4px; padding:4px 5px; overflow-x:auto; overflow-y:hidden; scrollbar-width:none; }
       #top-menu::-webkit-scrollbar { display:none; }
-      .menu-link { min-width:auto; font-size:10px; padding:7px 10px; letter-spacing:0.1em; flex:0 0 auto; }
+      .menu-link, .menu-btn { min-width:auto; font-size:10px; padding:7px 10px; letter-spacing:0.1em; flex:0 0 auto; }
       .menu-link.lang-link { gap:6px; }
       #back-link { font-size:11px; }
       #header { top:72px; width:88vw; }
@@ -462,7 +469,7 @@
     }
     @media (max-width: 520px) {
       #top-menu { top:8px; max-width:calc(100vw - 10px); gap:3px; padding:3px 4px; }
-      .menu-link { min-width:auto; padding:6px 8px; font-size:9px; letter-spacing:0.08em; }
+      .menu-link, .menu-btn { min-width:auto; padding:6px 8px; font-size:9px; letter-spacing:0.08em; }
       .menu-link.lang-link { padding-inline:8px; }
       #header { top:64px; width:calc(100vw - 24px); }
       #name { font-size:11px; letter-spacing:0.14em; }
@@ -512,6 +519,7 @@
 <nav id="top-menu" aria-label="Primary">
   <a class="menu-link" id="back-link" href="./index.html" data-i18n="home">home</a>
   <a class="menu-link" href="mailto:aylonbenami@gmail.com" data-i18n="contact">contact</a>
+  <button class="menu-btn motion-btn" id="motion-btn" type="button" hidden></button>
   <a class="menu-link lang-link" id="lang-toggle" href="?lang=he" aria-label="Toggle language">
     <span class="lang-option" data-lang-label="en">EN</span>
     <span class="lang-divider">/</span>
@@ -599,7 +607,9 @@ const TRANSLATIONS={
     tools:'Tools',
     execHint:'press e or esc to return',
     backHome:'back to home',
-    backBrief:'back to brief'
+    backBrief:'back to brief',
+    motionEnable:'shake',
+    motionReady:'shake on'
   },
   he:{
     title:'אילון בן-עמי — AI',
@@ -615,7 +625,9 @@ const TRANSLATIONS={
     tools:'כלים',
     execHint:'לחצו e או esc כדי לחזור',
     backHome:'חזרה לאתר',
-    backBrief:'חזרה לתקציר'
+    backBrief:'חזרה לתקציר',
+    motionEnable:'ניעור',
+    motionReady:'ניעור פעיל'
   }
 };
 function getLang(){
@@ -646,6 +658,8 @@ function applyTranslations(lang){
   }
   const soundBtn=document.getElementById('sound-btn');
   if(soundBtn) soundBtn.textContent=(window.__soundOn||false)?tt('soundOn'):tt('soundOff');
+  const motionBtn=document.getElementById('motion-btn');
+  if(motionBtn) motionBtn.textContent=window.__motionReady?tt('motionReady'):tt('motionEnable');
 }
 applyTranslations(getLang());
 /* ═══════════════════════════════════════════════════════
@@ -1199,11 +1213,24 @@ function announce(text) {
    ═══════════════════════════════════════════════════════ */
 let shakePermissionRequested = false;
 let shakeListening = false;
+window.__motionReady = false;
 let shakeWindowStart = 0;
 let shakeHits = 0;
 let lastShakeAt = 0;
 let lastMotionMag = 0;
 const shakeBurstTimers = [];
+
+function showMotionButton() {
+  const btn = document.getElementById('motion-btn');
+  if (!btn || !isMobile) return;
+  btn.hidden = false;
+}
+
+function hideMotionButton() {
+  const btn = document.getElementById('motion-btn');
+  if (!btn) return;
+  btn.hidden = true;
+}
 
 function scheduleShakeRebuild() {
   shakeBurstTimers.splice(0).forEach(clearTimeout);
@@ -1272,7 +1299,7 @@ function handleShakeMotion(event) {
     ? Math.abs(event.rotationRate.alpha || 0) + Math.abs(event.rotationRate.beta || 0) + Math.abs(event.rotationRate.gamma || 0)
     : 0;
 
-  const shakeSample = delta > 17 || (delta > 11 && rot > 260) || (mag > 42 && rot > 170);
+  const shakeSample = delta > 8 || (delta > 5.5 && rot > 110) || (mag > 28 && rot > 95);
   const now = Date.now();
 
   if (now - shakeWindowStart > 800) {
@@ -1288,21 +1315,41 @@ function handleShakeMotion(event) {
   }
 }
 
-function initShakeReset() {
+function initShakeReset(interactive=false) {
   if (!isMobile || shakeListening || !('DeviceMotionEvent' in window)) return;
 
   const startListening = () => {
     if (shakeListening) return;
     shakeListening = true;
+    window.__motionReady = true;
+    hideMotionButton();
+    applyTranslations(window.currentLanguage || getLang());
+    announce(window.currentLanguage === 'he' ? 'ניעור פעיל' : 'shake reset on');
     window.addEventListener('devicemotion', handleShakeMotion, { passive: true });
   };
 
   if (typeof DeviceMotionEvent.requestPermission === 'function') {
+    if (!interactive) {
+      showMotionButton();
+      return;
+    }
     if (shakePermissionRequested) return;
     shakePermissionRequested = true;
     DeviceMotionEvent.requestPermission()
-      .then(state => { if (state === 'granted') startListening(); })
-      .catch(() => {});
+      .then(state => {
+        if (state === 'granted') {
+          startListening();
+        } else {
+          shakePermissionRequested = false;
+          showMotionButton();
+          announce(window.currentLanguage === 'he' ? 'אפשרו גישת תנועה כדי לנער' : 'allow motion access to shake');
+        }
+      })
+      .catch(() => {
+        shakePermissionRequested = false;
+        showMotionButton();
+        announce(window.currentLanguage === 'he' ? 'אפשרו גישת תנועה כדי לנער' : 'allow motion access to shake');
+      });
     return;
   }
 
@@ -2166,6 +2213,7 @@ const heroRole     = document.getElementById('hero-role');
 const heroScale    = document.getElementById('hero-scale');
 const heroDesc     = document.getElementById('hero-desc');
 const heroBack     = document.getElementById('hero-back');
+const motionBtn    = document.getElementById('motion-btn');
 let execMode = false;
 let heroMode = false;
 
@@ -2211,6 +2259,9 @@ document.querySelectorAll('.ep-card').forEach(card => {
 
 /* Back button */
 heroBack.addEventListener('click', closeHero);
+if (motionBtn) {
+  motionBtn.addEventListener('click', () => initShakeReset(true));
+}
 
 /* Esc key also closes hero first, then exec */
 // (already wired: Esc → if execMode toggle; now hero takes priority)
@@ -2222,6 +2273,7 @@ document.addEventListener('keydown', e => {
    MOBILE TOUCH SUPPORT
    ═══════════════════════════════════════════════════════ */
 if (isMobile) {
+  initShakeReset(false);
   function isUiTarget(el) {
     return !!(el && el.closest('#top-menu, #sound-btn, #overlay, #exec-overlay, #hero-overlay, a, button'));
   }
@@ -2238,7 +2290,6 @@ if (isMobile) {
   let touchMoved    = false;
 
   document.addEventListener('touchstart', e => {
-    initShakeReset();
     const t = e.touches[0];
     touchStartPt = { x: t.clientX, y: t.clientY };
     touchMoved   = false;
