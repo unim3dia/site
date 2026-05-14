@@ -608,8 +608,8 @@ const TRANSLATIONS={
     execHint:'press e or esc to return',
     backHome:'back to home',
     backBrief:'back to brief',
-    motionEnable:'shake',
-    motionReady:'shake on'
+    motionEnable:'motion',
+    motionReady:'motion on'
   },
   he:{
     title:'אילון בן-עמי — AI',
@@ -626,8 +626,8 @@ const TRANSLATIONS={
     execHint:'לחצו e או esc כדי לחזור',
     backHome:'חזרה לאתר',
     backBrief:'חזרה לתקציר',
-    motionEnable:'ניעור',
-    motionReady:'ניעור פעיל'
+    motionEnable:'תנועה',
+    motionReady:'תנועה פעילה'
   }
 };
 function getLang(){
@@ -1209,7 +1209,7 @@ function announce(text) {
 }
 
 /* ═══════════════════════════════════════════════════════
-   SHAKE RESET — mobile gesture repopulates the tile field
+   MOBILE SENSOR PHYSICS — tilt drives gravity, motion kicks tiles
    ═══════════════════════════════════════════════════════ */
 let shakePermissionRequested = false;
 let shakeListening = false;
@@ -1219,6 +1219,13 @@ let shakeHits = 0;
 let lastShakeAt = 0;
 let lastMotionMag = 0;
 const shakeBurstTimers = [];
+let tiltListening = false;
+let tiltPermissionRequested = false;
+let lastImpulseAt = 0;
+
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
 
 function showMotionButton() {
   const btn = document.getElementById('motion-btn');
@@ -1230,6 +1237,13 @@ function hideMotionButton() {
   const btn = document.getElementById('motion-btn');
   if (!btn) return;
   btn.hidden = true;
+}
+
+function refreshMotionUi() {
+  window.__motionReady = shakeListening || tiltListening;
+  if (window.__motionReady) hideMotionButton();
+  else showMotionButton();
+  applyTranslations(window.currentLanguage || getLang());
 }
 
 function scheduleShakeRebuild() {
@@ -1249,6 +1263,23 @@ function scheduleShakeRebuild() {
     }, 140 + i * 85);
     shakeBurstTimers.push(timer);
   }
+}
+
+function triggerMotionBurst(intensity=1) {
+  const burst = clamp(intensity, 0.35, 1.6);
+  const pushX = (Math.random() - 0.5) * 0.004 * burst;
+  const pushY = (-0.0022 - Math.random() * 0.0025) * burst;
+  tileObjs.forEach((obj, idx) => {
+    const spread = ((idx % 2 === 0) ? 1 : -1) * (0.00035 + Math.random() * 0.0008) * burst;
+    Body.applyForce(obj.body, obj.body.position, {
+      x: pushX + spread,
+      y: pushY
+    });
+    Body.setAngularVelocity(obj.body, obj.body.angularVelocity + (Math.random() - 0.5) * 0.08 * burst);
+    obj.righting = false;
+    obj.rightWarmup = 0;
+    obj.restTimer = 0;
+  });
 }
 
 function triggerShakeReset() {
@@ -1291,6 +1322,11 @@ function handleShakeMotion(event) {
   const acc = event.accelerationIncludingGravity || event.acceleration;
   if (!acc) return;
 
+  const pureAcc = event.acceleration || { x:0, y:0, z:0 };
+  const motionX = (pureAcc.x ?? acc.x ?? 0);
+  const motionY = (pureAcc.y ?? acc.y ?? 0);
+  const motionZ = (pureAcc.z ?? acc.z ?? 0);
+
   const mag = Math.abs(acc.x || 0) + Math.abs(acc.y || 0) + Math.abs(acc.z || 0);
   const delta = Math.abs(mag - lastMotionMag);
   lastMotionMag = mag;
@@ -1309,51 +1345,109 @@ function handleShakeMotion(event) {
 
   if (!shakeSample) return;
   shakeHits += 1;
+  const impulseNow = Date.now();
+  const impulseStrength = clamp((delta + rot * 0.02 + Math.abs(motionZ) * 0.8) / 18, 0.45, 1.4);
+  if (impulseNow - lastImpulseAt > 220) {
+    lastImpulseAt = impulseNow;
+    triggerMotionBurst(impulseStrength);
+  }
   if (shakeHits >= 2) {
     shakeHits = 0;
     triggerShakeReset();
   }
 }
 
-function initShakeReset(interactive=false) {
-  if (!isMobile || shakeListening || !('DeviceMotionEvent' in window)) return;
+function handleTiltGravity(event) {
+  if (event.beta == null || event.gamma == null) return;
 
-  const startListening = () => {
-    if (shakeListening) return;
+  const orientationAngle = window.screen && window.screen.orientation
+    ? window.screen.orientation.angle || 0
+    : (typeof window.orientation === 'number' ? window.orientation : 0);
+
+  let gamma = clamp(event.gamma, -75, 75);
+  let beta = clamp(event.beta, -75, 75);
+  let gx = clamp(gamma / 48, -1, 1) * 0.34;
+  let gy = clamp(beta / 54, -1, 1) * 0.34;
+
+  if (orientationAngle === 90) {
+    const oldGx = gx;
+    gx = -gy;
+    gy = oldGx;
+  } else if (orientationAngle === -90 || orientationAngle === 270) {
+    const oldGx = gx;
+    gx = gy;
+    gy = -oldGx;
+  } else if (Math.abs(orientationAngle) === 180) {
+    gx *= -1;
+    gy *= -1;
+  }
+
+  engine.gravity.x += (gx - engine.gravity.x) * 0.18;
+  engine.gravity.y += (gy - engine.gravity.y) * 0.18;
+}
+
+function initShakeReset(interactive=false) {
+  if (!isMobile) return;
+
+  const canUseMotion = 'DeviceMotionEvent' in window;
+  const canUseTilt = 'DeviceOrientationEvent' in window;
+  if (!canUseMotion && !canUseTilt) return;
+
+  const startMotionListening = () => {
+    if (!canUseMotion || shakeListening) return;
     shakeListening = true;
-    window.__motionReady = true;
-    hideMotionButton();
-    applyTranslations(window.currentLanguage || getLang());
-    announce(window.currentLanguage === 'he' ? 'ניעור פעיל' : 'shake reset on');
     window.addEventListener('devicemotion', handleShakeMotion, { passive: true });
   };
 
-  if (typeof DeviceMotionEvent.requestPermission === 'function') {
+  const startTiltListening = () => {
+    if (!canUseTilt || tiltListening) return;
+    tiltListening = true;
+    window.addEventListener('deviceorientation', handleTiltGravity, { passive: true });
+  };
+
+  const finishActivation = () => {
+    refreshMotionUi();
+    announce(window.currentLanguage === 'he' ? 'תנועת הטלפון פעילה' : 'phone motion active');
+  };
+
+  const motionNeedsPermission = canUseMotion && typeof DeviceMotionEvent.requestPermission === 'function';
+  const tiltNeedsPermission = canUseTilt && typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
+
+  if (motionNeedsPermission || tiltNeedsPermission) {
     if (!interactive) {
       showMotionButton();
       return;
     }
-    if (shakePermissionRequested) return;
-    shakePermissionRequested = true;
-    DeviceMotionEvent.requestPermission()
-      .then(state => {
-        if (state === 'granted') {
-          startListening();
-        } else {
-          shakePermissionRequested = false;
-          showMotionButton();
-          announce(window.currentLanguage === 'he' ? 'אפשרו גישת תנועה כדי לנער' : 'allow motion access to shake');
-        }
-      })
-      .catch(() => {
-        shakePermissionRequested = false;
+    if ((motionNeedsPermission && shakePermissionRequested) || (tiltNeedsPermission && tiltPermissionRequested)) return;
+    if (motionNeedsPermission) shakePermissionRequested = true;
+    if (tiltNeedsPermission) tiltPermissionRequested = true;
+
+    Promise.all([
+      motionNeedsPermission ? DeviceMotionEvent.requestPermission().catch(()=> 'denied') : Promise.resolve('granted'),
+      tiltNeedsPermission ? DeviceOrientationEvent.requestPermission().catch(()=> 'denied') : Promise.resolve('granted')
+    ]).then(([motionState, tiltState]) => {
+      if (motionNeedsPermission) shakePermissionRequested = false;
+      if (tiltNeedsPermission) tiltPermissionRequested = false;
+
+      const motionGranted = !canUseMotion || motionState === 'granted';
+      const tiltGranted = !canUseTilt || tiltState === 'granted';
+
+      if (motionGranted) startMotionListening();
+      if (tiltGranted) startTiltListening();
+
+      if (shakeListening || tiltListening) {
+        finishActivation();
+      } else {
         showMotionButton();
-        announce(window.currentLanguage === 'he' ? 'אפשרו גישת תנועה כדי לנער' : 'allow motion access to shake');
-      });
+        announce(window.currentLanguage === 'he' ? 'אפשרו גישת תנועה לטלפון' : 'allow phone motion access');
+      }
+    });
     return;
   }
 
-  startListening();
+  startMotionListening();
+  startTiltListening();
+  if (shakeListening || tiltListening) finishActivation();
 }
 
 function dropFromTop(shape, w, h, delay) {

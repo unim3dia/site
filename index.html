@@ -588,7 +588,7 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   <a class="bottom-nav-item" data-nav="paper-zone" href="#paper-zone">
     <span class="bottom-nav-dot"></span><span class="bottom-nav-label" data-i18n="navPersonal">Personal</span>
   </a>
-  <a class="bottom-nav-item" data-nav="future" href="#future">
+  <a class="bottom-nav-item" data-nav="future" href="ai.html">
     <span class="bottom-nav-dot"></span><span class="bottom-nav-label">AI</span>
   </a>
 </nav>
@@ -602,7 +602,7 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
       <a class="top-nav-link" data-nav="evg" href="#evg" data-i18n="navEverglades">Everglades</a>
       <a class="top-nav-link" data-nav="edge" href="#edge" data-i18n="navCommercial">Commercial</a>
       <a class="top-nav-link" data-nav="paper-zone" href="#paper-zone" data-i18n="navPersonal">Personal</a>
-      <a class="top-nav-link" data-nav="future" href="#future">AI</a>
+      <a class="top-nav-link" data-nav="future" href="ai.html">AI</a>
       <a class="top-nav-link" data-nav="contact" href="#contact" data-i18n="contact">Contact</a>
       <a class="top-nav-link lang-toggle" id="lang-toggle" href="?lang=he" aria-label="Toggle language">
         <span class="lang-option" data-lang-label="en">EN</span>
@@ -857,7 +857,7 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
       <div class="portal-frame-shell">
         <div class="portal-frame-wrap">
           <div class="portal-frame">
-            <img class="portal-media is-active" id="portal-image" alt="AI portal preview" src="ai/The Suds 01.png" loading="lazy" decoding="async" fetchpriority="low">
+            <img class="portal-media is-active" id="portal-image" alt="AI portal preview" src="ai/Flower%20portrait.png" loading="lazy" decoding="async" fetchpriority="low">
             <video class="portal-media" id="portal-video" muted playsinline preload="metadata"></video>
             <div class="portal-overlay">
               <div class="portal-prompt" data-i18n="enterTheExperiments">Enter</div>
@@ -1055,7 +1055,7 @@ function applyTranslations(lang){
   if(footName){
     footName.innerHTML=lang==='he'?'אילון<br><em>בן-עמי</em>':'Aylon<br><em>Ben-Ami</em>';
   }
-  document.querySelectorAll('a[href="ai.html"]').forEach(link=>{
+  document.querySelectorAll('a[href="ai.html"],a[href^="ai.html?"]').forEach(link=>{
     link.setAttribute('href',`ai.html?lang=${lang}`);
   });
   document.querySelectorAll('.stat-n').forEach((el,index)=>{
@@ -2030,6 +2030,8 @@ ScrollTrigger.create({trigger:'#mgc',start:'top 80%',
 
   navItems.forEach(item=>{
     item.addEventListener('click',e=>{
+      const href=item.getAttribute('href')||'';
+      if(href && !href.startsWith('#')) return;
       e.preventDefault();
       const target=document.getElementById(item.dataset.nav);
       if(target){
