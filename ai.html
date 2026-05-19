@@ -1222,6 +1222,8 @@ const shakeBurstTimers = [];
 let tiltListening = false;
 let tiltPermissionRequested = false;
 let lastImpulseAt = 0;
+let lastMotionVector = null;
+let motionSampleCount = 0;
 
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
@@ -1266,16 +1268,33 @@ function scheduleShakeRebuild() {
 }
 
 function triggerMotionBurst(intensity=1) {
-  const burst = clamp(intensity, 0.35, 1.6);
-  const pushX = (Math.random() - 0.5) * 0.004 * burst;
-  const pushY = (-0.0022 - Math.random() * 0.0025) * burst;
+  const burst = clamp(intensity, 0.35, 2.4);
+  const pushX = (Math.random() - 0.5) * 0.008 * burst;
+  const pushY = (-0.0035 - Math.random() * 0.0045) * burst;
   tileObjs.forEach((obj, idx) => {
-    const spread = ((idx % 2 === 0) ? 1 : -1) * (0.00035 + Math.random() * 0.0008) * burst;
+    const spread = ((idx % 2 === 0) ? 1 : -1) * (0.0012 + Math.random() * 0.0022) * burst;
     Body.applyForce(obj.body, obj.body.position, {
       x: pushX + spread,
       y: pushY
     });
-    Body.setAngularVelocity(obj.body, obj.body.angularVelocity + (Math.random() - 0.5) * 0.08 * burst);
+    Body.setAngularVelocity(obj.body, obj.body.angularVelocity + (Math.random() - 0.5) * 0.16 * burst);
+    obj.righting = false;
+    obj.rightWarmup = 0;
+    obj.restTimer = 0;
+  });
+}
+
+function scatterTilesFromShake(intensity=1) {
+  const burst = clamp(intensity, 0.5, 2.2);
+  tileObjs.forEach(obj => {
+    const dx = obj.body.position.x - W / 2;
+    const dy = obj.body.position.y - H / 2;
+    const len = Math.max(1, Math.hypot(dx, dy));
+    Body.setVelocity(obj.body, {
+      x: (dx / len) * (8 + Math.random() * 9) * burst + (Math.random() - 0.5) * 7,
+      y: (dy / len) * (7 + Math.random() * 8) * burst - (4 + Math.random() * 6)
+    });
+    Body.setAngularVelocity(obj.body, (Math.random() - 0.5) * 0.42 * burst);
     obj.righting = false;
     obj.rightWarmup = 0;
     obj.restTimer = 0;
@@ -1284,7 +1303,7 @@ function triggerMotionBurst(intensity=1) {
 
 function triggerShakeReset() {
   const now = Date.now();
-  if (!isMobile || now - lastShakeAt < 4800) return;
+  if (!isMobile || now - lastShakeAt < 2400) return;
   lastShakeAt = now;
 
   if (expanded) closeOverlay();
@@ -1326,19 +1345,33 @@ function handleShakeMotion(event) {
   const motionX = (pureAcc.x ?? acc.x ?? 0);
   const motionY = (pureAcc.y ?? acc.y ?? 0);
   const motionZ = (pureAcc.z ?? acc.z ?? 0);
+  const accX = acc.x || 0;
+  const accY = acc.y || 0;
+  const accZ = acc.z || 0;
 
-  const mag = Math.abs(acc.x || 0) + Math.abs(acc.y || 0) + Math.abs(acc.z || 0);
+  engine.gravity.x += ((clamp(accX / 28, -1, 1) * 0.32) - engine.gravity.x) * 0.24;
+  engine.gravity.y += ((0.035 + clamp(-accY / 28, -1, 1) * 0.32) - engine.gravity.y) * 0.24;
+
+  const mag = Math.abs(accX) + Math.abs(accY) + Math.abs(accZ);
   const delta = Math.abs(mag - lastMotionMag);
   lastMotionMag = mag;
+  motionSampleCount += 1;
 
   const rot = event.rotationRate
     ? Math.abs(event.rotationRate.alpha || 0) + Math.abs(event.rotationRate.beta || 0) + Math.abs(event.rotationRate.gamma || 0)
     : 0;
 
-  const shakeSample = delta > 8 || (delta > 5.5 && rot > 110) || (mag > 28 && rot > 95);
+  const vec = { x:accX, y:accY, z:accZ };
+  const vecDelta = lastMotionVector
+    ? Math.hypot(vec.x - lastMotionVector.x, vec.y - lastMotionVector.y, vec.z - lastMotionVector.z)
+    : 0;
+  lastMotionVector = vec;
+
+  const linearMag = Math.hypot(motionX, motionY, motionZ);
+  const shakeSample = motionSampleCount > 4 && (vecDelta > 3.8 || linearMag > 2.8 || delta > 4.5 || rot > 95);
   const now = Date.now();
 
-  if (now - shakeWindowStart > 800) {
+  if (now - shakeWindowStart > 1100) {
     shakeWindowStart = now;
     shakeHits = 0;
   }
@@ -1346,13 +1379,14 @@ function handleShakeMotion(event) {
   if (!shakeSample) return;
   shakeHits += 1;
   const impulseNow = Date.now();
-  const impulseStrength = clamp((delta + rot * 0.02 + Math.abs(motionZ) * 0.8) / 18, 0.45, 1.4);
-  if (impulseNow - lastImpulseAt > 220) {
+  const impulseStrength = clamp((vecDelta + linearMag + delta + rot * 0.02) / 9, 0.55, 2.2);
+  if (impulseNow - lastImpulseAt > 120) {
     lastImpulseAt = impulseNow;
     triggerMotionBurst(impulseStrength);
   }
-  if (shakeHits >= 2) {
+  if (shakeHits >= 2 || vecDelta > 9 || linearMag > 7) {
     shakeHits = 0;
+    scatterTilesFromShake(impulseStrength);
     triggerShakeReset();
   }
 }
@@ -1408,6 +1442,7 @@ function initShakeReset(interactive=false) {
   const finishActivation = () => {
     refreshMotionUi();
     announce(window.currentLanguage === 'he' ? 'תנועת הטלפון פעילה' : 'phone motion active');
+    triggerMotionBurst(1.15);
   };
 
   const motionNeedsPermission = canUseMotion && typeof DeviceMotionEvent.requestPermission === 'function';
