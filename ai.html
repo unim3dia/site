@@ -666,46 +666,59 @@ applyTranslations(getLang());
    AI ASSETS — ai/ folder
    ═══════════════════════════════════════════════════════ */
 const ASSETS = [
-  { cat:'Character', lbl:'Thimsey',       src:'ai/Adventures of Thimsey.png' },
-  { cat:'Character', lbl:'Generation',    src:'ai/Generation.png' },
-  { cat:'Character', lbl:'Social Media',  src:'ai/Social Media 01.png' },
-  { cat:'Character', lbl:'Social Media',  src:'ai/Social Media 02.png' },
-  { cat:'Character', lbl:'Swim Game',     src:'ai/Swim Game.png' },
-  { cat:'Portrait',  lbl:'Flower Portrait', src:'ai/Flower portrait.png' },
-  { cat:'Portrait',  lbl:'Portrait',      src:'ai/Portrait01.png' },
-  { cat:'Portrait',  lbl:'Ninja Portrait',src:'ai/Portrait 02 ninja.png' },
-  { cat:'Portrait',  lbl:'Ninja Portrait',src:'ai/Portrait 04 ninja.png' },
-  { cat:'World',     lbl:'Dream Field',   src:'ai/Dream Field 01.png' },
-  { cat:'World',     lbl:'Dream Field',   src:'ai/Dream Field 02.png' },
-  { cat:'World',     lbl:'Quieters',      src:'ai/Quieters 02.png' },
-  { cat:'World',     lbl:'Quieters',      src:'ai/Quieters 03.png' },
-  { cat:'World',     lbl:'The Walkers',   src:'ai/Quieters - the Walkers.png' },
-  { cat:'Video',     lbl:'Andrew Origin Story', src:'ai/Andrew Origin story.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Chairmelt',     src:'ai/Chairmelt.mp4', isVideo:true },
-  { cat:'Video',     lbl:'False Alarm',   src:'ai/Finally You Are Just Another False Alarm.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Market Coffee', src:'ai/Market Coffee.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Quieters',      src:'ai/Quieters.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Quieters Graffiti', src:'ai/Quieters - Graffiti.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Quieters Street Scene', src:'ai/Quieters - Street Scene.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Rotten Beach',  src:'ai/Rotten beach - videogame project.mp4', isVideo:true },
-  { cat:'Video',     lbl:'The Quieters I', src:'ai/The Quieters 1.mp4', isVideo:true },
-  { cat:'Video',     lbl:'The Quieters II', src:'ai/The Quieters 2.mp4', isVideo:true },
-  { cat:'Video',     lbl:'The Quieters III', src:'ai/The Quieters 3.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Quieters Bike Escape', src:'ai/The Quieters bike escape.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Quieters Building', src:'ai/The Quieters bldg.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Quieters Clip', src:'ai/The Quieters clip.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Quieters Downtown', src:'ai/The Quieters downtown.mp4', isVideo:true },
+  { cat:'Video',     lbl:'About to Crush Everybody', src:'ai/guy_tells_camera_im_about_crush_everybody_01.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Times Square Giant',  src:'ai/uni369_smashing_cars_giant_times_square_new_01.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Pillow Human',        src:'ai/Pillow Huma22n.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Bob',                 src:'ai/Bob22.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Nunu Remix',          src:'ai/Nunu remix.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Romanesco Glitch',    src:'ai/Romanesco veggie glitch.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Time to Buy Ansem',    src:'ai/time to buy ansem.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Black Bull',          src:'ai/Black_bull_charges_wrecks_havoc_202607041429.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Mansplaining',        src:'ai/mansplaining2_1.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Cindoc',              src:'ai/Cindoc.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Overzealous Therapist', src:'ai/Overzealous Therapist.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Chairmelt',           src:'ai/Chairmelt art.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Rotten Beach',        src:'ai/Rotten beach - videogame design mockup.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Salat Tichoni',       src:'ai/Salat Tichoni Nissim Ben-Ami.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Escape Your Ex',      src:'ai/Escape your ex girlfriend.mp4', isVideo:true },
+  { cat:'Video',     lbl:'The Quieters II',     src:'ai/The Quieters 2.mp4', isVideo:true },
+  { cat:'Portrait',  lbl:'Portrait',            src:'ai/Portrait01.png' },
+  { cat:'Portrait',  lbl:'Flower Portrait',     src:'ai/Flower portrait.png' },
   { cat:'Video',     lbl:'Quieters Help Is Coming', src:'ai/The Quieters help is coming.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Quieters Meet', src:'ai/The Quieters meet.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Quieters Scene', src:'ai/The Quieters scene.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Quieters Spaceship', src:'ai/The Quieters spaceship.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Quieters Street', src:'ai/The Quieters street.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Scattered Man', src:'ai/The Scattered Man 01.mp4', isVideo:true },
-  { cat:'Video',     lbl:'The Suds',      src:'ai/The Suds 01.mp4', isVideo:true },
-  { cat:'Video',     lbl:'The Suds City', src:'ai/The Suds City.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Tupac Closeup', src:'ai/Tupac Closeup.mp4', isVideo:true },
-  { cat:'Video',     lbl:'UGC Influencer', src:'ai/UGC influencer.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Grok',          src:'ai/vid_grok_01.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Scene',      src:'ai/The Quieters scene.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Street',     src:'ai/The Quieters street.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Building',    src:'ai/The Quieters bldg.mp4', isVideo:true },
+  { cat:'Video',     lbl:'The Suds',            src:'ai/The Suds 01.mp4', isVideo:true },
+  { cat:'Video',     lbl:'The Quieters I',      src:'ai/The Quieters 1.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Clip',        src:'ai/The Quieters clip.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Spaceship',  src:'ai/The Quieters spaceship.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Meet',       src:'ai/The Quieters meet.mp4', isVideo:true },
+  { cat:'Video',     lbl:'The Quieters III',    src:'ai/The Quieters 3.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Bike Escape', src:'ai/The Quieters bike escape.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Downtown',   src:'ai/The Quieters downtown.mp4', isVideo:true },
+  { cat:'Character', lbl:'Thimsey',             src:'ai/Adventures of Thimsey.png' },
+  { cat:'Character', lbl:'Generation',          src:'ai/Generation.png' },
+  { cat:'Character', lbl:'Social Media',        src:'ai/Social Media 01.png' },
+  { cat:'Character', lbl:'Social Media',        src:'ai/Social Media 02.png' },
+  { cat:'Character', lbl:'Swim Game',           src:'ai/Swim Game.png' },
+  { cat:'Portrait',  lbl:'Ninja Portrait',      src:'ai/Portrait 02 ninja.png' },
+  { cat:'Portrait',  lbl:'Ninja Portrait',      src:'ai/Portrait 04 ninja.png' },
+  { cat:'World',     lbl:'Dream Field',         src:'ai/Dream Field 01.png' },
+  { cat:'World',     lbl:'Dream Field',         src:'ai/Dream Field 02.png' },
+  { cat:'World',     lbl:'Quieters',            src:'ai/Quieters 02.png' },
+  { cat:'World',     lbl:'Quieters',            src:'ai/Quieters 03.png' },
+  { cat:'Video',     lbl:'Andrew Origin Story', src:'ai/Andrew Origin story.mp4', isVideo:true },
+  { cat:'Video',     lbl:'False Alarm',         src:'ai/Finally You Are Just Another False Alarm.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Market Coffee',       src:'ai/Market Coffee.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Graffiti',   src:'ai/Quieters - Graffiti.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Scattered Man',       src:'ai/The Scattered Man 01.mp4', isVideo:true },
+  { cat:'Video',     lbl:'The Suds City',        src:'ai/The Suds City.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Tupac Closeup',       src:'ai/Tupac Closeup.mp4', isVideo:true },
+  { cat:'Video',     lbl:'UGC Influencer',      src:'ai/UGC influencer.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Grok',                src:'ai/vid_grok_01.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters',            src:'ai/Quieters.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters Street Scene', src:'ai/Quieters - Street Scene.mp4', isVideo:true },
+  { cat:'World',     lbl:'The Walkers',         src:'ai/Quieters - the Walkers.png' },
 ];
 
 /* ── URL-encode each path segment so spaces / parens / special chars resolve ── */
@@ -720,25 +733,13 @@ function assetUrl(src) {
   return ASSET_BASE + src.split('/').map(s => encodeURIComponent(s)).join('/');
 }
 
-/* Shuffle ASSETS so initial 14 shown are varied */
-(function shuffle(a) {
-  for (let i = a.length-1; i > 0; i--) {
-    const j = Math.floor(Math.random()*(i+1));
-    [a[i],a[j]]=[a[j],a[i]];
-  }
-})(ASSETS);
-
-/* Always start with 6 videos — separately shuffled so the opening field includes motion */
+/* Keep the newer half chronological; shuffle only the older archive. */
 {
-  const vids = ASSETS.filter(a =>  a.isVideo);
-  const imgs  = ASSETS.filter(a => !a.isVideo);
-  /* Shuffle video pool independently for maximum variety */
-  for(let i=vids.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [vids[i],vids[j]]=[vids[j],vids[i]];
+  const recentCount=Math.ceil(ASSETS.length/2);
+  for(let i=ASSETS.length-1;i>recentCount;i--){
+    const j=recentCount+Math.floor(Math.random()*(i-recentCount+1));
+    [ASSETS[i],ASSETS[j]]=[ASSETS[j],ASSETS[i]];
   }
-  /* Rebuild: 6 random videos first, then all images (already shuffled), then remaining videos */
-  ASSETS.splice(0, ASSETS.length, ...vids.slice(0,6), ...imgs, ...vids.slice(6));
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1964,12 +1965,12 @@ setTimeout(() => {
    ═══════════════════════════════════════════════════════ */
 setTimeout(() => {
   const hidden = ASSETS.map((_,i) => i).filter(i => !displayedSet.has(i));
-  const hiddenVideos = hidden.filter(i => ASSETS[i].isVideo).slice(0, 8);
-  const hiddenImages = hidden.filter(i => !ASSETS[i].isVideo).slice(0, 18);
+  const hiddenVideos = hidden.filter(i => ASSETS[i].isVideo).slice(0, 2);
+  const hiddenImages = hidden.filter(i => !ASSETS[i].isVideo).slice(0, 10);
 
   hiddenVideos.forEach(idx => {
     const vid = document.createElement('video');
-    vid.preload = 'auto';
+    vid.preload = 'metadata';
     vid.muted = true;
     vid.playsInline = true;
     vid.src = assetUrl(ASSETS[idx].src);
