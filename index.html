@@ -146,6 +146,8 @@ body{cursor:none}
 .top-nav-link{display:inline-flex;align-items:center;justify-content:center;padding:.72rem .95rem;border:1px solid rgba(255,255,255,.12);border-radius:999px;text-decoration:none;color:rgba(255,255,255,.82);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;background:rgba(255,255,255,.03);transition:background .25s,border-color .25s,color .25s,transform .25s}
 .top-nav-link:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);transform:translateY(-2px)}
 .top-nav-link.is-active{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.24);color:var(--gold)}
+.top-nav-link.latest-nav-link{color:#173448;font-weight:700;border-color:rgba(255,255,255,.52);background:linear-gradient(110deg,#f2b856,#74cbc5,#d5eb78,#94aef3,#ffad9f);background-size:220% 100%;box-shadow:0 7px 24px rgba(62,115,120,.22);transition:background-position .65s ease,box-shadow .3s ease,transform .25s ease,color .25s ease}
+.top-nav-link.latest-nav-link:hover{color:#112b36;border-color:rgba(255,255,255,.72);background-position:100% 0;box-shadow:0 11px 28px rgba(87,166,164,.32);transform:translateY(-2px) scale(1.025)}
 .lang-toggle{gap:.48rem;padding-inline:1.05rem;color:rgba(245,222,160,.9);border-color:rgba(200,169,110,.24);background:rgba(200,169,110,.08)}
 .lang-toggle:hover{border-color:rgba(200,169,110,.42);background:rgba(200,169,110,.14)}
 .lang-option{opacity:.46;transition:opacity .25s,color .25s}
@@ -174,7 +176,7 @@ body{cursor:none}
 /* ── HERO ───────────────────────────────────────────── */
 #hero{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .hero-video-wrap{position:absolute;inset:0;z-index:0;overflow:hidden;background:radial-gradient(ellipse at 50% 60%,#0c1428 0%,#060608 70%)}
-.hero-video{width:100%;height:100%;object-fit:cover;filter:brightness(.38) saturate(.7);transform:scale(1.08);transition:filter 3s ease}
+.hero-video{width:100%;height:100%;object-fit:cover;filter:brightness(.44) saturate(1.05);transform:scale(1.08);transition:filter 3s ease}
 .hero-video-overlay{position:absolute;inset:0;background:
   radial-gradient(ellipse at 50% 50%,rgba(6,6,8,.25) 0%,rgba(6,6,8,.7) 70%),
   linear-gradient(180deg,rgba(6,6,8,.4) 0%,transparent 30%,transparent 70%,rgba(6,6,8,.85) 100%);
@@ -454,7 +456,7 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   .bottom-nav-label{font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;font-weight:300}
   body.modal-open .bottom-nav{opacity:0!important;pointer-events:none}
   #hero{min-height:100svh;padding:2.9rem 1rem 0}
-  .hero-video{filter:brightness(.32) saturate(.6)}
+  .hero-video{filter:brightness(.4) saturate(.95)}
   .hero-eyebrow{margin-bottom:2rem;letter-spacing:.28em;text-align:center;padding:0 1rem;line-height:1.6}
   .hero-name{font-size:clamp(3.5rem,21vw,6.2rem);line-height:.9;margin-top:-5vh}
   .hero-eyebrow{margin-top:-3vh}
@@ -598,6 +600,7 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
 <section id="hero" class="section">
   <div class="hero-menu-wrap">
     <nav class="top-nav" aria-label="Primary">
+      <a class="top-nav-link latest-nav-link" href="latest.html" data-i18n="navLatest">Latest</a>
       <a class="top-nav-link is-active" data-nav="mgc" href="#mgc">MGC</a>
       <a class="top-nav-link" data-nav="evg" href="#evg" data-i18n="navEverglades">Everglades</a>
       <a class="top-nav-link" data-nav="edge" href="#edge" data-i18n="navCommercial">Commercial</a>
@@ -612,8 +615,7 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
     </nav>
   </div>
   <div class="hero-video-wrap">
-    <video class="hero-video" id="hero-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" disablepictureinpicture tabindex="-1" aria-hidden="true"
-      src="media/hero-silent-trees.mp4"></video>
+    <img class="hero-video" id="hero-video" src="media/Aylon%20Ben-Ami%20-%20Silent%20Trees_1.gif" alt="" aria-hidden="true" decoding="async" fetchpriority="high">
     <div class="hero-video-overlay"></div>
   </div>
   <p class="hero-eyebrow" id="ey" data-i18n="heroEyebrow">Creative Director &middot; Editor &middot; Colorist</p>
@@ -911,6 +913,7 @@ const TRANSLATIONS={
     youtubeHoverCopy:'<p>MGC Playhouse focuses on live-action skits, pranks, and original songs performed by a diverse cast of child actors, designed to promote social-emotional learning and creativity and early literacy. The flagship Mother Goose Club channel focuses on classic nursery rhymes and full-length episodes with animated characters. I created content for both channels and was integral in building Playhouse.</p><p>The Playhouse format features real-life kids being kids with an approachable style designed to have children singing and dancing along. Playhouse leans into real human children making it feel more like peer-to-peer content, much closer to how kids naturally experience YouTube. All the while teaching reading readiness through sound recognition, rhyme patterns and language comprehension.</p><p>Color grading at this scale is its own discipline. The palette has to be saturated and stimulating without being fatiguing, consistent across hundreds of videos, and built to age. Content from 2010 still pulls views today.</p><p>Mother Goose Club is available on Netflix, Amazon Prime Video, Kidoodle.TV, Tubi, HappyKidsTV, and Spotify. The brand has won four Midsouth Emmy awards and 15 other industry awards.</p>',
     openChannelYoutube:'Open Channel',
     navTop:'Top',
+    navLatest:'Latest',
     navCommercial:'Commercial',
     navPersonal:'Personal',
     navEverglades:'Everglades',
@@ -964,6 +967,7 @@ const TRANSLATIONS={
     youtubeHoverCopy:'<p>MGC Playhouse מתמקד במערכוני לייב אקשן, מתיחות ושירים מקוריים בביצוע קאסט מגוון של ילדים, ונבנה כדי לעודד למידה חברתית-רגשית, יצירתיות ואוריינות מוקדמת. ערוץ הדגל Mother Goose Club מתמקד בשירי ילדים קלאסיים ובפרקים מלאים עם דמויות אנימציה. יצרתי תוכן עבור שני הערוצים והייתי חלק מרכזי בבניית Playhouse.</p><p>הפורמט של Playhouse מציג ילדים אמיתיים פשוט נהנים, בסגנון נגיש שנועד לגרום לילדים בבית לשיר ולרקוד יחד איתם. Playhouse נשען על נוכחות של ילדים אמיתיים, ולכן הוא מרגיש הרבה יותר כמו תוכן peer-to-peer, קרוב יותר לאופן שבו ילדים חווים את YouTube באופן טבעי. ובו בזמן הוא מלמד מוכנות לקריאה דרך זיהוי צלילים, תבניות חריזה והבנת שפה.</p><p>עשיית צבע בקנה מידה כזה היא תחום בפני עצמו. הפלטה צריכה להיות רוויה ומגרה בלי לעייף, עקבית לאורך מאות סרטונים, ובנויה כך שתחזיק לאורך זמן. תוכן משנת 2010 עדיין ממשיך להביא צפיות גם היום.</p><p>Mother Goose Club זמין ב-Netflix, Amazon Prime Video, Kidoodle.TV, Tubi, HappyKidsTV ו-Spotify. המותג זכה בארבעה פרסי Midsouth Emmy ובעוד 15 פרסי תעשייה נוספים.</p>',
     openChannelYoutube:'פתחו את הערוץ',
     navTop:'ראשי',
+    navLatest:'חדש',
     navCommercial:'מסחרי',
     navPersonal:'אישי',
     navEverglades:'אוורגליידס',
@@ -1967,28 +1971,30 @@ ScrollTrigger.create({trigger:'#mgc',start:'top 80%',
 });
 
 /* ══════════════════════════════════════════════════════
-   HERO VIDEO — subtle parallax + brightness shift on scroll
+   HERO MEDIA — subtle parallax + brightness shift on scroll
 ══════════════════════════════════════════════════════ */
 (function(){
-  const heroVid=document.getElementById('hero-video');
-  if(!heroVid)return;
+  const heroMedia=document.getElementById('hero-video');
+  if(!heroMedia)return;
   const heroSection=document.getElementById('hero');
-  heroVid.muted=true;
-  heroVid.defaultMuted=true;
-  heroVid.autoplay=true;
-  heroVid.loop=true;
-  heroVid.playsInline=true;
-  heroVid.setAttribute('muted','');
-  heroVid.setAttribute('autoplay','');
-  heroVid.setAttribute('loop','');
-  heroVid.setAttribute('playsinline','');
-  heroVid.setAttribute('webkit-playsinline','');
-  const ensureHeroPlayback=()=>heroVid.play().catch(()=>{});
-  if(heroVid.readyState>=2) ensureHeroPlayback();
-  else heroVid.addEventListener('canplay',ensureHeroPlayback,{once:true});
-  window.addEventListener('load',ensureHeroPlayback,{once:true});
-  gsap.to(heroVid,{
-    scale:1.18,filter:'brightness(.2) saturate(.4)',ease:'none',
+  if(heroMedia instanceof HTMLVideoElement){
+    heroMedia.muted=true;
+    heroMedia.defaultMuted=true;
+    heroMedia.autoplay=true;
+    heroMedia.loop=true;
+    heroMedia.playsInline=true;
+    heroMedia.setAttribute('muted','');
+    heroMedia.setAttribute('autoplay','');
+    heroMedia.setAttribute('loop','');
+    heroMedia.setAttribute('playsinline','');
+    heroMedia.setAttribute('webkit-playsinline','');
+    const ensureHeroPlayback=()=>heroMedia.play().catch(()=>{});
+    if(heroMedia.readyState>=2) ensureHeroPlayback();
+    else heroMedia.addEventListener('canplay',ensureHeroPlayback,{once:true});
+    window.addEventListener('load',ensureHeroPlayback,{once:true});
+  }
+  gsap.to(heroMedia,{
+    scale:1.18,filter:'brightness(.24) saturate(.72)',ease:'none',
     scrollTrigger:{trigger:heroSection,start:'top top',end:'bottom top',scrub:1.2}
   });
 })();
