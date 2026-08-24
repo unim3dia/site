@@ -316,13 +316,16 @@
     function sectionMarkup(project,index){
       const nextColor=projects[index+1]?.colors.bg||project.colors.bg;
       const style=`--section-bg:${project.colors.bg};--next-bg:${nextColor};--section-ink:${project.colors.ink};--section-muted:${project.colors.muted};--section-accent:${project.colors.accent};--section-accent-2:${project.colors.accent2};--section-paper:${project.colors.paper}`;
-      const projectCards=project.cards.map((card,cardIndex)=>`
-        <article class="project-card" data-card="${cardIndex}" data-shape="${card.shape}" style="--card-ratio:${card.ratio}">
-          <div class="card-media"><img src="${encodeURI(card.src)}" alt="${project.short} project image ${cardIndex+1}" draggable="false"></div>
+      const projectCards=project.cards.map((card,cardIndex)=>{
+        const imageSource=encodeURI(card.src);
+        const sourceAttribute=index===0&&cardIndex===0?`src="${imageSource}" fetchpriority="high"`:`data-src="${imageSource}"`;
+        return `<article class="project-card" data-card="${cardIndex}" data-shape="${card.shape}" style="--card-ratio:${card.ratio}">
+          <div class="card-media"><img ${sourceAttribute} alt="${project.short} project image ${cardIndex+1}" draggable="false" decoding="async"></div>
           <button class="expand-image" data-expand type="button" aria-label="Expand image ${cardIndex+1} from ${project.short}">
             <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 3.5h-4v4M12.5 3.5h4v4M7.5 16.5h-4v-4M12.5 16.5h4v-4"/></svg>
           </button>
-        </article>`).join('');
+        </article>`;
+      }).join('');
       const projectLabels=project.labels.map(label=>`<span class="project-label">${label}</span>`).join('');
       const pageHeading=index===0?'<h1 class="latest-page-heading">Latest Projects</h1>':'';
       return `<section class="project-section" id="${project.id}" data-project="${project.id}" style="${style}">
@@ -347,6 +350,21 @@
     projectsRoot.innerHTML=projects.map(sectionMarkup).join('');
 
     const deckStates=new WeakMap();
+    const loadCardImage=card=>{
+      const image=card?.querySelector('img');
+      if(image?.dataset.src&&!image.getAttribute('src')){
+        image.setAttribute('src',image.dataset.src);
+        delete image.dataset.src;
+      }
+      return image;
+    };
+    const loadDeckWindow=(deck,center,radius=2)=>{
+      const projectCards=[...deck.querySelectorAll('.project-card')];
+      for(let offset=-radius;offset<=radius;offset+=1){
+        const index=(center+offset+projectCards.length)%projectCards.length;
+        loadCardImage(projectCards[index]);
+      }
+    };
     const sideOffset=()=>innerWidth<700?28:42;
     const mix=(from,to,progress)=>from+(to-from)*progress;
     const stackOffset=(frontWidth,cardWidth,scale,reveal)=>Math.max(reveal,frontWidth/2+reveal-(cardWidth*scale)/2);
@@ -429,6 +447,7 @@
     function cycleDeck(deck,direction){
       const state=deckStates.get(deck);
       state.index=(state.index+direction+deck.children.length)%deck.children.length;
+      loadDeckWindow(deck,state.index);
       layoutDeck(deck);
     }
 
@@ -445,7 +464,7 @@
       const cards=[...lightboxState.deck.querySelectorAll('.project-card')];
       lightboxState.index=(index+cards.length)%cards.length;
       const card=cards[lightboxState.index];
-      const image=card.querySelector('img');
+      const image=loadCardImage(card);
       const updateImage=()=>{
         lightboxImage.src=image.currentSrc||image.src;
         lightboxImage.alt=image.alt;
@@ -453,10 +472,7 @@
         deckState.index=lightboxState.index;
         layoutDeck(lightboxState.deck);
         lightbox.classList.remove('is-changing');
-        [cards[(lightboxState.index+1)%cards.length],cards[(lightboxState.index-1+cards.length)%cards.length]].forEach(neighbor=>{
-          const preload=new Image();
-          preload.src=neighbor.querySelector('img').currentSrc||neighbor.querySelector('img').src;
-        });
+        loadDeckWindow(lightboxState.deck,lightboxState.index);
       };
 
       clearTimeout(lightboxState.changeTimer);
@@ -495,6 +511,7 @@
 
     document.querySelectorAll('[data-deck]').forEach(deck=>{
       deckStates.set(deck,{index:0,drag:null,suppressClickUntil:0});
+      if(deck.closest('.project-section')===projectsRoot.firstElementChild) loadDeckWindow(deck,0);
       const shell=deck.closest('.deck-shell');
       const nextButton=shell.querySelector('[data-next]');
       nextButton.addEventListener('click',()=>{
@@ -586,11 +603,22 @@
     }
 
     const sections=[...document.querySelectorAll('.project-section')];
+    const mediaObserver=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(!entry.isIntersecting) return;
+        const deck=entry.target.querySelector('[data-deck]');
+        loadDeckWindow(deck,deckStates.get(deck)?.index||0);
+        mediaObserver.unobserve(entry.target);
+      });
+    },{rootMargin:'650px 0px'});
     const observer=new IntersectionObserver(entries=>{
       const visible=entries.filter(entry=>entry.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
       if(visible) activateSection(visible.target);
     },{threshold:[.28,.45,.62]});
-    sections.forEach(section=>observer.observe(section));
+    sections.forEach(section=>{
+      observer.observe(section);
+      mediaObserver.observe(section);
+    });
 
     let cursorX=-150,cursorY=-150,targetX=-150,targetY=-150,cursorStarted=false;
     const followCursor=()=>{
