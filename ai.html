@@ -404,6 +404,15 @@
     #ov-img  { max-width:82vw; max-height:62vh; object-fit:contain; display:block; margin:0 auto; filter:saturate(0.85) brightness(0.92); cursor:grab; user-select:none; will-change:transform; }
     #ov-img.ov-grabbing { cursor:grabbing; }
     #ov-vid  { max-width:82vw; max-height:62vh; object-fit:contain; display:none; margin:0 auto; }
+    #ov-audio {
+      display:inline-flex; align-items:center; gap:7px; margin-top:15px; padding:8px 13px;
+      border:1px solid rgba(240,237,232,0.2); border-radius:999px; background:rgba(240,237,232,0.05);
+      color:rgba(240,237,232,0.72); font-family:var(--font-body); font-size:11px;
+      font-weight:600; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer;
+      transition:background .2s,border-color .2s,color .2s;
+    }
+    #ov-audio:hover, #ov-audio.on { background:rgba(0,255,200,0.1); border-color:rgba(0,255,200,0.38); color:rgba(220,255,246,0.95); }
+    #ov-audio[hidden] { display:none; }
     #ov-cat  { font-family:var(--font-body); font-size:12px; letter-spacing:0.18em; font-weight:700; text-transform:uppercase; color:rgba(240,237,232,0.55); margin-top:24px; }
     #ov-lbl  { font-family:var(--font-display); font-size:42px; letter-spacing:0.01em; color:rgba(240,237,232,0.95); margin-top:10px; line-height:1.05; }
     #ov-close{ display:block; margin-top:18px; font-family:var(--font-body); font-size:12px; letter-spacing:0.14em; font-weight:600; text-transform:uppercase; color:rgba(240,237,232,0.28); cursor:none; }
@@ -433,6 +442,7 @@
 
       /* Photo overlay */
       #ov-img  { max-width:94vw; max-height:52vh; }
+      #ov-audio{ margin-top:12px; padding:7px 11px; font-size:10px; }
       #ov-lbl  { font-size:24px; }
       #ov-cat  { font-size:11px; }
       #ov-close{ font-size:10px; margin-top:12px; }
@@ -538,6 +548,7 @@
   <div id="ov-box">
     <img id="ov-img" src="" alt="">
     <video id="ov-vid" muted loop playsinline></video>
+    <button id="ov-audio" type="button" data-i18n="videoSoundOn" aria-pressed="false" hidden>sound on</button>
     <div id="ov-cat"></div>
     <div id="ov-lbl"></div>
     <span id="ov-close" data-i18n="overlayClose">esc &nbsp;·&nbsp; click outside to close</span>
@@ -601,6 +612,8 @@ const TRANSLATIONS={
     modeHint:'hold space — pull &nbsp;·&nbsp; release — push',
     soundOff:'○ sound off',
     soundOn:'◉ sound on',
+    videoSoundOn:'sound on',
+    videoSoundOff:'sound off',
     overlayClose:'esc &nbsp;·&nbsp; click outside to close',
     execName:'AI Studies',
     execTagline:'An experimental image-and-motion practice focused on character, worldbuilding, and visual tone. This page works like a sandbox: pull elements around, open pieces up close, and scan the range of visual directions.',
@@ -619,6 +632,8 @@ const TRANSLATIONS={
     modeHint:'החזיקו רווח — משכו &nbsp;·&nbsp; שחררו — דחפו',
     soundOff:'○ סאונד כבוי',
     soundOn:'◉ סאונד פועל',
+    videoSoundOn:'הפעלת שמע',
+    videoSoundOff:'כיבוי שמע',
     overlayClose:'esc &nbsp;·&nbsp; לחצו בחוץ כדי לסגור',
     execName:'מחקרי AI',
     execTagline:'פרקטיקה ניסיונית של דימוי ותנועה, המתמקדת בדמויות, בבניית עולמות ובטון חזותי. העמוד הזה פועל כמו ארגז חול: מזיזים אלמנטים, פותחים עבודות מקרוב וסורקים טווחים שונים של שפה ויזואלית.',
@@ -716,7 +731,7 @@ const ASSETS = [
   { cat:'Video',     lbl:'Tupac Closeup',       src:'ai/Tupac Closeup.mp4', isVideo:true },
   { cat:'Video',     lbl:'UGC Influencer',      src:'ai/UGC influencer.mp4', isVideo:true },
   { cat:'Video',     lbl:'Grok',                src:'ai/vid_grok_01.mp4', isVideo:true },
-  { cat:'Video',     lbl:'Quieters',            src:'ai/Quieters.mp4', isVideo:true },
+  { cat:'Video',     lbl:'Quieters',            src:'ai/Quieters.mp4', isVideo:true, hasAudio:false },
   { cat:'Video',     lbl:'Quieters Street Scene', src:'ai/Quieters - Street Scene.mp4', isVideo:true },
   { cat:'World',     lbl:'The Walkers',         src:'ai/Quieters - the Walkers.png' },
 ];
@@ -997,7 +1012,7 @@ document.addEventListener('mouseup', e => {
     if (tile && !expanded) {
       const obj = tileObjs.find(o => o.el===tile);
       if (obj) openOverlay(obj);
-    } else if (!tile && expanded && e.target.id !== 'ov-img' && e.target.id !== 'ov-vid') {
+    } else if (!tile && expanded && e.target.id !== 'ov-img' && e.target.id !== 'ov-vid' && !e.target.closest('#ov-audio')) {
       /* Don't close here when user is interacting with the overlay image/video itself —
          the ovDrag mouseup handler above owns that interaction */
       closeOverlay();
@@ -1009,6 +1024,7 @@ document.addEventListener('mouseup', e => {
 const overlay = document.getElementById('overlay');
 const ovImg   = document.getElementById('ov-img');
 const ovVid   = document.getElementById('ov-vid');
+const ovAudio = document.getElementById('ov-audio');
 const ovCat   = document.getElementById('ov-cat');
 const ovLbl   = document.getElementById('ov-lbl');
 
@@ -1019,6 +1035,20 @@ let ovDragDelta  = { x:0, y:0 };
 let ovDragVel    = { x:0, y:0 };
 let ovDragPrev   = { x:0, y:0 };
 
+function updateVideoAudioButton() {
+  const audible = !ovVid.muted;
+  ovAudio.textContent = tt(audible ? 'videoSoundOff' : 'videoSoundOn');
+  ovAudio.setAttribute('aria-pressed', String(audible));
+  ovAudio.classList.toggle('on', audible);
+}
+
+ovAudio.addEventListener('click', event => {
+  event.stopPropagation();
+  ovVid.muted = !ovVid.muted;
+  updateVideoAudioButton();
+  ovVid.play().catch(() => {});
+});
+
 function openOverlay(obj) {
   expanded = obj;
   const a  = ASSETS[obj.assetIdx];
@@ -1027,11 +1057,15 @@ function openOverlay(obj) {
   if (a.isVideo) {
     ovImg.style.display = 'none';
     ovVid.style.display = 'block';
+    ovVid.muted = true;
+    ovAudio.hidden = a.hasAudio === false;
+    updateVideoAudioButton();
     ovVid.src = assetUrl(a.src);
     ovVid.play();
   } else {
     ovImg.style.display = '';
     ovVid.style.display = 'none';
+    ovAudio.hidden = true;
     ovImg.src = assetUrl(a.src);
   }
   overlay.classList.add('on');
@@ -1048,6 +1082,9 @@ function closeOverlay() {
   ovImg.style.opacity    = '';
   ovImg.style.transition = '';
   ovVid.pause();
+  ovVid.muted = true;
+  ovAudio.hidden = true;
+  updateVideoAudioButton();
   ovVid.src = '';
   ovDragActive = false;
 }
