@@ -51,7 +51,7 @@
     .section-grain{position:absolute;inset:0;pointer-events:none;opacity:.045;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");mix-blend-mode:multiply;mask-image:linear-gradient(to bottom,transparent,#000 8%,#000 92%,transparent)}
     .section-inner{position:relative;z-index:3;width:min(1120px,100%);margin:0 auto;padding:72px 28px 34px;display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center}
     .project-section:not(:first-child) .section-inner{padding-top:54px}
-    .latest-page-heading{margin:0 0 8px;font-family:var(--sans);font-size:clamp(1.25rem,2.2vw,2rem);font-weight:800;line-height:1;letter-spacing:.1em;text-transform:uppercase;color:var(--section-ink)}
+    .latest-page-heading{margin:0 0 8px;font-family:var(--sans);font-size:clamp(1.25rem,2.2vw,2rem);font-weight:800;line-height:1;letter-spacing:.1em;color:var(--section-ink)}
     .project-title{max-width:900px;margin:0;font-family:var(--display);font-size:clamp(2.25rem,4.15vw,4rem);font-weight:800;line-height:.92;letter-spacing:-.035em;color:var(--section-ink)}
     .project-description{width:min(680px,calc(100% - 28px));margin:0;color:#11120f;font-size:clamp(.9rem,1.25vw,1.05rem);font-weight:650;line-height:1.48}
     .project-labels{width:min(760px,calc(100% - 28px));display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-top:5px}
@@ -327,10 +327,23 @@
           ['8 popcorn princess.png','portrait','2 / 3'],['9 zappa.png','portrait','1023 / 1537'],
           ['10 jerry.png','portrait','1023 / 1537'],['11.png','square','1024 / 923']
         ],'portrait')
+      },
+      {
+        id:'thelastredthing',short:'The Last Red Thing',title:'The Last Red Thing - fal x Sequoia 72 HR Hackathon',
+        description:'This is a small story about memories, companionship, loss and the future. Made this short for the hackathon using all kinds of tools on fal and had a blast. I lost a day to car trouble and my cousin having a baby but still put something together. There are parts and moments of this I like a lot - wish I had more time to compete. Will develop this clone concept further.',
+        labels:['MCP-Orchestrated Creative Workflow','Cross-Model Character Consistency','Generative Sound Design','AI Short Film Direction'],
+        colors:{bg:'#d84d4d',ink:'#173448',muted:'#173448',accent:'#ffbd4a',accent2:'#52389b',paper:'#fff'},
+        cards:cards('The Last Red Thing',[
+          ['1. The Last Red Thing - fal 72 hr Hackathon.mp4','landscape','16 / 9','video','13.jpeg'],
+          ['1.jpg','landscape','16 / 9'],['3.jpg','landscape','16 / 9'],['4.jpg','landscape','16 / 9'],['5.jpg','landscape','16 / 9'],
+          ['6.jpg','landscape','16 / 9'],['7.jpg','landscape','16 / 9'],['8.jpg','landscape','16 / 9'],
+          ['9.jpg','landscape','16 / 9'],['10.jpg','landscape','16 / 9'],['11.jpg','landscape','16 / 9'],
+          ['12.jpg','landscape','16 / 9']
+        ])
       }
     ];
 
-    const projectOrder=['clone','howmany','setshift','deadshift','aircheck','cinemadoctor','thoughtzapper'];
+    const projectOrder=['clone','howmany','setshift','deadshift','aircheck','cinemadoctor','thoughtzapper','thelastredthing'];
     projects.sort((a,b)=>projectOrder.indexOf(a.id)-projectOrder.indexOf(b.id));
 
     const root=document.documentElement;
@@ -374,7 +387,7 @@
         </article>`;
       }).join('');
       const projectLabels=project.labels.map(label=>`<span class="project-label">${label}</span>`).join('');
-      const pageHeading=index===0?'<h1 class="latest-page-heading">Latest Projects</h1>':'';
+      const pageHeading=index===0?'<h1 class="latest-page-heading">LAiTEST PROJECTS</h1>':'';
       const deckControls=project.cards.length>1?`<div class="deck-controls">
               <button class="deck-next" data-next type="button" aria-label="Next ${project.short} image">
                 <span class="deck-next-arrow" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3.5 10h12.5M11.5 5.5 16 10l-4.5 4.5"/></svg></span>
