@@ -444,9 +444,8 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   .top-nav::-webkit-scrollbar{display:none}
   .top-nav-link{flex:0 0 auto;padding:.62rem .78rem;font-size:.54rem;letter-spacing:.14em;white-space:nowrap}
   [data-nav="paper-zone"]{order:4}
-  #lang-toggle{order:5}
-  [data-nav="future"]{order:6}
-  [data-nav="contact"]{order:7}
+  [data-nav="future"]{order:5}
+  [data-nav="contact"]{order:6}
   .bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:9100;background:rgba(6,6,8,.85);backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,.06);padding:.45rem .4rem max(.12rem,env(safe-area-inset-bottom));justify-content:space-around;opacity:0;transition:opacity .6s ease}
   .bottom-nav.is-visible{opacity:1}
   .bottom-nav-item{display:flex;flex-direction:column;align-items:center;gap:.3rem;text-decoration:none;color:rgba(255,255,255,.4);transition:color .3s ease;padding:.3rem .4rem;-webkit-tap-highlight-color:transparent;text-align:center}
@@ -607,11 +606,6 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
       <a class="top-nav-link" data-nav="paper-zone" href="#paper-zone" data-i18n="navPersonal">Personal</a>
       <a class="top-nav-link" data-nav="future" href="ai.html">AI</a>
       <a class="top-nav-link" data-nav="contact" href="#contact" data-i18n="contact">Contact</a>
-      <a class="top-nav-link lang-toggle" id="lang-toggle" href="?lang=he" aria-label="Toggle language">
-        <span class="lang-option" data-lang-label="en">EN</span>
-        <span class="lang-divider">/</span>
-        <span class="lang-option" data-lang-label="he">עברית</span>
-      </a>
     </nav>
   </div>
   <div class="hero-video-wrap">
@@ -636,7 +630,7 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
 <section id="about" class="section about-section">
   <div class="inner about-inner">
     <p class="about-eyebrow" data-reveal data-i18n="about">About</p>
-    <p class="about-body" data-reveal data-i18n="aboutBody">I direct, edit, and color grade video, and these days, prompt and generate it. My work is characterized by systematic thinking about storytelling executed across wildly different mediums and scales, from billion-view children's content to meditative Super 16mm cinema to experimental digital art. Welcome to my site, scroll down for a glimpse of the work.</p>
+    <p class="about-body" data-reveal data-i18n="aboutBody">Two decades and counting. I direct, edit, and color grade video, and these days, prompt and generate it. My work is characterized by systematic thinking about storytelling executed across wildly different mediums and scales, from billion-view children's content to meditative Super 16mm cinema to experimental digital art. Welcome to my site, scroll down for a glimpse of the work.</p>
   </div>
 </section>
 
@@ -922,7 +916,7 @@ const TRANSLATIONS={
     heroEyebrow:'Creative Director &middot; Editor &middot; Colorist',
     scroll:'Scroll',
     about:'About',
-    aboutBody:'I direct, edit, and color grade video, and these days, prompt and generate it. My work is characterized by systematic thinking about storytelling executed across wildly different mediums and scales, from billion-view children&#39;s content to meditative Super 16mm cinema to experimental digital art. Welcome to my site, scroll down for a glimpse of the work.',
+    aboutBody:'Two decades and counting. I direct, edit, and color grade video, and these days, prompt and generate it. My work is characterized by systematic thinking about storytelling executed across wildly different mediums and scales, from billion-view children&#39;s content to meditative Super 16mm cinema to experimental digital art. Welcome to my site, scroll down for a glimpse of the work.',
     joyAtScale:'Joy at Scale',
     viewsOnYoutube:'Views on YouTube',
     subscribersOn2Channels:'Subscribers on 2 channels',

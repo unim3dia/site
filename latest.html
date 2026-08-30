@@ -54,6 +54,8 @@
     .latest-page-heading{margin:0 0 8px;font-family:var(--sans);font-size:clamp(1.25rem,2.2vw,2rem);font-weight:800;line-height:1;letter-spacing:.1em;color:var(--section-ink)}
     .project-title{max-width:900px;margin:0;font-family:var(--display);font-size:clamp(2.25rem,4.15vw,4rem);font-weight:800;line-height:.92;letter-spacing:-.035em;color:var(--section-ink)}
     .project-description{width:min(680px,calc(100% - 28px));margin:0;color:#11120f;font-size:clamp(.9rem,1.25vw,1.05rem);font-weight:650;line-height:1.48}
+    .project-link{color:inherit;font-weight:800;text-decoration-thickness:2px;text-underline-offset:3px}
+    .project-link:hover{color:var(--section-accent)}
     .project-labels{width:min(760px,calc(100% - 28px));display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-top:5px}
     .project-label{padding:7px 12px;border:1px solid color-mix(in srgb,var(--section-ink) 25%,transparent);border-radius:999px;background:rgba(255,255,255,.34);color:#11120f;font-size:.69rem;font-weight:800;line-height:1;letter-spacing:.012em;backdrop-filter:blur(10px)}
 
@@ -110,11 +112,14 @@
 
     .image-lightbox{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:34px 86px;background:rgba(8,10,12,.84);backdrop-filter:blur(18px);cursor:zoom-out;animation:lightboxIn .2s ease both}
     .lightbox-stage{width:100%;height:100%;display:grid;place-items:center;pointer-events:none}
-    .image-lightbox img,.image-lightbox video{width:auto;height:auto;max-width:min(88vw,1600px);max-height:89svh;object-fit:contain;border:5px solid rgba(255,255,255,.96);border-radius:14px;box-shadow:0 36px 100px rgba(0,0,0,.55);cursor:default;pointer-events:auto;transition:opacity .14s ease,transform .22s cubic-bezier(.22,1,.36,1)}
-    .image-lightbox video{display:none;background:#000}
+    .image-lightbox img,.image-lightbox video,.image-lightbox iframe{width:auto;height:auto;max-width:min(88vw,1600px);max-height:89svh;object-fit:contain;border:5px solid rgba(255,255,255,.96);border-radius:14px;box-shadow:0 36px 100px rgba(0,0,0,.55);cursor:default;pointer-events:auto;transition:opacity .14s ease,transform .22s cubic-bezier(.22,1,.36,1)}
+    .image-lightbox video,.image-lightbox iframe{display:none;background:#000}
+    .image-lightbox iframe{width:min(88vw,1600px);height:min(49.5vw,89svh);aspect-ratio:16 / 9;border:0}
     .image-lightbox.is-video img{display:none}
     .image-lightbox.is-video video{display:block}
-    .image-lightbox.is-changing img,.image-lightbox.is-changing video{opacity:.38;transform:scale(.985)}
+    .image-lightbox.is-youtube img,.image-lightbox.is-youtube video{display:none}
+    .image-lightbox.is-youtube iframe{display:block}
+    .image-lightbox.is-changing img,.image-lightbox.is-changing video,.image-lightbox.is-changing iframe{opacity:.38;transform:scale(.985)}
     .image-lightbox.has-single-item .lightbox-nav{display:none}
     .lightbox-close{position:fixed;right:22px;top:20px;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:#fffdf8;color:#171712;font-size:1.4rem;line-height:1;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.28)}
     .lightbox-nav{position:fixed;top:50%;z-index:2;width:52px;height:52px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:1.5rem;cursor:pointer;transform:translateY(-50%);backdrop-filter:blur(12px);box-shadow:0 10px 34px rgba(0,0,0,.18);transition:background .18s ease,transform .18s ease}
@@ -160,7 +165,8 @@
       .deck-next{width:39px;height:39px}
       .deck-next-arrow{width:36px;height:36px}
       .image-lightbox{padding:64px 12px 76px}
-      .image-lightbox img,.image-lightbox video{max-width:94vw;max-height:78svh;border-width:4px;border-radius:10px}
+      .image-lightbox img,.image-lightbox video,.image-lightbox iframe{max-width:94vw;max-height:78svh;border-width:4px;border-radius:10px}
+      .image-lightbox iframe{width:94vw;height:min(52.875vw,78svh)}
       .lightbox-close{right:12px;top:max(12px,env(safe-area-inset-top));width:38px;height:38px}
       .lightbox-nav{top:auto;bottom:max(14px,env(safe-area-inset-bottom));width:46px;height:46px;transform:none}
       .lightbox-nav:hover{transform:scale(1.05)}
@@ -211,6 +217,7 @@
     <div class="lightbox-stage">
       <img id="lightboxImage" alt="">
       <video id="lightboxVideo" controls playsinline preload="metadata"></video>
+      <iframe id="lightboxYouTube" title="Project video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
     </div>
     <button class="lightbox-nav next" id="lightboxNext" type="button" aria-label="Next image">&rarr;</button>
   </div>
@@ -224,9 +231,9 @@
 
     const ratios={phone:'1290 / 2340',portrait:'2 / 3',square:'1 / 1',browser:'1.3 / 1',landscape:'16 / 9'};
     const cards=(folder,files,defaultShape='landscape')=>files.map(item=>{
-      const [file,shape=defaultShape,ratio=ratios[shape],mediaType='image',thumbnailFile=file]=Array.isArray(item)?item:[item];
+      const [file,shape=defaultShape,ratio=ratios[shape],mediaType='image',thumbnailFile=file,externalSource=null]=Array.isArray(item)?item:[item];
       return {
-        src:`latest-assets/${folder}/${file}`,
+        src:externalSource||`latest-assets/${folder}/${file}`,
         thumb:`latest-thumbs/${folder}/${thumbnailFile}`,
         shape,
         ratio,
@@ -241,7 +248,7 @@
         labels:['Creative Direction','AI Filmmaking','Character Continuity','Editorial Design'],
         colors:{bg:'#f2ad35',ink:'#173448',muted:'#173448',accent:'#ff6245',accent2:'#42b9aa',paper:'#fff'},
         cards:cards('Clone Stills for Publishing',[
-          '1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg',
+          ['1.jpg','landscape','16 / 9','youtube','1.jpg','https://www.youtube.com/embed/KGU-5fH8Vig?autoplay=1&rel=0'],'2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg',
           'clone-lyric-video-final.00_01_13_29.Still015.jpg','clone-lyric-video-final.00_01_24_05.Still016.jpg',
           'clone-lyric-video-final.00_01_53_22.Still018.jpg','clone-lyric-video-final.00_01_56_21.Still019.jpg',
           'clone-lyric-video-final.00_02_09_04.Still020.jpg','clone-lyric-video-final.00_02_19_02.Still021.jpg',
@@ -258,7 +265,7 @@
         labels:['AI Cinematography','Multi-Model Pipeline','Visual Worldbuilding','Generative Production'],
         colors:{bg:'#61c8c4',ink:'#12313d',muted:'#12313d',accent:'#ff6378',accent2:'#3979d4',paper:'#fff'},
         cards:cards('How Many People Are You Stills for Publishing',[
-          '01.jpg','02.jpg','03.jpg','4.jpg','5.jpg','07.jpg','10.jpg','hmp-brawl.jpeg','hmp-faces.jpeg',
+          ['01.jpg','landscape','16 / 9','youtube','01.jpg','https://www.youtube.com/embed/2SETBlAEf5o?autoplay=1&rel=0'],'02.jpg','03.jpg','4.jpg','5.jpg','07.jpg','10.jpg','hmp-brawl.jpeg','hmp-faces.jpeg',
           'How Many People Are You.00_01_07_15.Still015.jpg','How Many People Are You.00_01_15_05.Still016.jpg',
           'How Many People Are You.00_01_18_23.Still017.jpg','How Many People Are You.00_01_30_13.Still018.jpg',
           'How Many People Are You.00_01_44_21.Still020.jpg','How Many People Are You.00_01_56_10.Still021.jpg',
@@ -271,7 +278,7 @@
       },
       {
         id:'aircheck',short:'Aircheck - Stern Player',title:'Aircheck - Stern Player',
-        description:'A handy player for the archived Howard Stern shows from 2006 and 2007, all segmented and transcribed, searchable, and playable with your phone off. Listen to entire shows or jump around to different segments.',
+        description:'A handy player for the archived Howard Stern shows from 2006 and 2007, all segmented and transcribed, searchable, and playable with your phone off. Listen to entire shows or jump around to different segments. <a class="project-link" href="https://unim3dia.github.io/aircheck/#home" target="_blank" rel="noreferrer">Try it here.</a>',
         labels:['Product Design','Archive Search','Transcript-Synced Audio','Background Playback'],
         colors:{bg:'#ffc86a',ink:'#30220d',muted:'#30220d',accent:'#ff6b35',accent2:'#55b9d5',paper:'#fff'},
         cards:cards('Aircheck',[
@@ -284,7 +291,7 @@
       },
       {
         id:'deadshift',short:'Dead/Shift',title:'Dead/Shift',
-        description:'Remix entire Grateful Dead setlists. Change the performances and build a unique show experience. Explore the musical history and binge a song, play all versions of that song, or select eras and locations. Play Dead or Not and see how well you can locate the music to the year.',
+        description:'Remix entire Grateful Dead setlists. Change the performances and build a unique show experience. Explore the musical history and binge a song, play all versions of that song, or select eras and locations. Play Dead or Not and see how well you can locate the music to the year. <a class="project-link" href="https://dead-shift.onrender.com/index.html" target="_blank" rel="noreferrer">Try it here.</a>',
         labels:['Generative Setlists','Archive Navigation','Music Metadata','Game Mechanics'],
         colors:{bg:'#809df3',ink:'#102554',muted:'#102554',accent:'#ff5b5b',accent2:'#50d3bd',paper:'#fff'},
         cards:cards('Dead:Shift',[
@@ -295,7 +302,7 @@
       },
       {
         id:'setshift',short:'Set/Shift - Phish Player',title:'Set/Shift - Phish Player',
-        description:'Remix entire Phish shows and change the performances that make a setlist. Test if you can locate the year by ear. Binge a song: play 156 hours of YEM, or only Ghosts from 1998.',
+        description:'Remix entire Phish shows and change the performances that make a setlist. Test if you can locate the year by ear. Binge a song: play 156 hours of YEM, or only Ghosts from 1998. <a class="project-link" href="https://set-shift.onrender.com" target="_blank" rel="noreferrer">Try it here.</a>',
         labels:['Performance Substitution','Song-Binge Logic','Audio UX','Ear Training'],
         colors:{bg:'#d5eb63',ink:'#19351e',muted:'#19351e',accent:'#ff643d',accent2:'#459ee8',paper:'#fff'},
         cards:cards('Set:Shift Phish',[
@@ -334,7 +341,7 @@
         labels:['MCP-Orchestrated Creative Workflow','Cross-Model Character Consistency','Generative Sound Design','AI Short Film Direction'],
         colors:{bg:'#d84d4d',ink:'#173448',muted:'#173448',accent:'#ffbd4a',accent2:'#52389b',paper:'#fff'},
         cards:cards('The Last Red Thing',[
-          ['1.The Last Red Thing - fal x Sequoia 72-hr Hackathon.mp4','landscape','16 / 9','video','1.jpg'],
+          ['1.The Last Red Thing - fal x Sequoia 72-hr Hackathon.mp4','landscape','16 / 9','video','5.jpg'],
           ['1.jpg','landscape','16 / 9'],['3.jpg','landscape','16 / 9'],['4.jpg','landscape','16 / 9'],['5.jpg','landscape','16 / 9'],
           ['6.jpg','landscape','16 / 9'],['7.jpg','landscape','16 / 9'],['8.jpg','landscape','16 / 9'],
           ['9.jpg','landscape','16 / 9'],['10.jpg','landscape','16 / 9'],['11.jpg','landscape','16 / 9'],
@@ -352,6 +359,7 @@
     const lightbox=document.getElementById('imageLightbox');
     const lightboxImage=document.getElementById('lightboxImage');
     const lightboxVideo=document.getElementById('lightboxVideo');
+    const lightboxYouTube=document.getElementById('lightboxYouTube');
     const lightboxClose=document.getElementById('lightboxClose');
     const lightboxPrevious=document.getElementById('lightboxPrevious');
     const lightboxNext=document.getElementById('lightboxNext');
@@ -371,14 +379,14 @@
       const nextColor=projects[index+1]?.colors.bg||project.colors.bg;
       const style=`--section-bg:${project.colors.bg};--next-bg:${nextColor};--section-ink:${project.colors.ink};--section-muted:${project.colors.muted};--section-accent:${project.colors.accent};--section-accent-2:${project.colors.accent2};--section-paper:${project.colors.paper}`;
       const projectCards=project.cards.map((card,cardIndex)=>{
-        const isVideo=card.mediaType==='video';
+        const isPlayable=card.mediaType==='video'||card.mediaType==='youtube';
         const imageSource=encodeURI(card.thumb);
         const fullImageSource=encodeURI(card.src);
         const sourceAttribute=index===0&&cardIndex===0
           ?`src="${imageSource}" fetchpriority="high" loading="eager"`
           :`data-src="${imageSource}" fetchpriority="low" loading="lazy"`;
-        const expandLabel=isVideo?`Play ${project.short}`:`Expand image ${cardIndex+1} from ${project.short}`;
-        const expandIcon=isVideo
+        const expandLabel=isPlayable?`Play ${project.short}`:`Expand image ${cardIndex+1} from ${project.short}`;
+        const expandIcon=isPlayable
           ?'<svg class="play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6z"/></svg>'
           :'<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 3.5h-4v4M12.5 3.5h4v4M7.5 16.5h-4v-4M12.5 16.5h4v-4"/></svg>';
         return `<article class="project-card" data-card="${cardIndex}" data-shape="${card.shape}" data-media-type="${card.mediaType}" style="--card-ratio:${card.ratio}">
@@ -558,7 +566,9 @@
       const loadToken=++lightboxState.loadToken;
       const updateImage=()=>{
         const isVideo=card.dataset.mediaType==='video';
+        const isYouTube=card.dataset.mediaType==='youtube';
         lightbox.classList.toggle('is-video',isVideo);
+        lightbox.classList.toggle('is-youtube',isYouTube);
         lightbox.classList.toggle('has-single-item',cards.length===1);
         const deckState=deckStates.get(lightboxState.deck);
         deckState.index=lightboxState.index;
@@ -566,6 +576,17 @@
         lightbox.classList.remove('is-changing');
         loadDeckWindow(lightboxState.deck,lightboxState.index);
 
+        if(isYouTube){
+          lightboxImage.removeAttribute('src');
+          lightboxImage.alt='';
+          lightboxVideo.pause();
+          lightboxVideo.removeAttribute('src');
+          lightboxVideo.load();
+          lightboxYouTube.src=image.dataset.fullSrc;
+          return;
+        }
+
+        lightboxYouTube.removeAttribute('src');
         if(isVideo){
           lightboxImage.removeAttribute('src');
           lightboxImage.alt='';
@@ -624,8 +645,9 @@
       lightboxVideo.pause();
       lightboxVideo.removeAttribute('src');
       lightboxVideo.load();
+      lightboxYouTube.removeAttribute('src');
       lightbox.hidden=true;
-      lightbox.classList.remove('is-changing','is-video','has-single-item');
+      lightbox.classList.remove('is-changing','is-video','is-youtube','has-single-item');
       lightboxImage.removeAttribute('src');
       document.body.classList.remove('modal-open');
       lightboxState.returnFocus?.focus();
