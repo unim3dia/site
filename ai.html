@@ -542,7 +542,7 @@
 <div id="overlay">
   <div id="ov-box">
     <img id="ov-img" src="" alt="">
-    <video id="ov-vid" muted loop playsinline></video>
+    <video id="ov-vid" muted loop playsinline preload="metadata"></video>
     <button id="ov-audio" type="button" data-i18n="videoSoundOn" aria-pressed="false" hidden>sound on</button>
     <div id="ov-lbl"></div>
     <div id="ov-desc" hidden></div>
@@ -1038,12 +1038,32 @@ function updateVideoAudioButton() {
   ovAudio.classList.toggle('on', audible);
 }
 
-ovAudio.addEventListener('click', event => {
-  event.stopPropagation();
-  ovVid.muted = !ovVid.muted;
+let lastOverlayAudioToggleAt = 0;
+function toggleOverlayVideoSound(event=null) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  const now=Date.now();
+  if(now-lastOverlayAudioToggleAt<450) return;
+  lastOverlayAudioToggleAt=now;
+
+  const enableSound=ovVid.muted;
+  ovVid.defaultMuted=!enableSound;
+  ovVid.muted=!enableSound;
+  if(enableSound) ovVid.volume=1;
   updateVideoAudioButton();
-  ovVid.play().catch(() => {});
-});
+  ovVid.play().catch(() => {
+    // Keep the control state honest if Safari rejects the audible play request.
+    if(enableSound){
+      ovVid.defaultMuted=true;
+      ovVid.muted=true;
+      updateVideoAudioButton();
+    }
+  });
+}
+
+ovAudio.addEventListener('click', toggleOverlayVideoSound);
 
 function openOverlay(obj) {
   expanded = obj;
@@ -1054,7 +1074,10 @@ function openOverlay(obj) {
   if (a.isVideo) {
     ovImg.style.display = 'none';
     ovVid.style.display = 'block';
+    ovVid.controls = isMobile;
+    ovVid.defaultMuted = true;
     ovVid.muted = true;
+    ovVid.volume = 1;
     ovAudio.hidden = a.hasAudio === false;
     updateVideoAudioButton();
     ovVid.src = assetUrl(a.src);
@@ -2485,6 +2508,11 @@ if (isMobile) {
     const contactLink = el && el.closest('#top-menu a[href^="mailto:"]');
     if (contactLink) {
       window.location.href = contactLink.href;
+      return;
+    }
+
+    if (el && el.closest('#ov-audio')) {
+      toggleOverlayVideoSound();
       return;
     }
 
