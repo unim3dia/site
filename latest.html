@@ -191,7 +191,19 @@
     .production-heading h2{font-family:var(--display);font-size:clamp(2.7rem,7vw,5.5rem);line-height:1;letter-spacing:-.04em;margin:12px 0}
     .production-heading p{margin:0;font-size:.95rem;line-height:1.5}
     .production-heading .production-kicker{font-size:.68rem;font-weight:800;letter-spacing:.2em}
-    .book-titles{list-style:none;margin:8px 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 24px;font-family:var(--display);font-weight:700;font-size:1.05rem}
+    #books{content-visibility:visible;contain-intrinsic-size:none}
+    .deck-shell.book-shelf{width:min(840px,100%);height:auto;display:block;margin:10px 0 24px}
+    .deck.book-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;width:100%;height:auto;touch-action:pan-y;user-select:auto}
+    .book-row .project-card{position:relative;left:auto;top:auto;width:100%;padding:7px;border-radius:12px;transform:none;backface-visibility:visible;box-shadow:0 14px 32px rgba(25,25,20,.2)}
+    .book-row .card-media{inset:7px;border-radius:7px}
+    .book-row .card-media img{object-fit:contain}
+    .book-row .project-card .expand-image{opacity:1;transform:none;pointer-events:auto}
+    @media(max-width:699px){
+      .deck.book-row{gap:10px}
+      .book-row .project-card{padding:4px;border-radius:8px}
+      .book-row .card-media{inset:4px;border-radius:4px}
+      .book-row .expand-image{width:28px;height:28px;right:6px;bottom:6px}
+    }
   </style>
 </head>
 <body>
@@ -342,7 +354,7 @@
       },
       {
         id:'thelastredthing',short:'The Last Red Thing',title:'The Last Red Thing - fal x Sequoia 72 HR Hackathon',
-        description:'This is a small story about memories, companionship, loss and the future. Made this short for the hackathon using all kinds of tools on fal and had a blast. I lost a day to car trouble and my cousin having a baby but still put something together. There are parts and moments of this I like a lot - wish I had more time to compete. Will develop this clone concept further.',
+        description:"<strong>A story about memories, companionship, loss and the future. Made this short for the hackathon using all kinds of tools on fal and had a blast. Wish I had more time to compete. This clone concept is one I've been developing further.</strong>",
         labels:['MCP-Orchestrated Creative Workflow','Cross-Model Character Consistency','Generative Sound Design','AI Short Film Direction'],
         colors:{bg:'#d84d4d',ink:'#173448',muted:'#173448',accent:'#ffbd4a',accent2:'#52389b',paper:'#fff'},
         cards:cards('The Last Red Thing',[
@@ -427,8 +439,8 @@
       {
         "id": "books",
         "short": "Three Books",
-        "title": "Three Books",
-        "description": "Three books I have written and am preparing to release on Amazon.",
+        "title": "",
+        "description": "",
         "labels": [
           "Books",
           "Forthcoming on Amazon"
@@ -469,7 +481,8 @@
           "Make Images That Stay",
           "Everyone Has a Channel",
           "Make Sound That Stays"
-        ]
+        ],
+        "layout": "book-row"
       },
       {
         "id": "quieters",
@@ -491,71 +504,29 @@
         },
         "cards": [
           {
-            "src": "latest-assets/The Quieters - website/select_reference_1_bedford_ave_invasion.png",
-            "thumb": "latest-thumbs/The Quieters - website/select_reference_1_bedford_ave_invasion.jpg",
+            "src": "latest-assets/The Quieters - website/01.png",
+            "thumb": "latest-thumbs/The Quieters - website/01.jpg",
             "shape": "landscape",
-            "ratio": "1672 / 941",
+            "ratio": "1448 / 1086",
             "mediaType": "image"
           },
           {
-            "src": "latest-assets/The Quieters - website/View_from_kids_window_2K_20260910004106.jpeg",
-            "thumb": "latest-thumbs/The Quieters - website/View_from_kids_window_2K_20260910004106.jpg",
+            "src": "latest-assets/The Quieters - website/02.png",
+            "thumb": "latest-thumbs/The Quieters - website/02.jpg",
+            "shape": "landscape",
+            "ratio": "1971 / 798",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/03.jpeg",
+            "thumb": "latest-thumbs/The Quieters - website/03.jpg",
             "shape": "landscape",
             "ratio": "2752 / 1536",
             "mediaType": "image"
           },
           {
-            "src": "latest-assets/The Quieters - website/cyclops to window.mp4",
-            "thumb": "latest-thumbs/The Quieters - website/cyclops to window.jpg",
-            "shape": "landscape",
-            "ratio": "960 / 540",
-            "mediaType": "video"
-          },
-          {
-            "src": "latest-assets/The Quieters - website/select_scene_new_addition_28_punk_kid_bike_chase_graffiti_street.png",
-            "thumb": "latest-thumbs/The Quieters - website/select_scene_new_addition_28_punk_kid_bike_chase_graffiti_street.jpg",
-            "shape": "landscape",
-            "ratio": "1672 / 941",
-            "mediaType": "image"
-          },
-          {
-            "src": "latest-assets/The Quieters - website/select_scene_new_addition_33_three_kids_bike_chase_sunlit_street.png",
-            "thumb": "latest-thumbs/The Quieters - website/select_scene_new_addition_33_three_kids_bike_chase_sunlit_street.jpg",
-            "shape": "landscape",
-            "ratio": "1536 / 1024",
-            "mediaType": "image"
-          },
-          {
-            "src": "latest-assets/The Quieters - website/kids to meet Quieter.mp4",
-            "thumb": "latest-thumbs/The Quieters - website/kids to meet Quieter.jpg",
-            "shape": "landscape",
-            "ratio": "960 / 540",
-            "mediaType": "video"
-          },
-          {
-            "src": "latest-assets/The Quieters - website/photo_bhodi_and_big_guy_waiting_at_tutus.png",
-            "thumb": "latest-thumbs/The Quieters - website/photo_bhodi_and_big_guy_waiting_at_tutus.jpg",
-            "shape": "landscape",
-            "ratio": "1672 / 941",
-            "mediaType": "image"
-          },
-          {
-            "src": "latest-assets/The Quieters - website/photo_al7dv1al7dv1al7d.jpg",
-            "thumb": "latest-thumbs/The Quieters - website/photo_al7dv1al7dv1al7d.jpg",
-            "shape": "landscape",
-            "ratio": "1365 / 768",
-            "mediaType": "image"
-          },
-          {
-            "src": "latest-assets/The Quieters - website/quieters_leaf_creature_huggingface_clip_064_20260505.mp4",
-            "thumb": "latest-thumbs/The Quieters - website/quieters_leaf_creature_huggingface_clip_064_20260505.jpg",
-            "shape": "portrait",
-            "ratio": "960 / 1280",
-            "mediaType": "video"
-          },
-          {
-            "src": "latest-assets/The Quieters - website/photo_drone_hovering_over_scene_2k_202609082353.jpeg",
-            "thumb": "latest-thumbs/The Quieters - website/photo_drone_hovering_over_scene_2k_202609082353.jpg",
+            "src": "latest-assets/The Quieters - website/04.jpeg",
+            "thumb": "latest-thumbs/The Quieters - website/04.jpg",
             "shape": "landscape",
             "ratio": "2752 / 1536",
             "mediaType": "image"
@@ -568,10 +539,38 @@
             "mediaType": "image"
           },
           {
-            "src": "latest-assets/The Quieters - website/quieters_leaf_characters_walking_generated_106.mp4",
-            "thumb": "latest-thumbs/The Quieters - website/quieters_leaf_characters_walking_generated_106.jpg",
+            "src": "latest-assets/The Quieters - website/the cyclops to window.mp4",
+            "thumb": "latest-thumbs/The Quieters - website/the cyclops to window.jpg",
             "shape": "landscape",
-            "ratio": "960 / 540",
+            "ratio": "1100 / 618",
+            "mediaType": "video"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/photo_al7dv1al7dv1al7d.jpg",
+            "thumb": "latest-thumbs/The Quieters - website/photo_al7dv1al7dv1al7d.jpg",
+            "shape": "landscape",
+            "ratio": "1365 / 768",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/kids to meet Quieter.mp4",
+            "thumb": "latest-thumbs/The Quieters - website/kids to meet Quieter.jpg",
+            "shape": "landscape",
+            "ratio": "1100 / 618",
+            "mediaType": "video"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/photo_bhodi_and_big_guy_waiting_at_tutus.png",
+            "thumb": "latest-thumbs/The Quieters - website/photo_bhodi_and_big_guy_waiting_at_tutus.jpg",
+            "shape": "landscape",
+            "ratio": "1672 / 941",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/quieters_leaf_creature_huggingface_clip_064_20260505.mp4",
+            "thumb": "latest-thumbs/The Quieters - website/quieters_leaf_creature_huggingface_clip_064_20260505.jpg",
+            "shape": "portrait",
+            "ratio": "1100 / 1466",
             "mediaType": "video"
           },
           {
@@ -582,6 +581,27 @@
             "mediaType": "image"
           },
           {
+            "src": "latest-assets/The Quieters - website/quieters_leaf_characters_walking_generated_106.mp4",
+            "thumb": "latest-thumbs/The Quieters - website/quieters_leaf_characters_walking_generated_106.jpg",
+            "shape": "landscape",
+            "ratio": "1100 / 618",
+            "mediaType": "video"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/photo_drone_hovering_over_scene_2k_202609082353.jpeg",
+            "thumb": "latest-thumbs/The Quieters - website/photo_drone_hovering_over_scene_2k_202609082353.jpg",
+            "shape": "landscape",
+            "ratio": "2752 / 1536",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/quieters_leaves_wind_generated_112.mp4",
+            "thumb": "latest-thumbs/The Quieters - website/quieters_leaves_wind_generated_112.jpg",
+            "shape": "portrait",
+            "ratio": "1100 / 1956",
+            "mediaType": "video"
+          },
+          {
             "src": "latest-assets/The Quieters - website/photo_maria_hernandez_12.png",
             "thumb": "latest-thumbs/The Quieters - website/photo_maria_hernandez_12.jpg",
             "shape": "landscape",
@@ -589,15 +609,57 @@
             "mediaType": "image"
           },
           {
-            "src": "latest-assets/The Quieters - website/quieters_leaves_wind_generated_112.mp4",
-            "thumb": "latest-thumbs/The Quieters - website/quieters_leaves_wind_generated_112.jpg",
-            "shape": "portrait",
-            "ratio": "960 / 1706",
+            "src": "latest-assets/The Quieters - website/quieters_leaf_creature_generated_clip_093.mp4",
+            "thumb": "latest-thumbs/The Quieters - website/quieters_leaf_creature_generated_clip_093.jpg",
+            "shape": "landscape",
+            "ratio": "1100 / 618",
             "mediaType": "video"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/photo_may_14_2026_07_21_12_pm.png",
+            "thumb": "latest-thumbs/The Quieters - website/photo_may_14_2026_07_21_12_pm.jpg",
+            "shape": "landscape",
+            "ratio": "1672 / 941",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/quieters_leaf_creature_huggingface_clip_071_20260706.mp4",
+            "thumb": "latest-thumbs/The Quieters - website/quieters_leaf_creature_huggingface_clip_071_20260706.jpg",
+            "shape": "landscape",
+            "ratio": "1100 / 632",
+            "mediaType": "video"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/photo_may_14_2026_07_48_11_pm.png",
+            "thumb": "latest-thumbs/The Quieters - website/photo_may_14_2026_07_48_11_pm.jpg",
+            "shape": "landscape",
+            "ratio": "1672 / 941",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/photo_may_15_2026_12_02_07_am.png",
+            "thumb": "latest-thumbs/The Quieters - website/photo_may_15_2026_12_02_07_am.jpg",
+            "shape": "landscape",
+            "ratio": "1672 / 941",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/photo_place_characters_in_location_2k_202609080338_2.jpeg",
+            "thumb": "latest-thumbs/The Quieters - website/photo_place_characters_in_location_2k_202609080338_2.jpg",
+            "shape": "landscape",
+            "ratio": "2752 / 1536",
+            "mediaType": "image"
           },
           {
             "src": "latest-assets/The Quieters - website/photo_regenerate_creature_in_west_village_2k_202609080317.jpeg",
             "thumb": "latest-thumbs/The Quieters - website/photo_regenerate_creature_in_west_village_2k_202609080317.jpg",
+            "shape": "landscape",
+            "ratio": "2752 / 1536",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/photo_remake_image_with_different_buil_2k_202609082353.jpeg",
+            "thumb": "latest-thumbs/The Quieters - website/photo_remake_image_with_different_buil_2k_202609082353.jpg",
             "shape": "landscape",
             "ratio": "2752 / 1536",
             "mediaType": "image"
@@ -610,11 +672,25 @@
             "mediaType": "image"
           },
           {
-            "src": "latest-assets/The Quieters - website/quieters_leaf_creature_generated_clip_093.mp4",
-            "thumb": "latest-thumbs/The Quieters - website/quieters_leaf_creature_generated_clip_093.jpg",
+            "src": "latest-assets/The Quieters - website/photo_substitute_the_character_to_2k_202609082353.jpeg",
+            "thumb": "latest-thumbs/The Quieters - website/photo_substitute_the_character_to_2k_202609082353.jpg",
             "shape": "landscape",
-            "ratio": "960 / 540",
-            "mediaType": "video"
+            "ratio": "2752 / 1536",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/photo_zoom_out_2k_202609082353.jpeg",
+            "thumb": "latest-thumbs/The Quieters - website/photo_zoom_out_2k_202609082353.jpg",
+            "shape": "landscape",
+            "ratio": "2752 / 1536",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/The Quieters - website/select_reference_1_bedford_ave_invasion.png",
+            "thumb": "latest-thumbs/The Quieters - website/select_reference_1_bedford_ave_invasion.jpg",
+            "shape": "landscape",
+            "ratio": "1672 / 941",
+            "mediaType": "image"
           },
           {
             "src": "latest-assets/The Quieters - website/select_scene_new_addition_12_el_fogon_rainy_alley_warning_sign.png",
@@ -624,39 +700,25 @@
             "mediaType": "image"
           },
           {
-            "src": "latest-assets/The Quieters - website/photo_may_14_2026_07_48_11_pm.png",
-            "thumb": "latest-thumbs/The Quieters - website/photo_may_14_2026_07_48_11_pm.jpg",
+            "src": "latest-assets/The Quieters - website/select_scene_new_addition_28_punk_kid_bike_chase_graffiti_street.png",
+            "thumb": "latest-thumbs/The Quieters - website/select_scene_new_addition_28_punk_kid_bike_chase_graffiti_street.jpg",
             "shape": "landscape",
             "ratio": "1672 / 941",
             "mediaType": "image"
           },
           {
-            "src": "latest-assets/The Quieters - website/quieters_leaf_creature_huggingface_clip_066_20260505.mp4",
-            "thumb": "latest-thumbs/The Quieters - website/quieters_leaf_creature_huggingface_clip_066_20260505.jpg",
-            "shape": "landscape",
-            "ratio": "960 / 540",
-            "mediaType": "video"
-          },
-          {
-            "src": "latest-assets/The Quieters - website/photo_may_14_2026_07_21_12_pm.png",
-            "thumb": "latest-thumbs/The Quieters - website/photo_may_14_2026_07_21_12_pm.jpg",
+            "src": "latest-assets/The Quieters - website/select_scene_new_addition_2_boy_bike_chase_close_low_angle.png",
+            "thumb": "latest-thumbs/The Quieters - website/select_scene_new_addition_2_boy_bike_chase_close_low_angle.jpg",
             "shape": "landscape",
             "ratio": "1672 / 941",
             "mediaType": "image"
           },
           {
-            "src": "latest-assets/The Quieters - website/select_reference_5_movie_poster_1.png",
-            "thumb": "latest-thumbs/The Quieters - website/select_reference_5_movie_poster_1.jpg",
+            "src": "latest-assets/The Quieters - website/select_scene_new_addition_33_three_kids_bike_chase_sunlit_street.png",
+            "thumb": "latest-thumbs/The Quieters - website/select_scene_new_addition_33_three_kids_bike_chase_sunlit_street.jpg",
             "shape": "landscape",
-            "ratio": "1448 / 1086",
+            "ratio": "1536 / 1024",
             "mediaType": "image"
-          },
-          {
-            "src": "latest-assets/The Quieters - website/quieters_leaf_creature_huggingface_clip_071_20260706.mp4",
-            "thumb": "latest-thumbs/The Quieters - website/quieters_leaf_creature_huggingface_clip_071_20260706.jpg",
-            "shape": "landscape",
-            "ratio": "960 / 552",
-            "mediaType": "video"
           }
         ]
       },
@@ -664,7 +726,7 @@
         "id": "suds",
         "short": "The Suds",
         "title": "The Suds",
-        "description": "The Suds is about a hidden world where human emotions take shape in water. When a boy’s tear becomes Pip, her search for where she came from collides with a citywide crisis, revealing what happens when people stop letting themselves truly feel.",
+        "description": "The Suds is about a hidden world where human emotions take shape in water. When a boy’s tear becomes Pip, her search for where she came from collides with a citywide crisis, revealing what happens when people stop letting themselves feel and start letting themselves go.",
         "labels": [
           "Animated Film",
           "Concept Art",
@@ -722,10 +784,73 @@
             "mediaType": "video"
           }
         ]
+      },
+      {
+        "id": "afterimage",
+        "short": "Afterimage",
+        "title": "Afterimage",
+        "description": "Afterimage is an interactive film-discovery site built around the ritual of collecting. About 1,700 films each have their own foil pack. You browse them on a 3D shop shelf, tear one open, flip through the cards (posters, stills, cast, crew, themes and the stories behind them) and keep favorites in a binder. A real-time 3D desk lets you lay cards out by hand. An \"orbit\" view turns each film into a map of the people, connects to levels of ideas and other films around it, and zooms out into a searchable galaxy of every title. It's a personal, non-commercial project about slowing down and actually looking at movies.",
+        "labels": [
+          "Interactive Film Discovery",
+          "Personal Project",
+          "In Progress"
+        ],
+        "colors": {
+          "bg": "#d8b9d8",
+          "ink": "#302342",
+          "muted": "#302342",
+          "accent": "#ac85c5",
+          "accent2": "#82bfc6",
+          "paper": "#fff"
+        },
+        "cards": [
+          {
+            "src": "latest-assets/Afterimage/1-landing.png",
+            "thumb": "latest-thumbs/Afterimage/1-landing.jpg",
+            "shape": "browser",
+            "ratio": "1440 / 900",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/Afterimage/2-shelves.png",
+            "thumb": "latest-thumbs/Afterimage/2-shelves.jpg",
+            "shape": "browser",
+            "ratio": "1440 / 900",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/Afterimage/3-open-pack.png",
+            "thumb": "latest-thumbs/Afterimage/3-open-pack.jpg",
+            "shape": "browser",
+            "ratio": "1440 / 900",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/Afterimage/4-orbit.png",
+            "thumb": "latest-thumbs/Afterimage/4-orbit.jpg",
+            "shape": "browser",
+            "ratio": "1440 / 900",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/Afterimage/5-desk.png",
+            "thumb": "latest-thumbs/Afterimage/5-desk.jpg",
+            "shape": "browser",
+            "ratio": "1440 / 900",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/Afterimage/6-landing.png",
+            "thumb": "latest-thumbs/Afterimage/6-landing.jpg",
+            "shape": "browser",
+            "ratio": "1269 / 940",
+            "mediaType": "image"
+          }
+        ]
       }
     );
 
-    const projectOrder=['artisanalcoffees','megamables','clone','howmany','setshift','deadshift','aircheck','cinemadoctor','thoughtzapper','thelastredthing','books','quieters','suds'];
+    const projectOrder=['artisanalcoffees','megamables','clone','howmany','setshift','deadshift','aircheck','cinemadoctor','thoughtzapper','thelastredthing','books','quieters','suds','afterimage'];
     projects.sort((a,b)=>projectOrder.indexOf(a.id)-projectOrder.indexOf(b.id));
 
     const root=document.documentElement;
@@ -760,18 +885,18 @@
         const sourceAttribute=index===0&&cardIndex===0
           ?`src="${imageSource}" fetchpriority="high" loading="eager"`
           :`data-src="${imageSource}" fetchpriority="low" loading="lazy"`;
-        const expandLabel=isPlayable?`Play ${project.short}`:`Expand image ${cardIndex+1} from ${project.short}`;
+        const expandLabel=project.bookTitles?`View ${project.bookTitles[cardIndex]}`:isPlayable?`Play ${project.short}`:`Expand image ${cardIndex+1} from ${project.short}`;
         const expandIcon=isPlayable
           ?'<svg class="play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6z"/></svg>'
           :'<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 3.5h-4v4M12.5 3.5h4v4M7.5 16.5h-4v-4M12.5 16.5h4v-4"/></svg>';
         return `<article class="project-card" data-card="${cardIndex}" data-shape="${card.shape}" data-media-type="${card.mediaType}" style="--card-ratio:${card.ratio}">
-          <div class="card-media"><img ${sourceAttribute} data-full-src="${fullImageSource}" alt="${project.short} project image ${cardIndex+1}" draggable="false" decoding="async"></div>
+          <div class="card-media"><img ${sourceAttribute} data-full-src="${fullImageSource}" alt="${project.bookTitles?.[cardIndex]||`${project.short} project image ${cardIndex+1}`}" draggable="false" decoding="async"></div>
           <button class="expand-image" data-expand type="button" aria-label="${expandLabel}">${expandIcon}</button>
         </article>`;
       }).join('');
       const projectLabels=project.labels.map(label=>`<span class="project-label">${label}</span>`).join('');
-      const pageHeading=index===0?'<h1 class="latest-page-heading">LAiTEST PROJECTS</h1>':project.productionStart?'<header class="production-heading"><p class="production-kicker">WHAT’S NEXT</p><h2>In Production</h2><p>Books, a show, and a film in the making.</p></header>':'';
-      const deckControls=project.cards.length>1?`<div class="deck-controls">
+      const pageHeading=index===0?'<h1 class="latest-page-heading">LAiTEST PROJECTS</h1>':project.productionStart?'<header class="production-heading"><p class="production-kicker">WHAT’S NEXT</p><h2>In Production</h2><p>Books, films, and interactive projects in the making.</p></header>':'';
+      const deckControls=project.layout!=='book-row'&&project.cards.length>1?`<div class="deck-controls">
               <button class="deck-next" data-next type="button" aria-label="Next ${project.short} image">
                 <span class="deck-next-arrow" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3.5 10h12.5M11.5 5.5 16 10l-4.5 4.5"/></svg></span>
               </button>
@@ -780,13 +905,12 @@
         <div class="section-grain" aria-hidden="true"></div>
         <div class="section-inner">
           ${pageHeading}
-          <${index>=projects.findIndex(p=>p.productionStart)?'h3':'h2'} class="project-title">${project.title}</${index>=projects.findIndex(p=>p.productionStart)?'h3':'h2'}>
-          <div class="deck-shell">
-            <div class="deck is-initializing" data-deck aria-label="${project.short} image deck">${projectCards}</div>
+          ${project.title?`<${index>=projects.findIndex(p=>p.productionStart)?'h3':'h2'} class="project-title">${project.title}</${index>=projects.findIndex(p=>p.productionStart)?'h3':'h2'}>`:''}
+          <div class="deck-shell ${project.layout==='book-row'?'book-shelf':''}">
+            <div class="deck is-initializing ${project.layout||''}" data-deck aria-label="${project.short} image deck">${projectCards}</div>
             ${deckControls}
           </div>
-          <p class="project-description">${project.description}</p>
-          ${project.bookTitles?`<ul class="book-titles">${project.bookTitles.map(title=>`<li>${title}</li>`).join('')}</ul>`:''}
+          ${project.description?`<p class="project-description">${project.description}</p>`:''}
           <div class="project-labels" aria-label="${project.short} capabilities">${projectLabels}</div>
         </div>
       </section>`;
@@ -872,6 +996,7 @@
     }
 
     function layoutDeck(deck){
+      if(deck.classList.contains('book-row')) return;
       const state=deckStates.get(deck);
       const projectCards=[...deck.querySelectorAll('.project-card')];
       const frontCard=projectCards[state.index];
