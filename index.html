@@ -592,7 +592,7 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   <a class="bottom-nav-item" data-nav="paper-zone" href="#paper-zone">
     <span class="bottom-nav-dot"></span><span class="bottom-nav-label" data-i18n="navPersonal">Personal</span>
   </a>
-  <a class="bottom-nav-item" data-nav="future" href="ai.html?v=20261006-quieters">
+  <a class="bottom-nav-item" data-nav="future" href="ai.html?v=20261006-assets2">
     <span class="bottom-nav-dot"></span><span class="bottom-nav-label">AI</span>
   </a>
 </nav>
@@ -607,7 +607,7 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
       <a class="top-nav-link" data-nav="evg" href="#evg" data-i18n="navEverglades">Everglades</a>
       <a class="top-nav-link" data-nav="edge" href="#edge" data-i18n="navCommercial">Commercial</a>
       <a class="top-nav-link" data-nav="paper-zone" href="#paper-zone" data-i18n="navPersonal">Personal</a>
-      <a class="top-nav-link" data-nav="future" href="ai.html?v=20261006-quieters">AI</a>
+      <a class="top-nav-link" data-nav="future" href="ai.html?v=20261006-assets2">AI</a>
       <a class="top-nav-link" data-nav="contact" href="#contact" data-i18n="contact">Contact</a>
     </nav>
   </div>
@@ -849,7 +849,7 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
 <!-- ═══ FUTURE ════════════════════════════════════════ -->
 <section id="future" class="section deferred-section">
   <div class="future-inner">
-    <a class="portal-link" href="ai.html?v=20261006-quieters" aria-label="Open AI and computer generated work" data-i18n-aria-label="openAiGeneratedWork">
+    <a class="portal-link" href="ai.html?v=20261006-assets2" aria-label="Open AI and computer generated work" data-i18n-aria-label="openAiGeneratedWork">
       <div class="portal-frame-shell">
         <div class="portal-frame-wrap">
           <div class="portal-frame">
@@ -1054,7 +1054,7 @@ function applyTranslations(lang){
     footName.innerHTML=lang==='he'?'אילון<br><em>בן-עמי</em>':'Aylon<br><em>Ben-Ami</em>';
   }
   document.querySelectorAll('a[href="ai.html"],a[href^="ai.html?"]').forEach(link=>{
-    link.setAttribute('href',`ai.html?v=20261006-quieters&lang=${lang}`);
+    link.setAttribute('href',`ai.html?v=20261006-assets2&lang=${lang}`);
   });
   document.querySelectorAll('.stat-n').forEach((el,index)=>{
     if(lang==='he'){
