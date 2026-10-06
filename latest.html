@@ -113,6 +113,8 @@
     .image-lightbox{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:34px 86px;background:rgba(8,10,12,.84);backdrop-filter:blur(18px);cursor:zoom-out;animation:lightboxIn .2s ease both}
     .lightbox-stage{width:100%;height:100%;display:grid;place-items:center;pointer-events:none;touch-action:none}
     .image-lightbox img,.image-lightbox video,.image-lightbox iframe{width:auto;height:auto;max-width:min(88vw,1600px);max-height:89svh;object-fit:contain;border:5px solid rgba(255,255,255,.96);border-radius:14px;box-shadow:0 36px 100px rgba(0,0,0,.55);cursor:default;pointer-events:auto;transition:opacity .14s ease,transform .22s cubic-bezier(.22,1,.36,1)}
+    .image-lightbox img{cursor:grab;touch-action:none;will-change:transform,opacity}
+    .image-lightbox img.is-dragging{cursor:grabbing;transition:none}
     .image-lightbox video,.image-lightbox iframe{display:none;background:#000}
     .image-lightbox iframe{width:min(88vw,1600px);height:min(49.5vw,89svh);aspect-ratio:16 / 9;border:0}
     .image-lightbox.is-video img{display:none}
@@ -1234,7 +1236,15 @@
       setTimeout(()=>button.classList.remove('is-advancing'),480);
     }
 
-    const lightboxState={deck:null,index:0,returnFocus:null,changeTimer:null,loadToken:0,swipe:null,suppressTapUntil:0};
+    const lightboxState={deck:null,index:0,returnFocus:null,changeTimer:null,tossTimer:null,loadToken:0,swipe:null,suppressTapUntil:0};
+
+    function resetLightboxImageMotion(immediate=false){
+      if(immediate) lightboxImage.style.transition='none';
+      lightboxImage.classList.remove('is-dragging');
+      lightboxImage.style.transform='';
+      lightboxImage.style.opacity='';
+      if(immediate) requestAnimationFrame(()=>{lightboxImage.style.transition=''});
+    }
 
     function displayLightboxImage(index,animate=false){
       const cards=[...lightboxState.deck.querySelectorAll('.project-card')];
@@ -1243,6 +1253,7 @@
       const image=loadCardImage(card);
       const loadToken=++lightboxState.loadToken;
       const updateImage=()=>{
+        resetLightboxImageMotion(true);
         const isVideo=card.dataset.mediaType==='video';
         const isYouTube=card.dataset.mediaType==='youtube';
         lightbox.classList.toggle('is-video',isVideo);
@@ -1319,6 +1330,7 @@
 
     function closeLightbox(){
       clearTimeout(lightboxState.changeTimer);
+      clearTimeout(lightboxState.tossTimer);
       lightboxState.loadToken+=1;
       lightboxVideo.pause();
       lightboxVideo.removeAttribute('src');
@@ -1328,6 +1340,7 @@
       lightbox.classList.remove('is-changing','is-video','is-youtube','has-single-item');
       lightboxImage.removeAttribute('src');
       lightboxState.swipe=null;
+      resetLightboxImageMotion(true);
       document.body.classList.remove('modal-open');
       lightboxState.returnFocus?.focus();
       lightboxState.deck=null;
@@ -1419,14 +1432,28 @@
       closeLightbox();
     });
     lightbox.addEventListener('pointerdown',event=>{
-      if(lightbox.hidden||event.target.closest('button')||event.target===lightboxVideo||event.target===lightboxYouTube) return;
-      lightboxState.swipe={id:event.pointerId,startX:event.clientX,startY:event.clientY,currentX:event.clientX,currentY:event.clientY};
+      if(lightbox.hidden||event.target!==lightboxImage||lightbox.classList.contains('is-video')||lightbox.classList.contains('is-youtube')) return;
+      const now=performance.now();
+      lightboxState.swipe={id:event.pointerId,startX:event.clientX,startY:event.clientY,currentX:event.clientX,currentY:event.clientY,lastX:event.clientX,lastAt:now,velocityX:0};
+      try{lightboxImage.setPointerCapture?.(event.pointerId)}catch(error){}
+      lightboxImage.classList.add('is-dragging');
     });
     lightbox.addEventListener('pointermove',event=>{
       const swipe=lightboxState.swipe;
       if(!swipe||swipe.id!==event.pointerId) return;
+      event.preventDefault();
+      const now=performance.now();
+      const elapsed=Math.max(now-swipe.lastAt,1);
+      swipe.velocityX=(event.clientX-swipe.lastX)/elapsed;
       swipe.currentX=event.clientX;
       swipe.currentY=event.clientY;
+      swipe.lastX=event.clientX;
+      swipe.lastAt=now;
+      const dx=swipe.currentX-swipe.startX;
+      const dy=swipe.currentY-swipe.startY;
+      const rotation=Math.max(-9,Math.min(9,dx/24));
+      lightboxImage.style.transform=`translate3d(${dx}px,${dy*.24}px,0) rotate(${rotation}deg)`;
+      lightboxImage.style.opacity=String(1-Math.min(Math.abs(dx)/1100,.24));
     });
     const finishLightboxSwipe=event=>{
       const swipe=lightboxState.swipe;
@@ -1434,14 +1461,33 @@
       lightboxState.swipe=null;
       const dx=swipe.currentX-swipe.startX;
       const dy=swipe.currentY-swipe.startY;
-      if(Math.abs(dx)>54&&Math.abs(dx)>Math.abs(dy)*1.15){
+      const horizontal=Math.abs(dx)>Math.abs(dy)*1.05;
+      const shouldToss=horizontal&&(Math.abs(dx)>72||Math.abs(swipe.velocityX)>.65);
+      lightboxImage.classList.remove('is-dragging');
+      if(shouldToss){
         event.preventDefault();
-        lightboxState.suppressTapUntil=performance.now()+80;
-        cycleLightbox(dx<0?1:-1);
+        const direction=(dx||swipe.velocityX)<0?1:-1;
+        const exitX=(direction>0?-1:1)*(innerWidth+lightboxImage.getBoundingClientRect().width);
+        lightboxState.suppressTapUntil=performance.now()+260;
+        lightboxImage.style.transition='transform .22s cubic-bezier(.4,0,1,1),opacity .18s ease';
+        lightboxImage.style.transform=`translate3d(${exitX}px,${dy*.35}px,0) rotate(${direction>0?-14:14}deg)`;
+        lightboxImage.style.opacity='0';
+        clearTimeout(lightboxState.tossTimer);
+        lightboxState.tossTimer=setTimeout(()=>displayLightboxImage(lightboxState.index+direction),180);
+        return;
       }
+      if(Math.abs(dx)>7||Math.abs(dy)>7) lightboxState.suppressTapUntil=performance.now()+120;
+      lightboxImage.style.transition='opacity .16s ease,transform .24s cubic-bezier(.22,1,.36,1)';
+      lightboxImage.style.transform='';
+      lightboxImage.style.opacity='';
+      setTimeout(()=>{if(!lightboxImage.classList.contains('is-dragging')) lightboxImage.style.transition=''},250);
     };
     lightbox.addEventListener('pointerup',finishLightboxSwipe);
-    lightbox.addEventListener('pointercancel',()=>{lightboxState.swipe=null});
+    lightbox.addEventListener('pointercancel',event=>{
+      if(lightboxState.swipe?.id!==event.pointerId) return;
+      lightboxState.swipe=null;
+      resetLightboxImageMotion();
+    });
     lightbox.addEventListener('click',event=>{if(event.target===lightbox) closeLightbox()});
     addEventListener('keydown',event=>{
       if(lightbox.hidden) return;
