@@ -111,7 +111,7 @@
     .has-grab-cursor .project-card.is-front,.has-grab-cursor .project-card.is-side{cursor:none}
 
     .image-lightbox{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:34px 86px;background:rgba(8,10,12,.84);backdrop-filter:blur(18px);cursor:zoom-out;animation:lightboxIn .2s ease both}
-    .lightbox-stage{width:100%;height:100%;display:grid;place-items:center;pointer-events:none}
+    .lightbox-stage{width:100%;height:100%;display:grid;place-items:center;pointer-events:none;touch-action:none}
     .image-lightbox img,.image-lightbox video,.image-lightbox iframe{width:auto;height:auto;max-width:min(88vw,1600px);max-height:89svh;object-fit:contain;border:5px solid rgba(255,255,255,.96);border-radius:14px;box-shadow:0 36px 100px rgba(0,0,0,.55);cursor:default;pointer-events:auto;transition:opacity .14s ease,transform .22s cubic-bezier(.22,1,.36,1)}
     .image-lightbox video,.image-lightbox iframe{display:none;background:#000}
     .image-lightbox iframe{width:min(88vw,1600px);height:min(49.5vw,89svh);aspect-ratio:16 / 9;border:0}
@@ -240,7 +240,7 @@
     <button class="lightbox-nav previous" id="lightboxPrevious" type="button" aria-label="Previous image">&larr;</button>
     <div class="lightbox-stage">
       <img id="lightboxImage" alt="">
-      <video id="lightboxVideo" controls playsinline preload="metadata"></video>
+      <video id="lightboxVideo" playsinline preload="metadata"></video>
       <iframe id="lightboxYouTube" title="Project video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
     </div>
     <button class="lightbox-nav next" id="lightboxNext" type="button" aria-label="Next image">&rarr;</button>
@@ -1234,7 +1234,7 @@
       setTimeout(()=>button.classList.remove('is-advancing'),480);
     }
 
-    const lightboxState={deck:null,index:0,returnFocus:null,changeTimer:null,loadToken:0};
+    const lightboxState={deck:null,index:0,returnFocus:null,changeTimer:null,loadToken:0,swipe:null,suppressTapUntil:0};
 
     function displayLightboxImage(index,animate=false){
       const cards=[...lightboxState.deck.querySelectorAll('.project-card')];
@@ -1327,6 +1327,7 @@
       lightbox.hidden=true;
       lightbox.classList.remove('is-changing','is-video','is-youtube','has-single-item');
       lightboxImage.removeAttribute('src');
+      lightboxState.swipe=null;
       document.body.classList.remove('modal-open');
       lightboxState.returnFocus?.focus();
       lightboxState.deck=null;
@@ -1347,9 +1348,14 @@
           event.stopPropagation();
           openLightbox(card);
         });
-        card.addEventListener('click',()=>{
+        card.addEventListener('click',event=>{
           const state=deckStates.get(deck);
           if(performance.now()<state.suppressClickUntil) return;
+          if(event.target.closest('button,a')) return;
+          if(card.classList.contains('is-front')){
+            openLightbox(card);
+            return;
+          }
           if(card.classList.contains('is-next')) cycleDeck(deck,1);
           if(card.classList.contains('is-previous')) cycleDeck(deck,-1);
         });
@@ -1407,6 +1413,35 @@
     lightboxClose.addEventListener('click',closeLightbox);
     lightboxPrevious.addEventListener('click',()=>cycleLightbox(-1));
     lightboxNext.addEventListener('click',()=>cycleLightbox(1));
+    lightboxImage.addEventListener('click',event=>{
+      event.stopPropagation();
+      if(performance.now()<lightboxState.suppressTapUntil) return;
+      closeLightbox();
+    });
+    lightbox.addEventListener('pointerdown',event=>{
+      if(lightbox.hidden||event.target.closest('button')||event.target===lightboxVideo||event.target===lightboxYouTube) return;
+      lightboxState.swipe={id:event.pointerId,startX:event.clientX,startY:event.clientY,currentX:event.clientX,currentY:event.clientY};
+    });
+    lightbox.addEventListener('pointermove',event=>{
+      const swipe=lightboxState.swipe;
+      if(!swipe||swipe.id!==event.pointerId) return;
+      swipe.currentX=event.clientX;
+      swipe.currentY=event.clientY;
+    });
+    const finishLightboxSwipe=event=>{
+      const swipe=lightboxState.swipe;
+      if(!swipe||swipe.id!==event.pointerId) return;
+      lightboxState.swipe=null;
+      const dx=swipe.currentX-swipe.startX;
+      const dy=swipe.currentY-swipe.startY;
+      if(Math.abs(dx)>54&&Math.abs(dx)>Math.abs(dy)*1.15){
+        event.preventDefault();
+        lightboxState.suppressTapUntil=performance.now()+80;
+        cycleLightbox(dx<0?1:-1);
+      }
+    };
+    lightbox.addEventListener('pointerup',finishLightboxSwipe);
+    lightbox.addEventListener('pointercancel',()=>{lightboxState.swipe=null});
     lightbox.addEventListener('click',event=>{if(event.target===lightbox) closeLightbox()});
     addEventListener('keydown',event=>{
       if(lightbox.hidden) return;
