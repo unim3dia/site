@@ -362,8 +362,14 @@ body{cursor:none}
 .portal-prompt{font-family:var(--serif);font-size:clamp(1.35rem,2.2vw,2rem);line-height:1.02;color:rgba(255,255,255,.92);text-align:right;text-shadow:0 10px 30px rgba(0,0,0,.45)}
 .portal-caption{max-width:760px;font-family:var(--serif);font-size:clamp(1.3rem,2.1vw,2rem);line-height:1.45;color:rgba(255,255,255,.8)}
 .portal-meta{font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.48)}
-.contact-link{display:inline-flex;align-items:center;justify-content:center;margin-top:1.75rem;min-width:min(92vw,420px);font-size:clamp(1.08rem,1.75vw,1.48rem);letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.96);text-decoration:none;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:1.2rem 2.4rem;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.04));box-shadow:0 24px 70px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease,background .3s ease}
+.contact-stack{display:flex;flex-direction:column;align-items:center;gap:.8rem;margin-top:1.35rem;text-align:center}
+.contact-intro{max-width:560px;font-size:clamp(.92rem,1.18vw,1.08rem);line-height:1.55;color:rgba(255,255,255,.58)}
+.contact-email{font-family:var(--serif);font-size:clamp(1.35rem,2.4vw,2.25rem);line-height:1.2;color:rgba(245,222,160,.92);text-decoration:none;border-bottom:1px solid rgba(245,222,160,.32);overflow-wrap:anywhere;transition:color .25s ease,border-color .25s ease}
+.contact-email:hover{color:#fff3cf;border-color:rgba(245,222,160,.76)}
+.contact-link{display:inline-flex;align-items:center;justify-content:center;margin-top:.35rem;min-width:min(92vw,360px);font-size:clamp(.92rem,1.25vw,1.08rem);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.96);text-decoration:none;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:1.08rem 2rem;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.04));box-shadow:0 24px 70px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease,background .3s ease}
 .contact-link:hover{transform:translateY(-3px);box-shadow:0 30px 80px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.18);border-color:rgba(255,255,255,.42);background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.06))}
+.contact-email:focus-visible,.contact-link:focus-visible{outline:2px solid #f5dea0;outline-offset:5px}
+.contact-note{font-size:.67rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.34)}
 .lang-he footer .contact-link{font-size:clamp(1.16rem,1.92vw,1.56rem)}
 
 /* ── FOOTER ─────────────────────────────────────────── */
@@ -512,7 +518,10 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
   footer{padding:6vh 1.5rem calc(7vh + 4rem)}
   .foot-name{font-size:clamp(3.1rem,14vw,5.1rem)}
   .foot-tag{font-size:clamp(.92rem,3.8vw,1.18rem);letter-spacing:.24em}
-  .contact-link{min-width:min(92vw,360px);padding:1.1rem 1.7rem}
+  .contact-stack{margin-top:1rem;gap:.7rem}
+  .contact-intro{max-width:310px}
+  .contact-email{font-size:clamp(1.2rem,5.4vw,1.6rem)}
+  .contact-link{min-width:min(88vw,330px);padding:1.05rem 1.6rem}
   .media-modal{padding:1rem}
   .media-shell{padding:.75rem}
   .media-actions{align-items:flex-start}
@@ -869,7 +878,12 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
 <footer id="contact">
   <div class="foot-name">Aylon<br><em>Ben-Ami</em></div>
   <p class="foot-tag" data-i18n="loaderInfinite">Infinite Expressions</p>
-  <a class="contact-link" href="mailto:aylonbenami@gmail.com" data-reveal data-i18n="sendMessage">Send a message</a>
+  <div class="contact-stack" data-reveal>
+    <p class="contact-intro" data-i18n="contactIntro">For projects, collaborations, or just to say hello.</p>
+    <a class="contact-email" href="mailto:aylonbenami@gmail.com">aylonbenami@gmail.com</a>
+    <a class="contact-link" href="mailto:aylonbenami@gmail.com" data-i18n="contactEmailAction">Write me an email ↗</a>
+    <span class="contact-note" data-i18n="emailAppNote">Opens your email app</span>
+  </div>
 </footer>
 
 <div class="media-modal" id="media-modal" aria-hidden="true">
@@ -941,6 +955,9 @@ const TRANSLATIONS={
     openAiGeneratedWork:'Enter',
     enterTheExperiments:'Enter',
     sendMessage:'Send a message',
+    contactIntro:'For projects, collaborations, or just to say hello.',
+    contactEmailAction:'Write me an email ↗',
+    emailAppNote:'Opens your email app',
     video:'Video',
     play:'Play',
     pause:'Pause',
@@ -995,6 +1012,9 @@ const TRANSLATIONS={
     openAiGeneratedWork:'היכנסו',
     enterTheExperiments:'היכנסו',
     sendMessage:'שלחו הודעה',
+    contactIntro:'לפרויקטים, שיתופי פעולה, או פשוט כדי לומר שלום.',
+    contactEmailAction:'שלחו לי אימייל ↗',
+    emailAppNote:'פותח את אפליקציית האימייל',
     video:'וידאו',
     play:'נגן',
     pause:'השהה',
