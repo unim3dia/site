@@ -93,7 +93,7 @@
     .project-card[data-media-type="video"] .expand-image:hover{background:var(--section-ink);transform:scale(1.12)}
     .project-card[data-media-type="video"][data-shape="phone"] .card-media::after{display:none}
     .project-card[data-media-type="video"] .card-media,.project-card[data-media-type="video"] .card-media img{background:#000}
-    .project-card[data-media-type="video"] .card-media img{object-fit:contain}
+    .project-card[data-media-type="video"] .card-media img{object-fit:cover}
     .expand-image .play-icon{fill:currentColor;stroke:none}
     .deck-controls{position:absolute;left:50%;bottom:0;z-index:14;transform:translateX(-50%);color:#171712;opacity:0;pointer-events:none;transition:opacity .2s ease}
     .deck-shell.is-ready .deck-controls{opacity:1;pointer-events:auto}
@@ -124,6 +124,11 @@
     .image-lightbox.is-video video{display:block}
     .image-lightbox.is-youtube img,.image-lightbox.is-youtube video{display:none}
     .image-lightbox.is-youtube iframe{display:block}
+    .lightbox-video-controls{position:fixed;left:50%;bottom:20px;z-index:4;display:flex;align-items:center;gap:10px;width:min(520px,calc(100vw - 190px));padding:8px 10px;border:1px solid rgba(255,255,255,.24);border-radius:999px;background:rgba(12,14,16,.48);color:#fff;transform:translateX(-50%);backdrop-filter:blur(10px);box-shadow:0 8px 28px rgba(0,0,0,.22)}
+    .lightbox-video-controls[hidden]{display:none}
+    .lightbox-video-controls button{flex:0 0 auto;padding:5px 8px;border-radius:999px;background:transparent;color:#fff;cursor:pointer;font-size:.72rem;font-weight:800;letter-spacing:.03em}
+    .lightbox-video-controls button:hover{background:rgba(255,255,255,.14)}
+    .lightbox-video-controls input{min-width:0;flex:1;accent-color:#fff;cursor:pointer}
     .image-lightbox.is-changing img,.image-lightbox.is-changing video,.image-lightbox.is-changing iframe{opacity:.38;transform:scale(.985)}
     .image-lightbox.has-single-item .lightbox-nav{display:none}
     .lightbox-close{position:fixed;right:22px;top:20px;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:#fffdf8;color:#171712;font-size:1.4rem;line-height:1;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.28)}
@@ -172,6 +177,8 @@
       .image-lightbox{padding:64px 12px 76px}
       .image-lightbox img,.image-lightbox video,.image-lightbox iframe{max-width:94vw;max-height:78svh;border-width:4px;border-radius:10px}
       .image-lightbox iframe{width:94vw;height:min(52.875vw,78svh)}
+      .lightbox-video-controls{bottom:max(76px,calc(env(safe-area-inset-bottom) + 70px));width:min(340px,calc(100vw - 28px));gap:6px;padding:7px 9px}
+      .lightbox-video-controls button{padding:5px 6px;font-size:.66rem}
       .lightbox-close{right:12px;top:max(12px,env(safe-area-inset-top));width:38px;height:38px}
       .lightbox-nav{top:auto;bottom:max(14px,env(safe-area-inset-bottom));width:46px;height:46px;transform:none}
       .lightbox-nav:hover{transform:scale(1.05)}
@@ -226,7 +233,7 @@
     <nav class="site-nav" aria-label="Site sections">
       <a href="latest.html" aria-current="page">Latest</a>
       <a href="index.html">Video</a>
-      <a href="ai.html?v=20261006-assets2">AI</a>
+      <a href="ai.html?v=20261006-controls">AI</a>
     </nav>
   </header>
 
@@ -247,6 +254,11 @@
       <img id="lightboxImage" alt="">
       <video id="lightboxVideo" playsinline preload="metadata"></video>
       <iframe id="lightboxYouTube" title="Project video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="lightbox-video-controls" id="lightboxVideoControls" aria-label="Video controls" hidden>
+      <button id="lightboxPlay" type="button" aria-label="Pause video">pause</button>
+      <input id="lightboxProgress" type="range" min="0" max="1000" value="0" step="1" aria-label="Video progress">
+      <button id="lightboxSound" type="button" aria-label="Mute video">sound off</button>
     </div>
     <button class="lightbox-nav next" id="lightboxNext" type="button" aria-label="Next image">&rarr;</button>
   </div>
@@ -493,7 +505,7 @@
         "cards": [
           {
             "src": "ai/Artisenal Coffees - v1.mp4",
-            "thumb": "latest-thumbs/Artisanal Coffees/Artisenal Coffees - v1.jpg",
+            "thumb": "latest-thumbs/Artisanal Coffees/Artisenal Coffees - Kusama Mirrors 20s.jpg",
             "shape": "landscape",
             "ratio": "960 / 540",
             "mediaType": "video"
@@ -1042,6 +1054,10 @@
     const lightboxImage=document.getElementById('lightboxImage');
     const lightboxVideo=document.getElementById('lightboxVideo');
     const lightboxYouTube=document.getElementById('lightboxYouTube');
+    const lightboxVideoControls=document.getElementById('lightboxVideoControls');
+    const lightboxPlay=document.getElementById('lightboxPlay');
+    const lightboxProgress=document.getElementById('lightboxProgress');
+    const lightboxSound=document.getElementById('lightboxSound');
     const lightboxClose=document.getElementById('lightboxClose');
     const lightboxPrevious=document.getElementById('lightboxPrevious');
     const lightboxNext=document.getElementById('lightboxNext');
@@ -1241,6 +1257,30 @@
 
     const lightboxState={deck:null,index:0,returnFocus:null,changeTimer:null,tossTimer:null,loadToken:0,swipe:null,suppressTapUntil:0};
 
+    function syncLightboxVideoControls(){
+      const duration=lightboxVideo.duration;
+      lightboxPlay.textContent=lightboxVideo.paused?'play':'pause';
+      lightboxPlay.setAttribute('aria-label',lightboxVideo.paused?'Play video':'Pause video');
+      lightboxSound.textContent=lightboxVideo.muted?'sound on':'sound off';
+      lightboxSound.setAttribute('aria-label',lightboxVideo.muted?'Turn sound on':'Mute video');
+      lightboxProgress.value=Number.isFinite(duration)&&duration>0?String(Math.round(lightboxVideo.currentTime/duration*1000)):'0';
+    }
+
+    lightboxPlay.addEventListener('click',event=>{
+      event.stopPropagation();
+      if(lightboxVideo.paused) lightboxVideo.play().catch(()=>{}); else lightboxVideo.pause();
+    });
+    lightboxSound.addEventListener('click',event=>{
+      event.stopPropagation();
+      lightboxVideo.muted=!lightboxVideo.muted;
+      if(lightboxVideo.paused) lightboxVideo.play().catch(()=>{});
+    });
+    lightboxProgress.addEventListener('input',event=>{
+      event.stopPropagation();
+      if(Number.isFinite(lightboxVideo.duration)) lightboxVideo.currentTime=Number(lightboxProgress.value)/1000*lightboxVideo.duration;
+    });
+    ['play','pause','timeupdate','loadedmetadata','volumechange'].forEach(type=>lightboxVideo.addEventListener(type,syncLightboxVideoControls));
+
     function resetLightboxImageMotion(immediate=false){
       if(immediate) lightboxImage.style.transition='none';
       lightboxImage.classList.remove('is-dragging');
@@ -1269,6 +1309,7 @@
         loadDeckWindow(lightboxState.deck,lightboxState.index);
 
         if(isYouTube){
+          lightboxVideoControls.hidden=true;
           lightboxImage.removeAttribute('src');
           lightboxImage.alt='';
           lightboxVideo.pause();
@@ -1280,10 +1321,12 @@
 
         lightboxYouTube.removeAttribute('src');
         if(isVideo){
+          lightboxVideoControls.hidden=false;
           lightboxImage.removeAttribute('src');
           lightboxImage.alt='';
           lightboxVideo.pause();
           lightboxVideo.src=image.dataset.fullSrc;
+          lightboxVideo.muted=false;
           lightboxVideo.load();
           const playVideo=()=>lightboxVideo.play().catch(()=>{});
           playVideo();
@@ -1292,6 +1335,7 @@
         }
 
         lightboxVideo.pause();
+        lightboxVideoControls.hidden=true;
         lightboxVideo.removeAttribute('src');
         lightboxVideo.load();
         lightboxImage.src=image.currentSrc||image.src;
@@ -1336,6 +1380,8 @@
       clearTimeout(lightboxState.tossTimer);
       lightboxState.loadToken+=1;
       lightboxVideo.pause();
+      lightboxVideoControls.hidden=true;
+      lightboxProgress.value='0';
       lightboxVideo.removeAttribute('src');
       lightboxVideo.load();
       lightboxYouTube.removeAttribute('src');

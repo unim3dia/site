@@ -407,15 +407,22 @@
     #ov-img  { max-width:82vw; max-height:62vh; object-fit:contain; display:block; margin:0 auto; filter:saturate(0.85) brightness(0.92); cursor:grab; user-select:none; will-change:transform; }
     #ov-img.ov-grabbing { cursor:grabbing; }
     #ov-vid  { max-width:82vw; max-height:62vh; object-fit:contain; display:none; margin:0 auto; }
-    #ov-audio {
-      display:inline-flex; align-items:center; gap:7px; margin-top:15px; padding:8px 13px;
+    #ov-controls {
+      display:flex; align-items:center; justify-content:center; gap:9px; width:min(520px,82vw);
+      margin:14px auto 0; padding:7px 9px; border:1px solid rgba(240,237,232,0.2);
+      border-radius:999px; background:rgba(10,14,14,0.46); backdrop-filter:blur(10px);
+    }
+    #ov-controls[hidden] { display:none; }
+    #ov-play, #ov-audio {
+      display:inline-flex; align-items:center; gap:7px; padding:7px 10px;
       border:1px solid rgba(240,237,232,0.2); border-radius:999px; background:rgba(240,237,232,0.05);
       color:rgba(240,237,232,0.72); font-family:var(--font-body); font-size:11px;
       font-weight:600; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer;
       transition:background .2s,border-color .2s,color .2s;
     }
-    #ov-audio:hover, #ov-audio.on { background:rgba(0,255,200,0.1); border-color:rgba(0,255,200,0.38); color:rgba(220,255,246,0.95); }
+    #ov-play:hover, #ov-audio:hover, #ov-audio.on { background:rgba(0,255,200,0.1); border-color:rgba(0,255,200,0.38); color:rgba(220,255,246,0.95); }
     #ov-audio[hidden] { display:none; }
+    #ov-progress { min-width:0; flex:1; accent-color:#00ffc8; cursor:pointer; }
     #ov-lbl  { font-family:var(--font-display); font-size:42px; letter-spacing:0.01em; color:rgba(240,237,232,0.95); margin-top:24px; line-height:1.05; }
     #ov-desc { max-width:560px; margin:12px auto 0; font-family:var(--font-body); font-size:14px; line-height:1.5; color:rgba(240,237,232,0.68); }
     #ov-desc[hidden] { display:none; }
@@ -446,7 +453,8 @@
 
       /* Photo overlay */
       #ov-img  { max-width:94vw; max-height:52vh; }
-      #ov-audio{ margin-top:12px; padding:7px 11px; font-size:10px; }
+      #ov-controls{ width:min(350px,92vw); margin-top:11px; gap:6px; padding:6px 7px; }
+      #ov-play, #ov-audio{ padding:6px 8px; font-size:9px; }
       #ov-lbl  { font-size:24px; }
       #ov-close{ font-size:10px; margin-top:12px; }
 
@@ -546,7 +554,11 @@
   <div id="ov-box">
     <img id="ov-img" src="" alt="">
     <video id="ov-vid" muted loop playsinline preload="metadata"></video>
-    <button id="ov-audio" type="button" data-i18n="videoSoundOn" aria-pressed="false" hidden>sound on</button>
+    <div id="ov-controls" aria-label="Video controls" hidden>
+      <button id="ov-play" type="button" aria-label="Pause video">pause</button>
+      <input id="ov-progress" type="range" min="0" max="1000" value="0" step="1" aria-label="Video progress">
+      <button id="ov-audio" type="button" data-i18n="videoSoundOn" aria-pressed="false" hidden>sound on</button>
+    </div>
     <div id="ov-lbl"></div>
     <div id="ov-desc" hidden></div>
     <span id="ov-close" data-i18n="overlayClose">esc &nbsp;·&nbsp; click outside to close</span>
@@ -613,6 +625,8 @@ const TRANSLATIONS={
     soundOn:'◉ sound on',
     videoSoundOn:'sound on',
     videoSoundOff:'sound off',
+    videoPlay:'play',
+    videoPause:'pause',
     overlayClose:'esc &nbsp;·&nbsp; click outside to close',
     execName:'AI Studies',
     execTagline:'An experimental image-and-motion practice focused on character, worldbuilding, and visual tone. This page works like a sandbox: pull elements around, open pieces up close, and scan the range of visual directions.',
@@ -634,6 +648,8 @@ const TRANSLATIONS={
     soundOn:'◉ סאונד פועל',
     videoSoundOn:'הפעלת שמע',
     videoSoundOff:'כיבוי שמע',
+    videoPlay:'נגן',
+    videoPause:'השהה',
     overlayClose:'esc &nbsp;·&nbsp; לחצו בחוץ כדי לסגור',
     execName:'מחקרי AI',
     execTagline:'פרקטיקה ניסיונית של דימוי ותנועה, המתמקדת בדמויות, בבניית עולמות ובטון חזותי. העמוד הזה פועל כמו ארגז חול: מזיזים אלמנטים, פותחים עבודות מקרוב וסורקים טווחים שונים של שפה ויזואלית.',
@@ -1022,7 +1038,7 @@ document.addEventListener('mouseup', e => {
     if (tile && !expanded) {
       const obj = tileObjs.find(o => o.el===tile);
       if (obj) openOverlay(obj);
-    } else if (!tile && expanded && e.target.id !== 'ov-img' && e.target.id !== 'ov-vid' && !e.target.closest('#ov-audio')) {
+    } else if (!tile && expanded && e.target.id !== 'ov-img' && e.target.id !== 'ov-vid' && !e.target.closest('#ov-controls')) {
       /* Don't close here when user is interacting with the overlay image/video itself —
          the ovDrag mouseup handler above owns that interaction */
       closeOverlay();
@@ -1034,6 +1050,9 @@ document.addEventListener('mouseup', e => {
 const overlay = document.getElementById('overlay');
 const ovImg   = document.getElementById('ov-img');
 const ovVid   = document.getElementById('ov-vid');
+const ovControls = document.getElementById('ov-controls');
+const ovPlay  = document.getElementById('ov-play');
+const ovProgress = document.getElementById('ov-progress');
 const ovAudio = document.getElementById('ov-audio');
 const ovLbl   = document.getElementById('ov-lbl');
 const ovDesc  = document.getElementById('ov-desc');
@@ -1051,6 +1070,25 @@ function updateVideoAudioButton() {
   ovAudio.setAttribute('aria-pressed', String(audible));
   ovAudio.classList.toggle('on', audible);
 }
+
+function updateOverlayVideoControls() {
+  const duration=ovVid.duration;
+  ovPlay.textContent=tt(ovVid.paused?'videoPlay':'videoPause');
+  ovPlay.setAttribute('aria-label',tt(ovVid.paused?'videoPlay':'videoPause'));
+  ovProgress.value=Number.isFinite(duration)&&duration>0?String(Math.round(ovVid.currentTime/duration*1000)):'0';
+  updateVideoAudioButton();
+}
+
+ovPlay.addEventListener('click', event => {
+  event.preventDefault();
+  event.stopPropagation();
+  if(ovVid.paused) ovVid.play().catch(()=>{}); else ovVid.pause();
+});
+ovProgress.addEventListener('input', event => {
+  event.stopPropagation();
+  if(Number.isFinite(ovVid.duration)) ovVid.currentTime=Number(ovProgress.value)/1000*ovVid.duration;
+});
+['play','pause','timeupdate','loadedmetadata','volumechange'].forEach(type=>ovVid.addEventListener(type,updateOverlayVideoControls));
 
 let lastOverlayAudioToggleAt = 0;
 function toggleOverlayVideoSound(event=null) {
@@ -1089,6 +1127,7 @@ function openOverlay(obj) {
     ovImg.style.display = 'none';
     ovVid.style.display = 'block';
     ovVid.controls = false;
+    ovControls.hidden = false;
     ovVid.defaultMuted = true;
     ovVid.muted = true;
     ovVid.volume = 1;
@@ -1100,6 +1139,7 @@ function openOverlay(obj) {
     ovImg.style.display = '';
     ovVid.style.display = 'none';
     ovAudio.hidden = true;
+    ovControls.hidden = true;
     ovImg.src = assetUrl(a.src);
   }
   overlay.classList.add('on');
@@ -1118,6 +1158,8 @@ function closeOverlay() {
   ovVid.pause();
   ovVid.muted = true;
   ovAudio.hidden = true;
+  ovControls.hidden = true;
+  ovProgress.value = '0';
   updateVideoAudioButton();
   ovVid.src = '';
   ovDragActive = false;
@@ -2529,6 +2571,8 @@ if (isMobile) {
       toggleOverlayVideoSound();
       return;
     }
+
+    if (el && el.closest('#ov-controls')) return;
 
     if (isUiTarget(el) && !(expanded && el && !el.closest('#ov-box'))) {
       return;
