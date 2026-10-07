@@ -210,9 +210,10 @@
     .book-row .card-media{inset:7px;border-radius:7px}
     .book-row .card-media img{object-fit:contain}
     .book-row .project-card .expand-image{opacity:1;transform:none;pointer-events:auto}
-    .pdf-preview{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:clamp(48px,6vh,74px) clamp(12px,4vw,64px);background:rgba(8,10,12,.9);backdrop-filter:blur(18px);cursor:zoom-out}
+    .pdf-preview{position:fixed;inset:0;z-index:120;display:flex;align-items:stretch;justify-content:center;padding:clamp(58px,7vh,78px) clamp(12px,4vw,64px) 26px;background:radial-gradient(circle at 50% 8%,rgba(87,105,112,.22),transparent 42%),rgba(8,10,12,.94);backdrop-filter:blur(18px);cursor:zoom-out}
     .pdf-preview[hidden]{display:none}
-    .pdf-preview-frame{width:min(900px,94vw);height:min(88svh,1100px);border:1px solid rgba(255,255,255,.3);border-radius:12px;background:#fff;box-shadow:0 36px 100px rgba(0,0,0,.55);cursor:default}
+    .pdf-preview-pages{width:min(820px,94vw);overflow:auto;padding:0 clamp(2px,1vw,14px) 20px;scroll-behavior:smooth;overscroll-behavior:contain;cursor:default;scrollbar-color:rgba(255,255,255,.35) transparent}
+    .pdf-preview-pages img{display:block;width:min(680px,100%);height:auto;margin:0 auto 22px;border-radius:3px;box-shadow:0 18px 50px rgba(0,0,0,.42)}
     .pdf-preview-close{position:fixed;right:22px;top:20px;width:42px;height:42px;display:grid;place-items:center;border:0;border-radius:50%;background:#fffdf8;color:#171712;font-size:1.4rem;line-height:1;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.28)}
     @media(max-width:699px){
       .deck.book-row{gap:10px}
@@ -220,7 +221,8 @@
       .book-row .card-media{inset:4px;border-radius:4px}
       .book-row .expand-image{width:28px;height:28px;right:6px;bottom:6px}
       .pdf-preview{padding:58px 8px 16px}
-      .pdf-preview-frame{width:96vw;height:86svh;border-radius:8px}
+      .pdf-preview-pages{width:96vw;padding-bottom:12px}
+      .pdf-preview-pages img{width:100%;margin-bottom:14px}
       .pdf-preview-close{right:12px;top:max(12px,env(safe-area-inset-top));width:38px;height:38px}
     }
     #mayas-memories .deck-shell{margin-bottom:40px}
@@ -271,7 +273,7 @@
   </div>
   <div class="pdf-preview" id="pdfPreview" role="dialog" aria-modal="true" aria-label="Book preview" hidden>
     <button class="pdf-preview-close" id="pdfPreviewClose" type="button" aria-label="Close book preview">&times;</button>
-    <iframe class="pdf-preview-frame" id="pdfPreviewFrame" title="Book preview"></iframe>
+    <div class="pdf-preview-pages" id="pdfPreviewPages"></div>
   </div>
 
   <script>
@@ -566,6 +568,11 @@
         "bookPdfs": [
           "latest-assets/ebooks/Make_Images_That_Stay_First5Pages.pdf",
           "latest-assets/ebooks/Everyone_Has_a_Channel_First5Pages.pdf",
+          null
+        ],
+        "bookPreviewDirs": [
+          "latest-assets/ebooks/preview-pages/images/page-",
+          "latest-assets/ebooks/preview-pages/channel/page-",
           null
         ],
         "productionStart": true,
@@ -1078,7 +1085,7 @@
     const lightboxPrevious=document.getElementById('lightboxPrevious');
     const lightboxNext=document.getElementById('lightboxNext');
     const pdfPreview=document.getElementById('pdfPreview');
-    const pdfPreviewFrame=document.getElementById('pdfPreviewFrame');
+    const pdfPreviewPages=document.getElementById('pdfPreviewPages');
     const pdfPreviewClose=document.getElementById('pdfPreviewClose');
 
     const fieldSegment=100/projects.length;
@@ -1107,7 +1114,8 @@
           ?'<svg class="play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6z"/></svg>'
           :'<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 3.5h-4v4M12.5 3.5h4v4M7.5 16.5h-4v-4M12.5 16.5h4v-4"/></svg>';
         const pdfSource=project.bookPdfs?.[cardIndex]||'';
-        return `<article class="project-card" data-card="${cardIndex}" data-pdf="${encodeURI(pdfSource)}" data-shape="${card.shape}" data-media-type="${card.mediaType}" style="--card-ratio:${card.ratio}">
+        const previewDir=project.bookPreviewDirs?.[cardIndex]||'';
+        return `<article class="project-card" data-card="${cardIndex}" data-pdf="${encodeURI(pdfSource)}" data-preview-dir="${encodeURI(previewDir)}" data-shape="${card.shape}" data-media-type="${card.mediaType}" style="--card-ratio:${card.ratio}">
           <div class="card-media"><img ${sourceAttribute} data-full-src="${fullImageSource}" alt="${project.bookTitles?.[cardIndex]||`${project.short} project image ${cardIndex+1}`}" draggable="false" decoding="async"></div>
           <button class="expand-image" data-expand type="button" aria-label="${expandLabel}">${expandIcon}</button>
         </article>`;
@@ -1395,7 +1403,14 @@
     }
 
     function openPdfPreview(card){
-      pdfPreviewFrame.src=`${card.dataset.pdf}#page=1&zoom=page-width`;
+      pdfPreviewPages.innerHTML='';
+      for(let page=1;page<=5;page++){
+        const image=new Image();
+        image.alt=`Book preview page ${page}`;
+        image.loading=page===1?'eager':'lazy';
+        image.src=`${card.dataset.previewDir}${page}.jpg`;
+        pdfPreviewPages.appendChild(image);
+      }
       pdfPreview.hidden=false;
       document.body.classList.add('modal-open');
       pdfPreviewClose.focus();
@@ -1403,7 +1418,7 @@
 
     function closePdfPreview(){
       pdfPreview.hidden=true;
-      pdfPreviewFrame.removeAttribute('src');
+      pdfPreviewPages.replaceChildren();
       if(lightbox.hidden) document.body.classList.remove('modal-open');
     }
 
