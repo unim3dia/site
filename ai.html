@@ -407,6 +407,7 @@
     #ov-img  { max-width:82vw; max-height:62vh; object-fit:contain; display:block; margin:0 auto; filter:saturate(0.85) brightness(0.92); cursor:grab; user-select:none; will-change:transform; }
     #ov-img.ov-grabbing { cursor:grabbing; }
     #ov-vid  { max-width:82vw; max-height:62vh; object-fit:contain; display:none; margin:0 auto; }
+    #ov-youtube{width:min(82vw,900px);aspect-ratio:16/9;border:0;display:none;margin:0 auto;background:#000}
     #ov-controls {
       display:flex; align-items:center; justify-content:center; gap:9px; width:min(520px,82vw);
       margin:14px auto 0; padding:7px 9px; border:1px solid rgba(240,237,232,0.2);
@@ -554,6 +555,7 @@
   <div id="ov-box">
     <img id="ov-img" src="" alt="">
     <video id="ov-vid" muted loop playsinline preload="metadata"></video>
+    <iframe id="ov-youtube" title="YouTube video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
     <div id="ov-controls" aria-label="Video controls" hidden>
       <button id="ov-play" type="button" aria-label="Pause video">pause</button>
       <input id="ov-progress" type="range" min="0" max="1000" value="0" step="1" aria-label="Video progress">
@@ -702,6 +704,8 @@ const QUIETERS_DESCRIPTIONS=[
   'Only one kid can see the leaf beings who patrol his street at night. They teach him stillness; he teaches them noise.'
 ];
 const ASSETS = [
+  {"cat": "Video", "lbl": "Everybody Wants to Be Your Personal Agent All of a Sudden", "src": "https://www.youtube.com/embed/xOO6J0MsQ-I", "thumb": "https://i.ytimg.com/vi/xOO6J0MsQ-I/hqdefault.jpg", "isVideo": true, "isYouTube": true, "description": "A short-form video study."},
+  {"cat": "Video", "lbl": "We've Updated Our Terms & Services", "src": "https://www.youtube.com/embed/uTy41gF3BTk", "thumb": "https://i.ytimg.com/vi/uTy41gF3BTk/hqdefault.jpg", "isVideo": true, "isYouTube": true, "description": "Official music video."},
   {"cat": "Video", "lbl": "The Man Communicates", "src": "ai/The Man Communicates.mp4", "isVideo": true},
   {"cat": "Video", "lbl": "The Man Is Direct", "src": "ai/The Man is Direct.mp4", "isVideo": true},
   {"cat": "Video", "lbl": "Artisanal Coffees", "src": "ai/Artisenal Coffees - v1.mp4", "isVideo": true, "description": "AI-imagined coffee pours by famous artists."},
@@ -851,7 +855,7 @@ function buildTileEl(shape, w, h, assetIdx) {
 
   let imgA, imgB;
 
-  if (asset.isVideo) {
+  if (asset.isVideo && !asset.isYouTube) {
     /* Video tile — single <video> element, no crossfade layers */
     const vid = document.createElement('video');
     vid.className  = 'img-a';
@@ -867,6 +871,17 @@ function buildTileEl(shape, w, h, assetIdx) {
     el.appendChild(vid);
     imgA = vid;
     imgB = null; // video tiles don't crossfade
+  } else if (asset.isYouTube) {
+    imgA = document.createElement('img');
+    imgA.className = 'img-a';
+    imgA.src = asset.thumb;
+    imgA.alt = asset.lbl;
+    imgA.draggable = false;
+    imgA.style.width = '100%';
+    imgA.style.height = '100%';
+    imgA.style.objectFit = 'cover';
+    el.appendChild(imgA);
+    imgB = null;
   } else {
     /* Two image layers for crossfade */
     imgA = document.createElement('img');
@@ -1038,7 +1053,7 @@ document.addEventListener('mouseup', e => {
     if (tile && !expanded) {
       const obj = tileObjs.find(o => o.el===tile);
       if (obj) openOverlay(obj);
-    } else if (!tile && expanded && e.target.id !== 'ov-img' && e.target.id !== 'ov-vid' && !e.target.closest('#ov-controls')) {
+    } else if (!tile && expanded && e.target.id !== 'ov-img' && e.target.id !== 'ov-vid' && e.target.id !== 'ov-youtube' && !e.target.closest('#ov-controls')) {
       /* Don't close here when user is interacting with the overlay image/video itself —
          the ovDrag mouseup handler above owns that interaction */
       closeOverlay();
@@ -1123,9 +1138,19 @@ function openOverlay(obj) {
   ovLbl.textContent = a.lbl;
   ovDesc.textContent = a.description || '';
   ovDesc.hidden = !a.description;
-  if (a.isVideo) {
+  const ovYouTube=document.getElementById('ov-youtube');
+  if (a.isYouTube) {
+    ovImg.style.display = 'none';
+    ovVid.style.display = 'none';
+    ovYouTube.style.display = 'block';
+    ovYouTube.src = `${a.src}?autoplay=1&rel=0`;
+    ovControls.hidden = true;
+    ovAudio.hidden = true;
+  } else if (a.isVideo) {
     ovImg.style.display = 'none';
     ovVid.style.display = 'block';
+    ovYouTube.style.display = 'none';
+    ovYouTube.removeAttribute('src');
     ovVid.controls = false;
     ovControls.hidden = false;
     ovVid.defaultMuted = true;
@@ -1138,6 +1163,8 @@ function openOverlay(obj) {
   } else {
     ovImg.style.display = '';
     ovVid.style.display = 'none';
+    ovYouTube.style.display = 'none';
+    ovYouTube.removeAttribute('src');
     ovAudio.hidden = true;
     ovControls.hidden = true;
     ovImg.src = assetUrl(a.src);
@@ -1162,6 +1189,9 @@ function closeOverlay() {
   ovProgress.value = '0';
   updateVideoAudioButton();
   ovVid.src = '';
+  const ovYouTube=document.getElementById('ov-youtube');
+  ovYouTube.removeAttribute('src');
+  ovYouTube.style.display = 'none';
   ovDragActive = false;
 }
 
@@ -2593,7 +2623,7 @@ if (isMobile) {
       }
     }
     /* Close image overlay by tapping outside the image */
-    if (expanded && el && el.id !== 'ov-img') {
+    if (expanded && el && el.id !== 'ov-img' && el.id !== 'ov-youtube') {
       closeOverlay();
     }
   }, { passive: true });
