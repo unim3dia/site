@@ -857,7 +857,7 @@ footer{padding:4vh clamp(2rem,6vw,5rem) 9vh;display:flex;flex-direction:column;a
         <div class="portal-frame-wrap">
           <div class="portal-frame">
             <img class="portal-media is-active" id="portal-image" alt="AI portal preview" src="ai/Flower%20portrait.png" loading="lazy" decoding="async" fetchpriority="low">
-            <video class="portal-media" id="portal-video" muted playsinline preload="metadata"></video>
+            <video class="portal-media" id="portal-video" muted playsinline preload="auto"></video>
             <div class="portal-overlay">
               <div class="portal-prompt" data-i18n="enterTheExperiments">Enter</div>
             </div>
@@ -1734,9 +1734,10 @@ document.querySelectorAll('[data-tilt]').forEach(card=>{
   if(!futureEl||!imageEl||!videoEl||!wrap)return;
 
   const mediaItems=[
+    'ai/The Man is Direct.mp4',
+    'ai/Chairmelt art.mp4',
     'ai/The Suds 01.png',
     'ai/The Suds 02.png',
-    'ai/Market Coffee.mp4',
     'ai/Quieters Street Portal.mp4',
     'ai/The Suds City.mp4',
     'ai/Andrew Origin story.mp4',
