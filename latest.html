@@ -210,7 +210,7 @@
     .book-row .card-media{inset:7px;border-radius:7px}
     .book-row .card-media img{object-fit:contain}
     .book-row .project-card .expand-image{opacity:1;transform:none;pointer-events:auto}
-    .pdf-preview{position:fixed;inset:0;z-index:120;display:flex;align-items:stretch;justify-content:center;padding:clamp(58px,7vh,78px) clamp(12px,4vw,64px) 26px;background:radial-gradient(circle at 50% 8%,rgba(255,255,255,.38),transparent 42%),rgba(190,185,175,.95);backdrop-filter:blur(4px);cursor:zoom-out}
+    .pdf-preview{position:fixed;inset:0;z-index:120;display:flex;align-items:stretch;justify-content:center;padding:clamp(58px,7vh,78px) clamp(12px,4vw,64px) 26px;background:radial-gradient(circle at 50% 8%,rgba(255,255,255,.24),transparent 42%),rgba(190,185,175,.76);backdrop-filter:blur(3px);cursor:zoom-out}
     .pdf-preview[hidden]{display:none}
     .pdf-preview-pages{width:min(820px,94vw);overflow:auto;padding:0 clamp(2px,1vw,14px) 20px;scroll-behavior:smooth;overscroll-behavior:contain;cursor:default;scrollbar-color:rgba(255,255,255,.35) transparent}
     .pdf-preview-pages img{display:block;width:min(680px,100%);height:auto;margin:0 auto 22px;border-radius:3px;box-shadow:0 18px 50px rgba(0,0,0,.42)}
@@ -567,7 +567,7 @@
         ],
         "bookPdfs": [
           "latest-assets/ebooks/Make_Images_That_Stay_First5Pages.pdf",
-          "latest-assets/ebooks/Everyone_Has_a_Channel_First5Pages.pdf",
+          "latest-assets/ebooks/Everyone_Has_a_Channel_V1_first7.pdf",
           null
         ],
         "bookPreviewDirs": [
@@ -575,6 +575,7 @@
           "latest-assets/ebooks/preview-pages/channel/page-",
           null
         ],
+        "bookPageCounts": [5, 7, null],
         "productionStart": true,
         "bookTitles": [
           "Make Images That Stay",
@@ -1115,8 +1116,9 @@
           :'<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 3.5h-4v4M12.5 3.5h4v4M7.5 16.5h-4v-4M12.5 16.5h4v-4"/></svg>';
         const pdfSource=project.bookPdfs?.[cardIndex]||'';
         const previewDir=project.bookPreviewDirs?.[cardIndex]||'';
+        const pageCount=project.bookPageCounts?.[cardIndex]||5;
         const expandButton=project.bookTitles&& !pdfSource?'':`<button class="expand-image" data-expand type="button" aria-label="${expandLabel}">${expandIcon}</button>`;
-        return `<article class="project-card" data-card="${cardIndex}" data-pdf="${encodeURI(pdfSource)}" data-preview-dir="${encodeURI(previewDir)}" data-shape="${card.shape}" data-media-type="${card.mediaType}" style="--card-ratio:${card.ratio}">
+        return `<article class="project-card" data-card="${cardIndex}" data-pdf="${encodeURI(pdfSource)}" data-preview-dir="${encodeURI(previewDir)}" data-page-count="${pageCount}" data-shape="${card.shape}" data-media-type="${card.mediaType}" style="--card-ratio:${card.ratio}">
           <div class="card-media"><img ${sourceAttribute} data-full-src="${fullImageSource}" alt="${project.bookTitles?.[cardIndex]||`${project.short} project image ${cardIndex+1}`}" draggable="false" decoding="async"></div>
           ${expandButton}
         </article>`;
@@ -1405,7 +1407,8 @@
 
     function openPdfPreview(card){
       pdfPreviewPages.innerHTML='';
-      for(let page=1;page<=5;page++){
+      const pageCount=Number(card.dataset.pageCount)||5;
+      for(let page=1;page<=pageCount;page++){
         const image=new Image();
         image.alt=`Book preview page ${page}`;
         image.loading=page===1?'eager':'lazy';
