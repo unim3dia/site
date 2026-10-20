@@ -426,6 +426,7 @@
     #ov-progress { min-width:0; flex:1; accent-color:#00ffc8; cursor:pointer; }
     #ov-lbl  { font-family:var(--font-display); font-size:42px; letter-spacing:0.01em; color:rgba(240,237,232,0.95); margin-top:24px; line-height:1.05; }
     #ov-desc { max-width:560px; margin:12px auto 0; font-family:var(--font-body); font-size:14px; line-height:1.5; color:rgba(240,237,232,0.68); }
+    #ov-desc a { color:rgba(240,237,232,0.92); text-decoration:underline; text-underline-offset:3px; }
     #ov-desc[hidden] { display:none; }
     #ov-close{ display:block; margin-top:18px; font-family:var(--font-body); font-size:12px; letter-spacing:0.14em; font-weight:600; text-transform:uppercase; color:rgba(240,237,232,0.28); cursor:none; }
     /* ═══════════════════════════════════════════════════════
@@ -709,6 +710,7 @@ const ASSETS = [
   {"cat": "Video", "lbl": "The Man Communicates", "src": "ai/The Man Communicates.mp4", "isVideo": true},
   {"cat": "Video", "lbl": "The Man Is Direct", "src": "ai/The Man is Direct.mp4", "isVideo": true},
   {"cat": "Video", "lbl": "Artisanal Coffees", "src": "https://www.youtube.com/embed/De0UxON31Ek", "thumb": "https://i.ytimg.com/vi/De0UxON31Ek/hqdefault.jpg", "isVideo": true, "isYouTube": true, "description": "AI-imagined coffee pours by famous artists."},
+  { cat:'World', lbl:'Darkride', description:'Drive through grain and rain.', linkText:'Play it here.', linkUrl:'https://unim3dia.github.io/darkride/', src:'ai/Darkride/01.jpg', sequence:['ai/Darkride/01.jpg','ai/Darkride/02.jpg','ai/Darkride/03.jpg','ai/Darkride/04.jpg','ai/Darkride/05.jpg','ai/Darkride/06.jpg','ai/Darkride/07.jpg'] },
   {"cat": "Video", "lbl": "HORSE", "src": "ai/HORSE - RunwayML Snap Challenge submission.mp4", "isVideo": true, "description": "RunwayML Snap Challenge submission"},
   {"cat": "Video", "lbl": "Runaway", "src": "ai/Runaway.mp4", "isVideo": true},
   {"cat": "Video", "lbl": "End of Summer", "src": "ai/end of summer.mp4", "isVideo": true},
@@ -943,6 +945,7 @@ function spawnTile(shape, w, h, sx, sy, vx, vy) {
     body, el, imgA, imgB, shape, w, h,
     assetIdx,
     isVideo:     !!ASSETS[assetIdx].isVideo,
+    isSequence:  Array.isArray(ASSETS[assetIdx].sequence),
     swapped:     false,  // which img layer is "front"
     swapping:    false,  // mid-transition
     restTimer:   0,      // frames at near-zero velocity
@@ -1052,7 +1055,7 @@ document.addEventListener('mouseup', e => {
     if (tile && !expanded) {
       const obj = tileObjs.find(o => o.el===tile);
       if (obj) openOverlay(obj);
-    } else if (!tile && expanded && e.target.id !== 'ov-img' && e.target.id !== 'ov-vid' && e.target.id !== 'ov-youtube' && !e.target.closest('#ov-controls')) {
+    } else if (!tile && expanded && e.target.id !== 'ov-img' && e.target.id !== 'ov-vid' && e.target.id !== 'ov-youtube' && !e.target.closest('#ov-controls') && !e.target.closest('a')) {
       /* Don't close here when user is interacting with the overlay image/video itself —
          the ovDrag mouseup handler above owns that interaction */
       closeOverlay();
@@ -1070,6 +1073,14 @@ const ovProgress = document.getElementById('ov-progress');
 const ovAudio = document.getElementById('ov-audio');
 const ovLbl   = document.getElementById('ov-lbl');
 const ovDesc  = document.getElementById('ov-desc');
+let overlaySequenceTimer = null;
+
+function stopOverlaySequence() {
+  if (overlaySequenceTimer !== null) {
+    clearInterval(overlaySequenceTimer);
+    overlaySequenceTimer = null;
+  }
+}
 
 /* ── Overlay drag-to-toss state (declared before openOverlay/closeOverlay) ── */
 let ovDragActive = false;
@@ -1132,13 +1143,39 @@ function toggleOverlayVideoSound(event=null) {
 ovAudio.addEventListener('click', toggleOverlayVideoSound);
 
 function openOverlay(obj) {
+  stopOverlaySequence();
   expanded = obj;
   const a  = ASSETS[obj.assetIdx];
   ovLbl.textContent = a.lbl;
   ovDesc.textContent = a.description || '';
-  ovDesc.hidden = !a.description;
+  if (a.linkText && a.linkUrl) {
+    ovDesc.append(document.createTextNode(' '));
+    const link=document.createElement('a');
+    link.href=a.linkUrl;
+    link.target='_blank';
+    link.rel='noopener noreferrer';
+    link.textContent=a.linkText;
+    ovDesc.append(link);
+  }
+  ovDesc.hidden = !(a.description || (a.linkText && a.linkUrl));
   const ovYouTube=document.getElementById('ov-youtube');
-  if (a.isYouTube) {
+  if (Array.isArray(a.sequence) && a.sequence.length) {
+    ovImg.style.display = '';
+    ovVid.style.display = 'none';
+    ovYouTube.style.display = 'none';
+    ovYouTube.removeAttribute('src');
+    ovAudio.hidden = true;
+    ovControls.hidden = true;
+    const frameUrls=a.sequence.map(assetUrl);
+    const preloadedFrames=frameUrls.map(src=>{const image=new Image();image.src=src;return image;});
+    let frameIndex=0;
+    ovImg.src=frameUrls[frameIndex];
+    overlaySequenceTimer=window.setInterval(()=>{
+      if (!expanded || expanded.assetIdx !== obj.assetIdx) return stopOverlaySequence();
+      frameIndex=(frameIndex+1)%preloadedFrames.length;
+      ovImg.src=frameUrls[frameIndex];
+    },1000);
+  } else if (a.isYouTube) {
     ovImg.style.display = 'none';
     ovVid.style.display = 'none';
     ovYouTube.style.display = 'block';
@@ -1175,6 +1212,7 @@ function openOverlay(obj) {
   ovImg.style.transition = '';
 }
 function closeOverlay() {
+  stopOverlaySequence();
   expanded = null;
   overlay.classList.remove('on');
   ovImg.classList.remove('ov-grabbing');
@@ -1255,7 +1293,7 @@ document.addEventListener('mouseup', e => {
    ═══════════════════════════════════════════════════════ */
 function swapAsset(obj) {
   if (obj.swapping) return;
-  if (obj.isVideo) return; // video tiles play forever — no crossfade
+  if (obj.isVideo || obj.isSequence) return; // video and sequence tiles keep their identity
   const newIdx = nextAsset();
   if (newIdx === null) return;
 
@@ -2622,7 +2660,7 @@ if (isMobile) {
       }
     }
     /* Close image overlay by tapping outside the image */
-    if (expanded && el && el.id !== 'ov-img' && el.id !== 'ov-youtube') {
+    if (expanded && el && el.id !== 'ov-img' && el.id !== 'ov-youtube' && !el.closest('a')) {
       closeOverlay();
     }
   }, { passive: true });
