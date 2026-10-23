@@ -710,7 +710,8 @@ const ASSETS = [
   {"cat": "Video", "lbl": "The Man Communicates", "src": "ai/The Man Communicates.mp4", "isVideo": true},
   {"cat": "Video", "lbl": "The Man Is Direct", "src": "ai/The Man is Direct.mp4", "isVideo": true},
   {"cat": "Video", "lbl": "Artisanal Coffees", "src": "https://www.youtube.com/embed/De0UxON31Ek", "thumb": "https://i.ytimg.com/vi/De0UxON31Ek/hqdefault.jpg", "isVideo": true, "isYouTube": true, "description": "AI-imagined coffee pours by famous artists."},
-  { cat:'World', lbl:'Darkride', description:'Drive through grain and rain.', linkText:'Play it here.', linkUrl:'https://unim3dia.github.io/darkride/', src:'ai/Darkride/01.jpg', sequence:['ai/Darkride/01.jpg','ai/Darkride/02.jpg','ai/Darkride/03.jpg','ai/Darkride/04.jpg','ai/Darkride/05.jpg','ai/Darkride/06.jpg','ai/Darkride/07.jpg'] },
+  { cat:'World', lbl:'Darkride', description:'Drive through grain and rain.', linkText:'Play it here.', linkUrl:'https://unim3dia.github.io/darkride/', src:'ai/Darkride/01.jpg', sequence:['ai/Darkride/01.jpg','ai/Darkride/02.jpg','ai/Darkride/04.jpg','ai/Darkride/05.jpg','ai/Darkride/06.jpg','ai/Darkride/07.jpg'] },
+  { cat:'Game', lbl:'Delete the Apps', description:'Delete the Apps is a 3D browser game where you close and match falling app cubes on a quilted road, with each level adding a new twist.', linkText:'PLAY IT HERE', linkUrl:'https://unim3dia.github.io/delete-the-apps/', src:'ai/Delete the Apps - Teaser.mp4', isVideo:true },
   {"cat": "Video", "lbl": "HORSE", "src": "ai/HORSE - RunwayML Snap Challenge submission.mp4", "isVideo": true, "description": "RunwayML Snap Challenge submission"},
   {"cat": "Video", "lbl": "Runaway", "src": "ai/Runaway.mp4", "isVideo": true},
   {"cat": "Video", "lbl": "End of Summer", "src": "ai/end of summer.mp4", "isVideo": true},
@@ -1174,7 +1175,7 @@ function openOverlay(obj) {
       if (!expanded || expanded.assetIdx !== obj.assetIdx) return stopOverlaySequence();
       frameIndex=(frameIndex+1)%preloadedFrames.length;
       ovImg.src=frameUrls[frameIndex];
-    },1000);
+    },2000);
   } else if (a.isYouTube) {
     ovImg.style.display = 'none';
     ovVid.style.display = 'none';
