@@ -710,7 +710,7 @@ const ASSETS = [
   {"cat": "Video", "lbl": "The Man Communicates", "src": "ai/The Man Communicates.mp4", "isVideo": true},
   {"cat": "Video", "lbl": "The Man Is Direct", "src": "ai/The Man is Direct.mp4", "isVideo": true},
   {"cat": "Video", "lbl": "Artisanal Coffees", "src": "https://www.youtube.com/embed/De0UxON31Ek", "thumb": "https://i.ytimg.com/vi/De0UxON31Ek/hqdefault.jpg", "isVideo": true, "isYouTube": true, "description": "AI-imagined coffee pours by famous artists."},
-  { cat:'World', lbl:'Darkride', description:'Drive through grain and rain.', linkText:'Play it here.', linkUrl:'https://unim3dia.github.io/darkride/', src:'ai/Darkride/01.jpg', sequence:['ai/Darkride/01.jpg','ai/Darkride/02.jpg','ai/Darkride/04.jpg','ai/Darkride/05.jpg','ai/Darkride/06.jpg','ai/Darkride/07.jpg'] },
+  { cat:'Game', lbl:'Darkride', description:'Drive through grain and rain.', linkText:'Play it here.', linkUrl:'https://unim3dia.github.io/darkride/', src:'ai/Darkride/01.jpg', sequence:['ai/Darkride/01.jpg','ai/Darkride/02.jpg','ai/Darkride/04.jpg','ai/Darkride/05.jpg','ai/Darkride/06.jpg','ai/Darkride/07.jpg'] },
   { cat:'Game', lbl:'Delete the Apps', description:'Delete the Apps is a 3D browser game where you close and match falling app cubes on a quilted road, with each level adding a new twist.', linkText:'PLAY IT HERE', linkUrl:'https://unim3dia.github.io/delete-the-apps/', src:'ai/Delete the Apps - Teaser.mp4', isVideo:true },
   {"cat": "Video", "lbl": "HORSE", "src": "ai/HORSE - RunwayML Snap Challenge submission.mp4", "isVideo": true, "description": "RunwayML Snap Challenge submission"},
   {"cat": "Video", "lbl": "Runaway", "src": "ai/Runaway.mp4", "isVideo": true},
@@ -919,6 +919,45 @@ function buildTileEl(shape, w, h, assetIdx) {
   return { el, imgA, imgB };
 }
 
+function cycleSequenceTile(obj) {
+  if (!obj.isSequence || obj.sequenceChanging || !obj.el.isConnected) return;
+  const sequence = ASSETS[obj.assetIdx].sequence;
+  if (!sequence || sequence.length < 2) return;
+
+  const nextIndex = (obj.sequenceIndex + 1) % sequence.length;
+  const backImg = obj.swapped ? obj.imgA : obj.imgB;
+  obj.sequenceChanging = true;
+  backImg.src = assetUrl(sequence[nextIndex]);
+  backImg.alt = ASSETS[obj.assetIdx].lbl;
+
+  const finishSwap = () => {
+    obj.sequenceIndex = nextIndex;
+    obj.swapped = !obj.swapped;
+    obj.el.classList.toggle('swapped', obj.swapped);
+    obj.sequenceChanging = false;
+    backImg.onload = null;
+    backImg.onerror = null;
+  };
+
+  if (backImg.complete && backImg.naturalWidth > 0) {
+    finishSwap();
+  } else {
+    backImg.onload = finishSwap;
+    backImg.onerror = () => {
+      obj.sequenceChanging = false;
+      backImg.onload = null;
+      backImg.onerror = null;
+    };
+  }
+}
+
+function stopTileSequence(obj) {
+  if (obj.sequenceTimer) {
+    clearInterval(obj.sequenceTimer);
+    obj.sequenceTimer = null;
+  }
+}
+
 /* ── Spawn a physics tile ── */
 function spawnTile(shape, w, h, sx, sy, vx, vy) {
   const assetIdx = nextAsset();
@@ -964,6 +1003,11 @@ function spawnTile(shape, w, h, sx, sy, vx, vy) {
     chargeStr: 0.4 + Math.random() * 0.6,  // individual field strength
   };
   tileObjs.push(obj);
+  if (obj.isSequence) {
+    obj.sequenceIndex = 0;
+    obj.sequenceChanging = false;
+    obj.sequenceTimer = window.setInterval(() => cycleSequenceTile(obj), 2000);
+  }
   return obj;
 }
 
@@ -1508,6 +1552,7 @@ function triggerShakeReset() {
     obj.restTimer = 0;
     setTimeout(() => {
       if (!obj.el.parentNode) return;
+      stopTileSequence(obj);
       obj.el.remove();
       World.remove(world, obj.body);
       displayedSet.delete(obj.assetIdx);
@@ -1796,6 +1841,7 @@ function loop() {
       obj.el.style.transition = 'opacity 0.5s ease';
       obj.el.style.opacity    = '0';
       setTimeout(() => {
+        stopTileSequence(obj);
         if (obj.el.parentNode) obj.el.remove();
         World.remove(world, obj.body);
         displayedSet.delete(obj.assetIdx);
@@ -1834,6 +1880,7 @@ function loop() {
         obj.el.style.transition = 'opacity 0.3s ease';
         obj.el.style.opacity = '0';
         setTimeout(() => {
+          stopTileSequence(obj);
           if (obj.el.parentNode) obj.el.remove();
           World.remove(world, obj.body);
           displayedSet.delete(obj.assetIdx);
