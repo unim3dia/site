@@ -70,6 +70,7 @@
     .deck.is-initializing .project-card{transition:none!important}
     .deck.is-ready .project-card.is-front,.deck.is-ready .project-card.is-side,.deck.is-ready .project-card.is-deep,.project-card.is-dragging{will-change:transform}
     .project-card[data-shape="phone"]{--card-width:180px;border-radius:32px;padding:7px}
+    #nissim-dance-library .project-card[data-shape="phone"]{--card-width:160px;top:50%}
     .project-card[data-shape="portrait"]{--card-width:210px;border-radius:20px}
     .project-card[data-shape="square"]{--card-width:315px;border-radius:18px}
     .project-card[data-shape="browser"]{--card-width:460px;border-radius:12px}
@@ -163,6 +164,7 @@
       #clone .deck,#howmany .deck{height:230px}
       .project-card{width:min(var(--card-width),calc(100vw - 42px));padding:6px}
       .project-card[data-shape="phone"]{--card-width:178px;border-radius:29px;padding:6px}
+      #nissim-dance-library .project-card[data-shape="phone"]{--card-width:150px}
       .project-card[data-shape="portrait"]{--card-width:200px;border-radius:17px}
       .project-card[data-shape="square"]{--card-width:286px;border-radius:15px}
       .project-card[data-shape="browser"]{--card-width:320px}
@@ -190,6 +192,7 @@
       .deck-shell{height:350px}
       .deck{height:312px}
       .project-card[data-shape="phone"]{--card-width:164px}
+      #nissim-dance-library .project-card[data-shape="phone"]{--card-width:138px}
       .project-card[data-shape="portrait"]{--card-width:185px}
       .project-card[data-shape="square"]{--card-width:265px}
       .project-card[data-shape="browser"]{--card-width:298px}
@@ -1003,6 +1006,47 @@
         ]
       },
       {
+        "id": "nissim-dance-library",
+        "short": "Nissim's Dance Library",
+        "title": "Nissim's Dance Library",
+        "description": "800 videos. A lifetime of dancing. <a class=\"project-link\" href=\"https://unim3dia.github.io/dance-nissim/?lang=en\" target=\"_blank\" rel=\"noopener noreferrer\">Visit the Collection.</a>",
+        "labels": [
+          "Dance Archive",
+          "Website"
+        ],
+        "colors": {
+          "bg": "#f2ad35",
+          "ink": "#102e3d",
+          "muted": "#315265",
+          "accent": "#d3a95f",
+          "accent2": "#9b5c44",
+          "paper": "#fffdf8"
+        },
+        "cards": [
+          {
+            "src": "latest-assets/Nissim's Dance Library/01-home.jpg",
+            "thumb": "latest-thumbs/Nissim's Dance Library/01-home.jpg",
+            "shape": "phone",
+            "ratio": "390 / 844",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/Nissim's Dance Library/02-library.jpg",
+            "thumb": "latest-thumbs/Nissim's Dance Library/02-library.jpg",
+            "shape": "phone",
+            "ratio": "390 / 844",
+            "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/Nissim's Dance Library/03-dances.jpg",
+            "thumb": "latest-thumbs/Nissim's Dance Library/03-dances.jpg",
+            "shape": "phone",
+            "ratio": "390 / 844",
+            "mediaType": "image"
+          }
+        ]
+      },
+      {
         "id": "playframe",
         "short": "Playframe",
         "title": "Playframe",
@@ -1144,7 +1188,7 @@
       }
     );
 
-    const projectOrder=['artisanalcoffees','playframe','megamables','clone','howmany','setshift','deadshift','aircheck','cinemadoctor','thoughtzapper','thelastredthing','books','quieters','suds','mayas-memories','afterimage'];
+    const projectOrder=['artisanalcoffees','playframe','megamables','clone','howmany','setshift','deadshift','aircheck','cinemadoctor','thoughtzapper','thelastredthing','books','quieters','suds','mayas-memories','nissim-dance-library','afterimage'];
     projects.sort((a,b)=>projectOrder.indexOf(a.id)-projectOrder.indexOf(b.id));
 
     const root=document.documentElement;
