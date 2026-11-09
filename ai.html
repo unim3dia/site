@@ -710,9 +710,9 @@ const ASSETS = [
   {"cat": "Video", "lbl": "The Man Communicates", "src": "ai/The Man Communicates.mp4", "isVideo": true},
   {"cat": "Video", "lbl": "The Man Is Direct", "src": "ai/The Man is Direct.mp4", "isVideo": true},
   {"cat": "Video", "lbl": "Artisanal Coffees", "src": "https://www.youtube.com/embed/De0UxON31Ek", "thumb": "https://i.ytimg.com/vi/De0UxON31Ek/hqdefault.jpg", "isVideo": true, "isYouTube": true, "description": "AI-imagined coffee pours by famous artists."},
+  { cat:'Video', lbl:'Rabble', description:'Submission for the Meta Hackathon.', src:'ai/Rabble - Meta Hackathon submission.mp4', poster:'ai/posters/rabble.jpg', isVideo:true, clickToPlay:true },
+  { cat:'Video', lbl:'Darkride — Promotional Video', description:'Promotional video.', linkText:'Play it here.', linkUrl:'https://unim3dia.github.io/darkride/', src:'ai/DARKRIDE_ad_share.mp4', poster:'ai/posters/darkride-promo.jpg', isVideo:true, clickToPlay:true },
   { cat:'Game', lbl:'Darkride', description:'Drive through grain and rain.', linkText:'Play it here.', linkUrl:'https://unim3dia.github.io/darkride/', src:'ai/Darkride/01.jpg', sequence:['ai/Darkride/01.jpg','ai/Darkride/02.jpg','ai/Darkride/04.jpg','ai/Darkride/05.jpg','ai/Darkride/06.jpg','ai/Darkride/07.jpg'] },
-  { cat:'Video', lbl:'Rabble', description:'Submission for the Meta Hackathon.', src:'ai/Rabble - Meta Hackathon submission.mp4', isVideo:true },
-  { cat:'Video', lbl:'Darkride — Promotional Video', description:'Promotional video.', linkText:'Play it here.', linkUrl:'https://unim3dia.github.io/darkride/', src:'ai/DARKRIDE_ad_share.mp4', isVideo:true },
   { cat:'Game', lbl:'Delete the Apps', description:'Delete the Apps is a 3D browser game where you close and match falling app cubes on a quilted road, with each level adding a new twist.', linkText:'PLAY IT HERE', linkUrl:'https://unim3dia.github.io/delete-the-apps/', src:'ai/Delete the Apps - Teaser.mp4', isVideo:true },
   {"cat": "Video", "lbl": "HORSE", "src": "ai/HORSE - RunwayML Snap Challenge submission.mp4", "isVideo": true, "description": "RunwayML Snap Challenge submission"},
   {"cat": "Video", "lbl": "Runaway", "src": "ai/Runaway.mp4", "isVideo": true},
@@ -858,7 +858,19 @@ function buildTileEl(shape, w, h, assetIdx) {
 
   let imgA, imgB;
 
-  if (asset.isVideo && !asset.isYouTube) {
+  if (asset.isVideo && asset.clickToPlay) {
+    /* Large video tile: show a light poster and load the movie only when opened */
+    imgA = document.createElement('img');
+    imgA.className = 'img-a';
+    imgA.src = assetUrl(asset.poster);
+    imgA.alt = asset.lbl;
+    imgA.draggable = false;
+    imgA.style.width = '100%';
+    imgA.style.height = '100%';
+    imgA.style.objectFit = 'cover';
+    el.appendChild(imgA);
+    imgB = null;
+  } else if (asset.isVideo && !asset.isYouTube) {
     /* Video tile — single <video> element, no crossfade layers */
     const vid = document.createElement('video');
     vid.className  = 'img-a';
