@@ -115,7 +115,7 @@
     .has-grab-cursor .project-card.is-front,.has-grab-cursor .project-card.is-side{cursor:none}
 
     .image-lightbox{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:34px 86px;background:rgba(8,10,12,.84);backdrop-filter:blur(18px);cursor:zoom-out;animation:lightboxIn .2s ease both}
-    .lightbox-stage{width:100%;height:100%;display:grid;place-items:center;pointer-events:none;touch-action:none}
+    .lightbox-stage{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;pointer-events:none;touch-action:none}
     .image-lightbox img,.image-lightbox video,.image-lightbox iframe{width:auto;height:auto;max-width:min(88vw,1600px);max-height:89svh;object-fit:contain;border:5px solid rgba(255,255,255,.96);border-radius:14px;box-shadow:0 36px 100px rgba(0,0,0,.55);cursor:default;pointer-events:auto;transition:opacity .14s ease,transform .22s cubic-bezier(.22,1,.36,1)}
     .image-lightbox img{cursor:grab;touch-action:none;will-change:transform,opacity}
     .image-lightbox img.is-dragging{cursor:grabbing;transition:none}
@@ -126,7 +126,7 @@
     .image-lightbox.is-youtube img,.image-lightbox.is-youtube video{display:none}
     .image-lightbox.is-youtube iframe{display:block}
     .image-lightbox.has-caption #lightboxImage{max-height:calc(89svh - 72px)}
-    .lightbox-caption{position:fixed;left:50%;bottom:18px;z-index:3;width:min(620px,calc(100vw - 36px));transform:translateX(-50%);color:rgba(255,255,255,.92);font-size:clamp(.82rem,1.2vw,1rem);font-weight:550;line-height:1.45;text-align:center;text-shadow:0 2px 12px rgba(0,0,0,.7);pointer-events:none}
+    .lightbox-caption{position:static;z-index:3;width:min(620px,calc(100vw - 36px));margin:0;color:rgba(255,255,255,.92);font-size:clamp(.82rem,1.2vw,1rem);font-weight:550;line-height:1.45;text-align:center;text-shadow:0 2px 12px rgba(0,0,0,.7);pointer-events:none}
     .lightbox-caption[hidden]{display:none}
     .lightbox-fullscreen{position:fixed;right:22px;bottom:72px;z-index:5;width:62px;height:62px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.48);border-radius:50%;background:rgba(12,14,16,.72);color:#fff;cursor:pointer;box-shadow:0 10px 34px rgba(0,0,0,.35);backdrop-filter:blur(12px);transition:transform .18s ease,background .18s ease}
     .lightbox-fullscreen:hover{transform:scale(1.08);background:rgba(255,255,255,.2)}
@@ -135,9 +135,10 @@
     .lightbox-fullscreen .icon-exit{display:none}
     .image-lightbox.is-fullscreen .lightbox-fullscreen .icon-enter{display:none}
     .image-lightbox.is-fullscreen .lightbox-fullscreen .icon-exit{display:block}
-    .image-lightbox:fullscreen,.image-lightbox.pseudo-fullscreen{background:#050607}
-    .image-lightbox:fullscreen.has-caption #lightboxImage,.image-lightbox.pseudo-fullscreen.has-caption #lightboxImage{max-height:calc(100svh - 110px);max-width:96vw}
-    .image-lightbox:fullscreen .lightbox-caption,.image-lightbox.pseudo-fullscreen .lightbox-caption{bottom:max(20px,env(safe-area-inset-bottom))}
+    .image-lightbox:fullscreen,.image-lightbox.pseudo-fullscreen{padding:0;background:#050607}
+    .image-lightbox:fullscreen .lightbox-stage,.image-lightbox.pseudo-fullscreen .lightbox-stage{width:100%;height:100%;gap:0}
+    .image-lightbox:fullscreen.has-caption #lightboxImage,.image-lightbox.pseudo-fullscreen.has-caption #lightboxImage{width:100vw;height:100svh;max-width:none;max-height:none;object-fit:fill;border:0;border-radius:0;box-shadow:none}
+    .image-lightbox:fullscreen .lightbox-caption,.image-lightbox.pseudo-fullscreen .lightbox-caption{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));padding:10px 14px;border-radius:12px;background:rgba(0,0,0,.58);backdrop-filter:blur(8px);transform:translateX(-50%)}
     .lightbox-video-controls{position:fixed;left:50%;bottom:20px;z-index:4;display:flex;align-items:center;gap:10px;width:min(520px,calc(100vw - 190px));padding:8px 10px;border:1px solid rgba(255,255,255,.24);border-radius:999px;background:rgba(12,14,16,.48);color:#fff;transform:translateX(-50%);backdrop-filter:blur(10px);box-shadow:0 8px 28px rgba(0,0,0,.22)}
     .lightbox-video-controls[hidden]{display:none}
     .lightbox-video-controls button{flex:0 0 auto;padding:5px 8px;border-radius:999px;background:transparent;color:#fff;cursor:pointer;font-size:.72rem;font-weight:800;letter-spacing:.03em}
@@ -279,8 +280,8 @@
       <img id="lightboxImage" alt="">
       <video id="lightboxVideo" playsinline preload="metadata"></video>
       <iframe id="lightboxYouTube" title="Project video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+      <p class="lightbox-caption" id="lightboxCaption" hidden></p>
     </div>
-    <p class="lightbox-caption" id="lightboxCaption" hidden></p>
     <button class="lightbox-fullscreen" id="lightboxFullscreen" type="button" aria-label="View fullscreen" title="View fullscreen" aria-pressed="false" hidden>
       <svg class="icon-enter" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/></svg>
       <svg class="icon-exit" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3v5H3M16 3v5h5M3 16h5v5M21 16h-5v5"/></svg>
