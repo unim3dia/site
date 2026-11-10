@@ -128,6 +128,16 @@
     .image-lightbox.has-caption #lightboxImage{max-height:calc(89svh - 72px)}
     .lightbox-caption{position:fixed;left:50%;bottom:18px;z-index:3;width:min(620px,calc(100vw - 36px));transform:translateX(-50%);color:rgba(255,255,255,.92);font-size:clamp(.82rem,1.2vw,1rem);font-weight:550;line-height:1.45;text-align:center;text-shadow:0 2px 12px rgba(0,0,0,.7);pointer-events:none}
     .lightbox-caption[hidden]{display:none}
+    .lightbox-fullscreen{position:fixed;right:22px;bottom:72px;z-index:5;width:62px;height:62px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.48);border-radius:50%;background:rgba(12,14,16,.72);color:#fff;cursor:pointer;box-shadow:0 10px 34px rgba(0,0,0,.35);backdrop-filter:blur(12px);transition:transform .18s ease,background .18s ease}
+    .lightbox-fullscreen:hover{transform:scale(1.08);background:rgba(255,255,255,.2)}
+    .lightbox-fullscreen svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+    .lightbox-fullscreen[hidden]{display:none}
+    .lightbox-fullscreen .icon-exit{display:none}
+    .image-lightbox.is-fullscreen .lightbox-fullscreen .icon-enter{display:none}
+    .image-lightbox.is-fullscreen .lightbox-fullscreen .icon-exit{display:block}
+    .image-lightbox:fullscreen,.image-lightbox.pseudo-fullscreen{background:#050607}
+    .image-lightbox:fullscreen.has-caption #lightboxImage,.image-lightbox.pseudo-fullscreen.has-caption #lightboxImage{max-height:calc(100svh - 110px);max-width:96vw}
+    .image-lightbox:fullscreen .lightbox-caption,.image-lightbox.pseudo-fullscreen .lightbox-caption{bottom:max(20px,env(safe-area-inset-bottom))}
     .lightbox-video-controls{position:fixed;left:50%;bottom:20px;z-index:4;display:flex;align-items:center;gap:10px;width:min(520px,calc(100vw - 190px));padding:8px 10px;border:1px solid rgba(255,255,255,.24);border-radius:999px;background:rgba(12,14,16,.48);color:#fff;transform:translateX(-50%);backdrop-filter:blur(10px);box-shadow:0 8px 28px rgba(0,0,0,.22)}
     .lightbox-video-controls[hidden]{display:none}
     .lightbox-video-controls button{flex:0 0 auto;padding:5px 8px;border-radius:999px;background:transparent;color:#fff;cursor:pointer;font-size:.72rem;font-weight:800;letter-spacing:.03em}
@@ -271,6 +281,10 @@
       <iframe id="lightboxYouTube" title="Project video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
     </div>
     <p class="lightbox-caption" id="lightboxCaption" hidden></p>
+    <button class="lightbox-fullscreen" id="lightboxFullscreen" type="button" aria-label="View fullscreen" title="View fullscreen" aria-pressed="false" hidden>
+      <svg class="icon-enter" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/></svg>
+      <svg class="icon-exit" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3v5H3M16 3v5h5M3 16h5v5M21 16h-5v5"/></svg>
+    </button>
     <div class="lightbox-video-controls" id="lightboxVideoControls" aria-label="Video controls" hidden>
       <button id="lightboxPlay" type="button" aria-label="Pause video">pause</button>
       <input id="lightboxProgress" type="range" min="0" max="1000" value="0" step="1" aria-label="Video progress">
@@ -1218,6 +1232,7 @@
     const lightboxVideo=document.getElementById('lightboxVideo');
     const lightboxYouTube=document.getElementById('lightboxYouTube');
     const lightboxCaption=document.getElementById('lightboxCaption');
+    const lightboxFullscreen=document.getElementById('lightboxFullscreen');
     const lightboxVideoControls=document.getElementById('lightboxVideoControls');
     const lightboxPlay=document.getElementById('lightboxPlay');
     const lightboxProgress=document.getElementById('lightboxProgress');
@@ -1460,6 +1475,49 @@
       if(immediate) requestAnimationFrame(()=>{lightboxImage.style.transition=''});
     }
 
+    function syncLightboxFullscreenButton(){
+      const active=document.fullscreenElement===lightbox||document.webkitFullscreenElement===lightbox||lightbox.classList.contains('pseudo-fullscreen');
+      lightbox.classList.toggle('is-fullscreen',active);
+      lightboxFullscreen.setAttribute('aria-pressed',String(active));
+      const label=active?'Exit fullscreen':'View fullscreen';
+      lightboxFullscreen.setAttribute('aria-label',label);
+      lightboxFullscreen.title=label;
+    }
+
+    lightboxFullscreen.addEventListener('click',event=>{
+      event.preventDefault();
+      event.stopPropagation();
+      const nativeActive=document.fullscreenElement===lightbox||document.webkitFullscreenElement===lightbox;
+      const active=nativeActive||lightbox.classList.contains('pseudo-fullscreen');
+      if(active){
+        if(nativeActive){
+          const exit=document.exitFullscreen||document.webkitExitFullscreen;
+          exit?.call(document)?.catch?.(()=>{});
+        }
+        lightbox.classList.remove('pseudo-fullscreen');
+        syncLightboxFullscreenButton();
+        return;
+      }
+      const enter=lightbox.requestFullscreen||lightbox.webkitRequestFullscreen;
+      if(!enter){
+        lightbox.classList.add('pseudo-fullscreen');
+        syncLightboxFullscreenButton();
+        return;
+      }
+      try{
+        const result=enter.call(lightbox);
+        result?.catch?.(()=>{
+          lightbox.classList.add('pseudo-fullscreen');
+          syncLightboxFullscreenButton();
+        });
+        lightbox.classList.add('is-fullscreen');
+      }catch(error){
+        lightbox.classList.add('pseudo-fullscreen');
+        syncLightboxFullscreenButton();
+      }
+    });
+    ['fullscreenchange','webkitfullscreenchange'].forEach(type=>document.addEventListener(type,syncLightboxFullscreenButton));
+
     function displayLightboxImage(index,animate=false){
       const cards=[...lightboxState.deck.querySelectorAll('.project-card')];
       lightboxState.index=(index+cards.length)%cards.length;
@@ -1468,7 +1526,10 @@
       const caption=decodeURIComponent(card.dataset.caption||'');
       lightboxCaption.textContent=caption;
       lightboxCaption.hidden=!caption;
+      lightboxFullscreen.hidden=!caption;
       lightbox.classList.toggle('has-caption',!!caption);
+      if(!caption&&lightbox.classList.contains('pseudo-fullscreen')) lightbox.classList.remove('pseudo-fullscreen');
+      if(!caption&&document.fullscreenElement===lightbox) document.exitFullscreen?.().catch?.(()=>{});
       const loadToken=++lightboxState.loadToken;
       const updateImage=()=>{
         resetLightboxImageMotion(true);
@@ -1586,7 +1647,11 @@
       lightboxVideo.load();
       lightboxYouTube.removeAttribute('src');
       lightbox.hidden=true;
-      lightbox.classList.remove('is-changing','is-video','is-youtube','has-single-item','has-caption');
+      if(document.fullscreenElement===lightbox) document.exitFullscreen?.().catch?.(()=>{});
+      if(document.webkitFullscreenElement===lightbox) document.webkitExitFullscreen?.();
+      lightbox.classList.remove('is-changing','is-video','is-youtube','has-single-item','has-caption','pseudo-fullscreen','is-fullscreen');
+      lightboxFullscreen.hidden=true;
+      lightboxFullscreen.setAttribute('aria-pressed','false');
       lightboxCaption.hidden=true;
       lightboxCaption.textContent='';
       lightboxImage.removeAttribute('src');
