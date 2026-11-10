@@ -125,6 +125,9 @@
     .image-lightbox.is-video video{display:block}
     .image-lightbox.is-youtube img,.image-lightbox.is-youtube video{display:none}
     .image-lightbox.is-youtube iframe{display:block}
+    .image-lightbox.has-caption #lightboxImage{max-height:calc(89svh - 72px)}
+    .lightbox-caption{position:fixed;left:50%;bottom:18px;z-index:3;width:min(620px,calc(100vw - 36px));transform:translateX(-50%);color:rgba(255,255,255,.92);font-size:clamp(.82rem,1.2vw,1rem);font-weight:550;line-height:1.45;text-align:center;text-shadow:0 2px 12px rgba(0,0,0,.7);pointer-events:none}
+    .lightbox-caption[hidden]{display:none}
     .lightbox-video-controls{position:fixed;left:50%;bottom:20px;z-index:4;display:flex;align-items:center;gap:10px;width:min(520px,calc(100vw - 190px));padding:8px 10px;border:1px solid rgba(255,255,255,.24);border-radius:999px;background:rgba(12,14,16,.48);color:#fff;transform:translateX(-50%);backdrop-filter:blur(10px);box-shadow:0 8px 28px rgba(0,0,0,.22)}
     .lightbox-video-controls[hidden]{display:none}
     .lightbox-video-controls button{flex:0 0 auto;padding:5px 8px;border-radius:999px;background:transparent;color:#fff;cursor:pointer;font-size:.72rem;font-weight:800;letter-spacing:.03em}
@@ -267,6 +270,7 @@
       <video id="lightboxVideo" playsinline preload="metadata"></video>
       <iframe id="lightboxYouTube" title="Project video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
     </div>
+    <p class="lightbox-caption" id="lightboxCaption" hidden></p>
     <div class="lightbox-video-controls" id="lightboxVideoControls" aria-label="Video controls" hidden>
       <button id="lightboxPlay" type="button" aria-label="Pause video">pause</button>
       <input id="lightboxProgress" type="range" min="0" max="1000" value="0" step="1" aria-label="Video progress">
@@ -497,6 +501,14 @@
             "shape": "square",
             "ratio": "562 / 491",
             "mediaType": "image"
+          },
+          {
+            "src": "latest-assets/Mega Mables/The static is code and music.gif",
+            "thumb": "latest-thumbs/Mega Mables/The static is code and music.jpg",
+            "shape": "square",
+            "ratio": "1 / 1",
+            "mediaType": "image",
+            "caption": "The data inside a game cartridge, drawn as pictures. The static is code and music."
           }
         ]
       },
@@ -1205,6 +1217,7 @@
     const lightboxImage=document.getElementById('lightboxImage');
     const lightboxVideo=document.getElementById('lightboxVideo');
     const lightboxYouTube=document.getElementById('lightboxYouTube');
+    const lightboxCaption=document.getElementById('lightboxCaption');
     const lightboxVideoControls=document.getElementById('lightboxVideoControls');
     const lightboxPlay=document.getElementById('lightboxPlay');
     const lightboxProgress=document.getElementById('lightboxProgress');
@@ -1245,7 +1258,7 @@
         const previewDir=project.bookPreviewDirs?.[cardIndex]||'';
         const pageCount=project.bookPageCounts?.[cardIndex]||5;
         const expandButton=project.bookTitles&& !pdfSource?'':`<button class="expand-image" data-expand type="button" aria-label="${expandLabel}">${expandIcon}</button>`;
-        return `<article class="project-card" data-card="${cardIndex}" data-pdf="${encodeURI(pdfSource)}" data-preview-dir="${encodeURI(previewDir)}" data-page-count="${pageCount}" data-shape="${card.shape}" data-media-type="${card.mediaType}" style="--card-ratio:${card.ratio}">
+        return `<article class="project-card" data-card="${cardIndex}" data-pdf="${encodeURI(pdfSource)}" data-preview-dir="${encodeURI(previewDir)}" data-page-count="${pageCount}" data-shape="${card.shape}" data-media-type="${card.mediaType}" data-caption="${encodeURIComponent(card.caption||'')}" style="--card-ratio:${card.ratio}">
           <div class="card-media"><img ${sourceAttribute} data-full-src="${fullImageSource}" alt="${project.bookTitles?.[cardIndex]||`${project.short} project image ${cardIndex+1}`}" draggable="false" decoding="async"></div>
           ${expandButton}
         </article>`;
@@ -1452,6 +1465,10 @@
       lightboxState.index=(index+cards.length)%cards.length;
       const card=cards[lightboxState.index];
       const image=loadCardImage(card);
+      const caption=decodeURIComponent(card.dataset.caption||'');
+      lightboxCaption.textContent=caption;
+      lightboxCaption.hidden=!caption;
+      lightbox.classList.toggle('has-caption',!!caption);
       const loadToken=++lightboxState.loadToken;
       const updateImage=()=>{
         resetLightboxImageMotion(true);
@@ -1569,7 +1586,9 @@
       lightboxVideo.load();
       lightboxYouTube.removeAttribute('src');
       lightbox.hidden=true;
-      lightbox.classList.remove('is-changing','is-video','is-youtube','has-single-item');
+      lightbox.classList.remove('is-changing','is-video','is-youtube','has-single-item','has-caption');
+      lightboxCaption.hidden=true;
+      lightboxCaption.textContent='';
       lightboxImage.removeAttribute('src');
       lightboxState.swipe=null;
       resetLightboxImageMotion(true);
