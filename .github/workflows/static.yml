@@ -27,11 +27,13 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Prepare Pages artifact
+        run: python3 .github/scripts/prepare_pages.py "$RUNNER_TEMP/pages-site"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # This tells GitHub your files are in the ROOT of the repo
-          path: '.' 
+          path: ${{ runner.temp }}/pages-site
 
       - name: Deploy to GitHub Pages
         id: deployment
