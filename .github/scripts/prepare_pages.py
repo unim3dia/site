@@ -9,7 +9,7 @@ from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[2]
 CODE_SUFFIXES = {".html", ".js", ".css", ".svg", ".json", ".xml"}
-ASSET_DIRS = ("ai", "media")
+ASSET_DIRS = ("ai", "media", "latest-assets", "latest-thumbs")
 MAX_PAGES_BYTES = 1_000_000_000
 
 
@@ -53,7 +53,7 @@ def stage(destination: Path) -> None:
                 pass
 
     size = sum(path.stat().st_size for path in destination.rglob("*") if path.is_file())
-    print(f"Staged {size:,} bytes for Pages; omitted {len(removed)} unreferenced files from ai/ and media/.")
+    print(f"Staged {size:,} bytes for Pages; omitted {len(removed)} unreferenced files from media asset folders.")
     print("All omitted source files remain in the Git repository.")
     if size >= MAX_PAGES_BYTES:
         raise SystemExit(f"Pages package exceeds the 1 GB limit ({MAX_PAGES_BYTES:,} bytes).")
