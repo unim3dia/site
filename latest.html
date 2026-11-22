@@ -319,6 +319,17 @@
 
     const projects=[
       {
+        id:'rottenbeach',short:'Rotten Beach',title:'Rotten Beach',
+        description:'Video game created in Unreal as part of the Epic Games Mega Jam hackathon.',
+        labels:['Video Game','Unreal Engine','Epic Games Mega Jam'],
+        colors:{bg:'#b8d2bb',ink:'#183e35',muted:'#183e35',accent:'#ed704a',accent2:'#d9bd54',paper:'#fff'},
+        cards:[{
+          src:'https://www.youtube.com/embed/FHOSdQigw_w?autoplay=1&rel=0&vq=hd1080',
+          thumb:'https://i.ytimg.com/vi/FHOSdQigw_w/maxresdefault.jpg',
+          shape:'landscape',ratio:'16 / 9',mediaType:'youtube'
+        }]
+      },
+      {
         id:'clone',short:'Clone',title:'Clone',
         description:'Lyric music video for the Leo Kottke and Mike Gordon classic "Clone." Fan-made with Nano Banana 2 and Pro, GPT2, Seedance 2, Google Omni and Veo 3.1.',
         labels:['Creative Direction','AI Filmmaking','Character Continuity','Editorial Design'],
@@ -1222,7 +1233,7 @@
       }
     );
 
-    const projectOrder=['artisanalcoffees','playframe','megamables','clone','howmany','setshift','deadshift','aircheck','cinemadoctor','thoughtzapper','thelastredthing','books','quieters','suds','mayas-memories','nissim-dance-library','afterimage'];
+    const projectOrder=['rottenbeach','artisanalcoffees','playframe','megamables','clone','howmany','setshift','deadshift','aircheck','cinemadoctor','thoughtzapper','thelastredthing','books','quieters','suds','mayas-memories','nissim-dance-library','afterimage'];
     projects.sort((a,b)=>projectOrder.indexOf(a.id)-projectOrder.indexOf(b.id));
 
     const root=document.documentElement;
