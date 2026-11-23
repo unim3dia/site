@@ -1272,8 +1272,8 @@
       const style=`--section-bg:${project.colors.bg};--next-bg:${nextColor};--section-ink:${project.colors.ink};--section-muted:${project.colors.muted};--section-accent:${project.colors.accent};--section-accent-2:${project.colors.accent2};--section-paper:${project.colors.paper}`;
       const projectCards=project.cards.map((card,cardIndex)=>{
         const isPlayable=card.mediaType==='video'||card.mediaType==='youtube';
-        const imageSource=encodeURI(card.thumb);
-        const fullImageSource=encodeURI(card.src);
+        const imageSource=encodeURI(card.thumb)+(card.thumb.startsWith('http')?'':'?v=20261123-restored');
+        const fullImageSource=encodeURI(card.src)+(card.src.startsWith('http')?'':'?v=20261123-restored');
         const sourceAttribute=index===0&&cardIndex===0
           ?`src="${imageSource}" fetchpriority="high" loading="eager"`
           :`data-src="${imageSource}" fetchpriority="low" loading="lazy"`;
