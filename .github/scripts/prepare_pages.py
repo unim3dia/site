@@ -9,7 +9,9 @@ from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[2]
 CODE_SUFFIXES = {".html", ".js", ".css", ".svg", ".json", ".xml"}
-ASSET_DIRS = ("ai", "media", "latest-assets", "latest-thumbs")
+# Latest paths are assembled dynamically by cards(folder, files).
+# Preserve both folders; a text search cannot resolve those references.
+ASSET_DIRS = ("ai", "media")
 MAX_PAGES_BYTES = 1_000_000_000
 
 
